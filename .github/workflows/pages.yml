@@ -35,7 +35,7 @@ jobs:
         run: npm ci
 
       - name: Build with Astro
-        run: npx astro build --site "${{ steps.pages.outputs.origin }}" --base "${{ steps.pages.outputs.base_path }}"
+        run: npx astro build
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
