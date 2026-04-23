@@ -1,0 +1,240 @@
+---
+import Base from '../../layouts/Base.astro';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<Base title="File Processing | Enhanced Task Completion">
+  <article class="scenario">
+    <div class="container">
+      <a href={base} class="back">&larr; All scenarios</a>
+
+      <header class="scenario__header">
+        <span class="badge badge--primary">File Upload & Download</span>
+        <h1>File Processing</h1>
+        <p class="scenario__lead">
+          The agent accepts a CSV file upload, reads its contents, enriches each row by calling tools for every order ID,
+          and returns a fully populated CSV as a downloadable file.
+        </p>
+      </header>
+
+      <!-- Screenshot -->
+      <div class="scenario__screenshot">
+        <img src={`${base}images/scenario-files.png`} alt="File upload and download processing in the Gradio chat UI" />
+      </div>
+
+      <!-- What happens -->
+      <section class="scenario__section">
+        <h2>What happens</h2>
+        <p>When the user uploads <em>demo-orders.csv</em> and says <em>"Fill in all the empty columns and return the completed CSV"</em>, the agent:</p>
+
+        <ol class="scenario__steps">
+          <li>
+            <div class="step">
+              <div class="step__icon">&#x1F4C4;</div>
+              <div class="step__content">
+                <strong>Reads the uploaded CSV file</strong>
+                <p>Parses the file structure, identifies the order ID column, and detects which columns are empty and need to be populated.</p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="step">
+              <div class="step__icon">&#x1F504;</div>
+              <div class="step__content">
+                <strong>Iterates through each order ID</strong>
+                <p>Plans a batch operation — for every row in the CSV, it prepares to fetch the full order details from the MCP server.</p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="step">
+              <div class="step__icon">&#x1F4E6;</div>
+              <div class="step__content">
+                <strong>Calls <code>get_order</code> for each row</strong>
+                <p>Retrieves complete order data — customer name, items, status, dates, totals — for every order ID in the spreadsheet.</p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="step">
+              <div class="step__icon">&#x1F4DD;</div>
+              <div class="step__content">
+                <strong>Populates the missing columns</strong>
+                <p>Maps the returned data to the correct CSV columns, filling in every blank cell with the retrieved values.</p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="step">
+              <div class="step__icon">&#x2705;</div>
+              <div class="step__content">
+                <strong>Returns the completed CSV as a download</strong>
+                <p>Generates the enriched file and presents it as a downloadable attachment in the chat, ready for the user to save.</p>
+              </div>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <!-- Why it matters -->
+      <section class="scenario__section">
+        <h2>Why it matters</h2>
+        <div class="value-grid">
+          <div class="value-card">
+            <h3>Structured data processing</h3>
+            <p>The agent understands tabular data formats, correctly mapping tool results back to CSV columns without losing structure or introducing errors.</p>
+          </div>
+          <div class="value-card">
+            <h3>Batch operations</h3>
+            <p>Rather than asking the user to query one order at a time, the agent processes an entire spreadsheet in a single interaction — turning minutes of manual work into seconds.</p>
+          </div>
+          <div class="value-card">
+            <h3>File I/O protocol</h3>
+            <p>Demonstrates the full file lifecycle — upload, read, transform, and download — showing that agents can work with files as naturally as they handle text.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Try it -->
+      <section class="scenario__section">
+        <h2>Try it yourself</h2>
+        <div class="try-prompt">
+          <p class="try-prompt__label">Copy this prompt:</p>
+          <blockquote class="try-prompt__text">
+            I've uploaded a CSV with order IDs. For each order, fill in all the empty columns and return the completed CSV.
+          </blockquote>
+        </div>
+      </section>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .scenario {
+    padding: var(--space-3xl) 0;
+  }
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--c-text-muted);
+    margin-bottom: var(--space-xl);
+  }
+  .back:hover { color: var(--c-primary); }
+
+  .scenario__header {
+    max-width: 680px;
+  }
+  .scenario__header h1 {
+    margin-top: var(--space-md);
+  }
+  .scenario__lead {
+    margin-top: var(--space-lg);
+    font-size: 1.1rem;
+    color: var(--c-text-secondary);
+    line-height: 1.7;
+  }
+
+  .scenario__screenshot {
+    margin-top: var(--space-2xl);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+  }
+  .scenario__screenshot img {
+    width: 100%;
+  }
+
+  .scenario__section {
+    margin-top: var(--space-3xl);
+  }
+  .scenario__section h2 {
+    margin-bottom: var(--space-lg);
+  }
+  .scenario__section > p {
+    color: var(--c-text-secondary);
+    margin-bottom: var(--space-lg);
+  }
+
+  .scenario__steps {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+  .step {
+    display: flex;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    background: var(--c-surface);
+    border: 1px solid var(--c-border-subtle);
+    border-radius: var(--radius-md);
+    transition: border-color 0.2s ease;
+  }
+  .step:hover { border-color: var(--c-border); }
+  .step__icon {
+    font-size: 1.3rem;
+    flex-shrink: 0;
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .step__content strong {
+    display: block;
+    font-size: 0.95rem;
+    margin-bottom: 2px;
+  }
+  .step__content p {
+    font-size: 0.88rem;
+    color: var(--c-text-secondary);
+    line-height: 1.6;
+  }
+
+  .value-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--space-lg);
+  }
+  .value-card {
+    padding: var(--space-lg);
+    background: var(--c-surface-raised);
+    border: 1px solid var(--c-border-subtle);
+    border-radius: var(--radius-md);
+  }
+  .value-card h3 {
+    font-size: 0.95rem;
+    margin-bottom: var(--space-xs);
+  }
+  .value-card p {
+    font-size: 0.85rem;
+    color: var(--c-text-secondary);
+    line-height: 1.6;
+  }
+
+  .try-prompt {
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-md);
+    padding: var(--space-lg);
+  }
+  .try-prompt__label {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--c-text-muted);
+    margin-bottom: var(--space-sm);
+  }
+  .try-prompt__text {
+    font-size: 0.95rem;
+    color: var(--c-text);
+    line-height: 1.65;
+    border-left: 3px solid var(--c-primary);
+    padding-left: var(--space-md);
+    margin: 0;
+  }
+</style>

@@ -1,0 +1,416 @@
+---
+import Base from '../layouts/Base.astro';
+import ScenarioCard from '../components/ScenarioCard.astro';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<Base title="Enhanced Task Completion | Microsoft Copilot Studio">
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero__bg"></div>
+    <div class="container hero__inner">
+      <div class="hero__content">
+        <span class="badge badge--primary">Microsoft Copilot Studio</span>
+        <h1 class="hero__title">Enhanced Task<br />Completion</h1>
+        <p class="hero__subtitle">
+          A new orchestration mode that lets Copilot Studio agents reason dynamically,
+          chain tools across MCP servers, recover from failures, and interleave
+          conversation with actions — all in real time.
+        </p>
+        <div class="hero__actions">
+          <a href="#scenarios" class="btn btn--primary">Explore scenarios</a>
+          <a href="https://github.com/microsoft/Agents/blob/main/docs/enhanced-task-completion.md" class="btn btn--secondary">
+            Read the docs
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
+        </div>
+      </div>
+      <div class="hero__visual">
+        <div class="hero__card">
+          <div class="hero__card-header">
+            <span class="hero__dot hero__dot--red"></span>
+            <span class="hero__dot hero__dot--yellow"></span>
+            <span class="hero__dot hero__dot--green"></span>
+          </div>
+          <div class="hero__card-body">
+            <div class="hero__msg hero__msg--user">I'm Sarah Mitchell. I'd like to return my Sony headphones — they have a crackling sound. Also, where's my Kindle order?</div>
+            <div class="hero__msg hero__msg--bot">Let me look up your orders!</div>
+            <div class="hero__tool"><span class="hero__tool-icon">&#x1F50D;</span> search_orders</div>
+            <div class="hero__msg hero__msg--bot">Found 3 orders. Pulling details...</div>
+            <div class="hero__tool"><span class="hero__tool-icon">&#x1F4E6;</span> get_order <span class="hero__tool-badge">&times;2</span></div>
+            <div class="hero__tool"><span class="hero__tool-icon">&#x1F504;</span> request_return</div>
+            <div class="hero__tool"><span class="hero__tool-icon">&#x1F69A;</span> get_shipment</div>
+            <div class="hero__msg hero__msg--bot">Return initiated! <strong>RA-50022</strong> &mdash; your $349.99 refund is on the way.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How it works -->
+  <section class="how">
+    <div class="container">
+      <p class="section-label">How it works</p>
+      <h2>From plan-then-execute to adaptive orchestration</h2>
+      <p class="how__intro">Traditional agents select all tools upfront, then execute a fixed plan. Enhanced Task Completion takes a fundamentally different approach.</p>
+
+      <div class="how__grid">
+        <div class="how__item">
+          <div class="how__icon">&#x1F9E0;</div>
+          <h3>Reasons before acting</h3>
+          <p>Asks clarifying questions and gathers context before calling any tools. Visible reasoning steps show the agent's thought process.</p>
+        </div>
+        <div class="how__item">
+          <div class="how__icon">&#x26A1;</div>
+          <h3>Dynamic orchestration</h3>
+          <p>Recognizes dependencies between tool outputs, parallelizes independent calls, and adjusts strategy based on intermediate results.</p>
+        </div>
+        <div class="how__item">
+          <div class="how__icon">&#x1F504;</div>
+          <h3>Conversation + actions</h3>
+          <p>Fluidly mixes questions, tool calls, and responses across multiple turns. Keeps the user informed at every step.</p>
+        </div>
+        <div class="how__item">
+          <div class="how__icon">&#x1F6E1;&#xFE0F;</div>
+          <h3>Failure recovery</h3>
+          <p>When a tool call fails, the agent retries with different parameters or finds alternative approaches rather than giving up.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scenarios -->
+  <section class="scenarios" id="scenarios">
+    <div class="container">
+      <p class="section-label">Scenarios</p>
+      <h2>See it in action</h2>
+      <p class="scenarios__intro">Each scenario demonstrates a different Enhanced Task Completion capability through a realistic e-commerce customer service example with 9 tools across two MCP servers.</p>
+
+      <div class="scenarios__grid">
+        <ScenarioCard
+          title="Multi-tool Orchestration"
+          capability="Tool Chaining"
+          description="The agent dynamically chains search_orders → get_order → request_return → get_shipment, parallelizing independent calls and narrating each step."
+          href={`${base}scenarios/multi-tool-orchestration`}
+          image={`${base}images/scenario-tools.png`}
+        />
+        <ScenarioCard
+          title="Connected Agents"
+          capability="Agent Delegation"
+          description="The Orders Agent delegates warehouse queries to the Warehouse Agent, which calls its own MCP server for stock levels, fulfillment status, and alternatives."
+          href={`${base}scenarios/connected-agents`}
+          image={`${base}images/scenario-agents.png`}
+        />
+        <ScenarioCard
+          title="File Processing"
+          capability="File Upload & Download"
+          description="Upload a CSV of order IDs. The agent reads the file, calls tools for each order, populates the missing data, and returns a completed CSV."
+          href={`${base}scenarios/file-processing`}
+          image={`${base}images/scenario-files.png`}
+        />
+        <ScenarioCard
+          title="Reasoning & Recovery"
+          capability="Adaptive Reasoning"
+          description="When tool calls fail or return unexpected results, the agent reasons about what went wrong and tries alternative approaches."
+          href={`${base}scenarios/reasoning-and-recovery`}
+          image={`${base}images/scenario-reasoning.png`}
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Try it -->
+  <section class="cta">
+    <div class="container">
+      <div class="cta__card">
+        <h2>Try it yourself</h2>
+        <p>Clone the repo, import the agents, start the MCP servers, and chat with the Gradio UI in under 10 minutes.</p>
+        <div class="cta__actions">
+          <a href="https://github.com/microsoft/enhanced-task-completion/tree/main/sample" class="btn btn--primary">
+            View the sample
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+          </a>
+          <a href="https://github.com/microsoft/enhanced-task-completion" class="btn btn--secondary-dark">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+            GitHub repo
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  /* ── Hero ── */
+  .hero {
+    position: relative;
+    overflow: hidden;
+    padding: var(--space-4xl) 0 var(--space-3xl);
+  }
+  .hero__bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 20% 40%, rgba(14,122,92,0.06), transparent),
+      radial-gradient(ellipse 60% 50% at 80% 30%, rgba(239,154,51,0.04), transparent);
+    z-index: -1;
+  }
+  .hero__inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3xl);
+    align-items: center;
+  }
+  .hero__title {
+    margin-top: var(--space-md);
+    color: var(--c-dark);
+  }
+  .hero__subtitle {
+    margin-top: var(--space-lg);
+    font-size: 1.1rem;
+    color: var(--c-text-secondary);
+    line-height: 1.7;
+    max-width: 520px;
+  }
+  .hero__actions {
+    display: flex;
+    gap: var(--space-md);
+    margin-top: var(--space-xl);
+    flex-wrap: wrap;
+  }
+
+  /* Buttons */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 22px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    border-radius: var(--radius-md);
+    transition: all 0.2s ease;
+    text-decoration: none;
+  }
+  .btn--primary {
+    background: var(--c-dark);
+    color: white;
+  }
+  .btn--primary:hover {
+    background: var(--c-dark-soft);
+    color: white;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  }
+  .btn--secondary {
+    background: var(--c-surface);
+    color: var(--c-text);
+    border: 1px solid var(--c-border);
+  }
+  .btn--secondary:hover {
+    border-color: var(--c-text-muted);
+    color: var(--c-text);
+  }
+
+  /* Hero visual — fake chat UI */
+  .hero__visual {
+    display: flex;
+    justify-content: center;
+  }
+  .hero__card {
+    width: 100%;
+    max-width: 420px;
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.03);
+  }
+  .hero__card-header {
+    display: flex;
+    gap: 6px;
+    padding: 12px 16px;
+    background: var(--c-surface-raised);
+    border-bottom: 1px solid var(--c-border-subtle);
+  }
+  .hero__dot {
+    width: 10px; height: 10px; border-radius: 50%;
+  }
+  .hero__dot--red { background: #f87171; }
+  .hero__dot--yellow { background: #fbbf24; }
+  .hero__dot--green { background: #34d399; }
+  .hero__card-body {
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+  .hero__msg {
+    padding: 10px 14px;
+    border-radius: 14px;
+    max-width: 90%;
+  }
+  .hero__msg--user {
+    background: var(--c-dark);
+    color: #f1f3f5;
+    align-self: flex-end;
+    border-radius: 14px 14px 4px 14px;
+  }
+  .hero__msg--bot {
+    background: var(--c-surface-raised);
+    border: 1px solid var(--c-border-subtle);
+    align-self: flex-start;
+    border-radius: 14px 14px 14px 4px;
+    color: var(--c-text-secondary);
+  }
+  .hero__tool {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: var(--c-surface-raised);
+    border: 1px solid var(--c-border);
+    border-left: 3px solid var(--c-primary);
+    border-radius: 2px 8px 8px 2px;
+    font-family: var(--font-mono);
+    font-size: 0.72rem;
+    font-weight: 500;
+    color: var(--c-text-secondary);
+    align-self: flex-start;
+  }
+  .hero__tool-icon { font-size: 0.85rem; }
+  .hero__tool-badge {
+    background: var(--c-primary-light);
+    color: var(--c-primary);
+    font-size: 0.65rem;
+    padding: 1px 5px;
+    border-radius: 8px;
+    font-weight: 700;
+  }
+
+  /* ── How it works ── */
+  .how {
+    padding: var(--space-4xl) 0;
+  }
+  .how h2 {
+    max-width: 500px;
+  }
+  .how__intro {
+    color: var(--c-text-secondary);
+    margin-top: var(--space-md);
+    max-width: 600px;
+  }
+  .how__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: var(--space-xl);
+    margin-top: var(--space-2xl);
+  }
+  .how__item {
+    padding: var(--space-lg);
+    border: 1px solid var(--c-border-subtle);
+    border-radius: var(--radius-lg);
+    background: var(--c-surface);
+    transition: border-color 0.2s ease;
+  }
+  .how__item:hover {
+    border-color: var(--c-border);
+  }
+  .how__icon {
+    font-size: 1.5rem;
+    margin-bottom: var(--space-sm);
+  }
+  .how__item h3 {
+    font-size: 1rem;
+    margin-bottom: var(--space-xs);
+  }
+  .how__item p {
+    font-size: 0.88rem;
+    color: var(--c-text-secondary);
+    line-height: 1.6;
+  }
+
+  /* ── Scenarios ── */
+  .scenarios {
+    padding: var(--space-4xl) 0;
+    background: var(--c-surface-raised);
+    border-top: 1px solid var(--c-border-subtle);
+    border-bottom: 1px solid var(--c-border-subtle);
+  }
+  .scenarios__intro {
+    color: var(--c-text-secondary);
+    margin-top: var(--space-md);
+    max-width: 650px;
+  }
+  .scenarios__grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-xl);
+    margin-top: var(--space-2xl);
+  }
+
+  /* ── CTA ── */
+  .cta {
+    padding: var(--space-4xl) 0;
+  }
+  .cta__card {
+    background: linear-gradient(135deg, var(--c-dark) 0%, var(--c-dark-soft) 50%, #145845 100%);
+    border-radius: var(--radius-xl);
+    padding: var(--space-3xl);
+    text-align: center;
+    color: white;
+  }
+  .cta__card h2 {
+    color: white;
+  }
+  .cta__card p {
+    color: #9ca3af;
+    margin-top: var(--space-md);
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .cta__actions {
+    display: flex;
+    gap: var(--space-md);
+    margin-top: var(--space-xl);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .cta__card .btn--primary {
+    background: white;
+    color: var(--c-dark);
+  }
+  .cta__card .btn--primary:hover {
+    background: #f1f3f5;
+    color: var(--c-dark);
+  }
+  .btn--secondary-dark {
+    background: transparent;
+    color: #9ca3af;
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .btn--secondary-dark:hover {
+    color: white;
+    border-color: rgba(255,255,255,0.3);
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 768px) {
+    .hero__inner {
+      grid-template-columns: 1fr;
+      gap: var(--space-2xl);
+    }
+    .hero__visual {
+      order: -1;
+    }
+    .hero__card {
+      max-width: 360px;
+    }
+    .cta__card {
+      padding: var(--space-2xl);
+    }
+  }
+</style>

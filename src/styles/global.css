@@ -1,0 +1,137 @@
+/* ── Fonts ── */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap');
+
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* Palette */
+  --c-bg: #fafbfc;
+  --c-surface: #ffffff;
+  --c-surface-raised: #f4f6f8;
+  --c-border: #e2e6ea;
+  --c-border-subtle: #edf0f3;
+  --c-text: #111827;
+  --c-text-secondary: #4b5563;
+  --c-text-muted: #9ca3af;
+  --c-primary: #0e7a5c;
+  --c-primary-light: #e6f5f0;
+  --c-primary-dark: #065f46;
+  --c-accent: #ef9a33;
+  --c-accent-light: #fef7ee;
+  --c-dark: #0f172a;
+  --c-dark-soft: #1e293b;
+
+  /* Typography */
+  --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-2xl: 3rem;
+  --space-3xl: 4rem;
+  --space-4xl: 6rem;
+
+  /* Layout */
+  --max-width: 1200px;
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+}
+
+html {
+  font-family: var(--font-body);
+  color: var(--c-text);
+  background: var(--c-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  scroll-behavior: smooth;
+}
+
+body {
+  line-height: 1.65;
+  font-size: 16px;
+}
+
+a {
+  color: var(--c-primary);
+  text-decoration: none;
+  transition: color 0.15s ease;
+}
+a:hover {
+  color: var(--c-primary-dark);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+code {
+  font-family: var(--font-mono);
+  font-size: 0.875em;
+  background: var(--c-surface-raised);
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  border: 1px solid var(--c-border-subtle);
+}
+
+/* ── Utilities ── */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--space-xl);
+}
+
+.badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: 20px;
+}
+
+.badge--primary {
+  background: var(--c-primary-light);
+  color: var(--c-primary);
+  border: 1px solid rgba(14, 122, 92, 0.15);
+}
+
+.badge--accent {
+  background: var(--c-accent-light);
+  color: #b45309;
+  border: 1px solid rgba(239, 154, 51, 0.2);
+}
+
+.section-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--c-primary);
+  margin-bottom: var(--space-sm);
+}
+
+h1, h2, h3, h4 {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+}
+
+h1 { font-size: clamp(2rem, 5vw, 3rem); }
+h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+h3 { font-size: 1.25rem; }
+
+/* ── Selection ── */
+::selection {
+  background: var(--c-primary-light);
+  color: var(--c-primary-dark);
+}
