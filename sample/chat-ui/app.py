@@ -939,9 +939,9 @@ with gr.Blocks(title="Copilot Studio Agent Chat") as demo:
         multimodal=True,
         examples=[
             "Hi, I'm Sarah Mitchell. I ordered some Sony headphones recently but they arrived with a crackling sound in the left ear. I'd like to return them. Also, can you check where my other order is — the Kindle I ordered last week?",
-            "I'm Emily Chen. I returned a damaged Blu-ray disc a couple weeks ago — can you check if my refund has been processed yet, and also tell me where my ergonomic chair delivery is right now?",
+            "I'm Emily Chen. Can you pull up all my orders and create a chart showing how much I've spent per month this year?",
             "I'm James Rivera. I have two pending orders — can you give me a full status update on both? I want to know exactly where each one is in the process, when they'll ship, and if anything is out of stock, what alternatives do I have?",
-            "I've uploaded a CSV with order IDs. For each order, fill in all the empty columns and return the completed CSV.",
+            "I'm about to upload a CSV with order IDs. For each order, fill in all the empty columns and return the completed CSV.",
         ],
     )
 

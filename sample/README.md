@@ -62,11 +62,19 @@ Publish both agents, then open **ETC - Order Management** and try these prompts:
 
 > Hi, I'm Sarah Mitchell. I ordered some Sony headphones recently but they arrived with a crackling sound in the left ear. I'd like to return them.
 
-This tests: `search_orders` -> `get_order` (x3) -> `request_return` — a multi-step return flow using the Order Management MCP.
+Tests: `search_orders` -> `get_order` (x3) -> `request_return` — a multi-step return flow.
+
+> I'm Emily Chen. Can you pull up all my orders and create a chart showing how much I've spent per month this year?
+
+Tests: `search_orders` -> `get_order` (multiple) -> chart generation from order data.
 
 > I'm James Rivera. I have two pending orders — can you give me a full status update on both? I want to know exactly where each one is in the process, when they'll ship, and if anything is out of stock, what alternatives do I have?
 
-This tests the full cross-agent flow: `search_orders` -> `get_order` (x2) -> `get_shipment` + **Warehouse Agent** delegation (in parallel) — the Order Management agent delegates to the Warehouse agent to check stock, find alternatives, and get restock dates.
+Tests the full cross-agent flow: `search_orders` -> `get_order` (x2) -> `get_shipment` + **Warehouse Agent** delegation (in parallel).
+
+> I'm about to upload a CSV with order IDs. For each order, fill in all the empty columns and return the completed CSV.
+
+Upload [`chat-ui/data/demo-orders.csv`](chat-ui/data/demo-orders.csv) with this prompt. Tests file upload + multi-tool chaining to enrich a spreadsheet.
 
 ## How it works
 
