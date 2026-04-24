@@ -1,0 +1,29 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Order Management MCP",
+    "description": "E-commerce order management with tools for searching orders, viewing details, tracking shipments, and managing returns. Runs entirely inside the connector — no external MCP server needed.",
+    "version": "1.0.0"
+  },
+  "host": "placeholder.azure-apim.net",
+  "basePath": "/mcp",
+  "schemes": ["https"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/": {
+      "post": {
+        "summary": "Order Management MCP Server",
+        "description": "MCP server for e-commerce order management. Tools: search_orders, get_order, get_shipment, request_return, get_return_status.",
+        "operationId": "InvokeMCP",
+        "x-ms-agentic-protocol": "mcp-streamable-1.0",
+        "parameters": [],
+        "responses": {
+          "200": { "description": "MCP response" }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {},
+  "security": []
+}

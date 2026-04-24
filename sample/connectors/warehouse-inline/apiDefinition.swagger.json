@@ -1,0 +1,29 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Warehouse MCP",
+    "description": "Warehouse inventory and fulfillment with tools for checking stock, tracking pipeline stages, finding alternatives, and restock dates. Runs entirely inside the connector — no external MCP server needed.",
+    "version": "1.0.0"
+  },
+  "host": "placeholder.azure-apim.net",
+  "basePath": "/mcp",
+  "schemes": ["https"],
+  "consumes": ["application/json"],
+  "produces": ["application/json"],
+  "paths": {
+    "/": {
+      "post": {
+        "summary": "Warehouse MCP Server",
+        "description": "MCP server for warehouse and fulfillment. Tools: check_stock, get_fulfillment_status, find_alternatives, get_restock_date.",
+        "operationId": "InvokeMCP",
+        "x-ms-agentic-protocol": "mcp-streamable-1.0",
+        "parameters": [],
+        "responses": {
+          "200": { "description": "MCP response" }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {},
+  "security": []
+}

@@ -459,16 +459,16 @@ theme = gr.themes.Base(
 ).set(
     # Overall page
     body_background_fill="#f8f9fa",
-    body_background_fill_dark="#111827",
+    body_background_fill_dark="#0e1117",
 
     # Blocks
     block_background_fill="white",
-    block_background_fill_dark="#1f2937",
+    block_background_fill_dark="#1c2028",
     block_border_width="0px",
     block_shadow="0 1px 3px 0 rgba(0,0,0,0.06), 0 1px 2px -1px rgba(0,0,0,0.04)",
     block_shadow_dark="0 1px 3px 0 rgba(0,0,0,0.4)",
 
-    # Buttons
+    # Buttons — light
     button_primary_background_fill="*primary_500",
     button_primary_background_fill_hover="*primary_600",
     button_primary_text_color="white",
@@ -478,11 +478,17 @@ theme = gr.themes.Base(
     button_secondary_border_color="*neutral_200",
     button_secondary_text_color="*neutral_700",
 
+    # Buttons — dark (controls example cards too)
+    button_secondary_background_fill_dark="#14171c",
+    button_secondary_background_fill_hover_dark="#191d24",
+    button_secondary_border_color_dark="rgba(255,255,255,0.07)",
+    button_secondary_text_color_dark="#a1a7b4",
+
     # Inputs
     input_background_fill="white",
-    input_background_fill_dark="#1f2937",
+    input_background_fill_dark="#1c2028",
     input_border_color="*neutral_200",
-    input_border_color_dark="*neutral_700",
+    input_border_color_dark="#2a2f3a",
     input_border_color_focus="*primary_400",
     input_shadow="none",
     input_shadow_focus="0 0 0 3px rgba(30,140,110,0.1)",
@@ -558,12 +564,17 @@ custom_css = """
     background: #f8f9fa !important;
 }
 
+/* ── Align header and chat area widths ── */
+.gradio-container > .main > .wrap > .gap {
+    gap: 8px !important;
+}
+
 /* ── Header area ── */
 .header-bar {
     background: linear-gradient(135deg, #111827 0%, #1f2937 50%, #145845 100%) !important;
-    border-radius: 16px !important;
+    border-radius: 14px !important;
     padding: 28px 32px !important;
-    margin-bottom: 8px !important;
+    margin: 0 !important;
     border: 1px solid rgba(255,255,255,0.06) !important;
     box-shadow: 0 4px 24px rgba(17, 24, 39, 0.12), 0 1px 3px rgba(17, 24, 39, 0.08) !important;
 }
@@ -600,7 +611,9 @@ custom_css = """
 }
 
 /* ── Example buttons ── */
-.example-btn {
+.example-btn,
+button.example,
+.examples button {
     border-radius: 12px !important;
     font-size: 0.84em !important;
     padding: 10px 16px !important;
@@ -611,7 +624,9 @@ custom_css = """
     box-shadow: 0 1px 2px rgba(0,0,0,0.03) !important;
 }
 
-.example-btn:hover {
+.example-btn:hover,
+button.example:hover,
+.examples button:hover {
     border-color: #3bab8e !important;
     color: #1e8c6e !important;
     background: #f0f9f6 !important;
@@ -680,6 +695,231 @@ footer {
     opacity: 0.4;
     font-size: 0.85em !important;
 }
+
+/* ══════════════════════════════════════════════════════════════════════
+   DARK MODE — premium developer tool aesthetic
+
+   Elevation system (3 clear levels + base):
+     L0  Base       #0e1117   (~5.5% luminance)  — page background
+     L1  Recessed   #151921   (~8.5% luminance)  — accordion, code, blockquote
+     L2  Surface    #1c2028   (~11.5% luminance) — bot bubbles, input, cards
+     L3  Raised     #252a33   (~15% luminance)   — hover states, active surfaces
+
+   Border system:
+     Subtle    rgba(255,255,255,0.07)  — between L0/L1 elements
+     Standard  rgba(255,255,255,0.10)  — between L1/L2 elements
+     Emphasis  rgba(255,255,255,0.14)  — raised elements, interactive
+
+   Text hierarchy:
+     Primary   #e2e4e9  (contrast 12.5:1 on L2)
+     Secondary #a1a7b4  (contrast  7.0:1 on L2)
+     Tertiary  #6e7681  (contrast  4.5:1 on L0 — AA minimum)
+     Accent    #5cbfa5  (teal, used sparingly)
+   ══════════════════════════════════════════════════════════════════════ */
+
+body.dark .gradio-container {
+    background: #0e1117 !important;
+}
+
+/* Subtle ambient glow behind content — slightly warmer teal */
+body.dark .gradio-container::before {
+    content: '';
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background:
+        radial-gradient(ellipse 50% 40% at 30% 20%, rgba(59,171,142,0.03), transparent),
+        radial-gradient(ellipse 40% 30% at 70% 60%, rgba(59,171,142,0.015), transparent);
+    pointer-events: none;
+    z-index: 0;
+}
+
+body.dark .header-bar {
+    background: linear-gradient(135deg, #12161e 0%, #171c26 40%, #112b22 100%) !important;
+    border: 1px solid rgba(255,255,255,0.07) !important;
+    border-bottom: 1px solid rgba(59,171,142,0.12) !important;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 8px 32px rgba(0,0,0,0.5), 0 0 60px rgba(14,122,92,0.03) !important;
+}
+
+/* ── Hide Gradio chrome that breaks the design ── */
+.chatbot > .label-wrap {
+    display: none !important;
+}
+
+/* ── Hide Aa icon badges on example cards ── */
+.examples button > div > div:first-child {
+    display: none !important;
+}
+
+/* ── Chat area container — subtle surface for hierarchy ── */
+body.dark .chatbot {
+    background: rgba(16, 19, 24, 0.5) !important;
+    border: 1px solid rgba(255,255,255,0.03) !important;
+    border-radius: 14px !important;
+}
+
+body.dark .header-bar p {
+    color: #a1a7b4 !important;
+}
+
+/* ── User messages — teal accent, AA-safe text ── */
+body.dark .message-row.user-row .message-bubble {
+    background: linear-gradient(135deg, #11835f, #0e6e50) !important;
+    color: #f0faf6 !important;
+    border: 1px solid rgba(110,201,176,0.2) !important;
+    box-shadow: 0 2px 16px rgba(14,122,92,0.2) !important;
+}
+
+/* ── Bot messages — L2 surface ── */
+body.dark .message-row.bot-row .message-bubble {
+    background: #1c2028 !important;
+    border: 1px solid rgba(255,255,255,0.10) !important;
+    color: #cdd1d8 !important;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.03) inset, 0 2px 8px rgba(0,0,0,0.2) !important;
+}
+
+body.dark .message-row.bot-row .message-bubble strong {
+    color: #e2e4e9 !important;
+}
+
+body.dark .message-row.bot-row .message-bubble a {
+    color: #5cbfa5 !important;
+}
+
+/* ── Tool accordions — L1 recessed, signature teal bar ── */
+body.dark .message-row .accordion {
+    border: 1px solid rgba(255,255,255,0.07) !important;
+    border-left: 3px solid #3bab8e !important;
+    background: #151921 !important;
+}
+
+body.dark .message-row .accordion:hover {
+    border-left-color: #5cbfa5 !important;
+    background: #1a1f28 !important;
+}
+
+body.dark .message-row .accordion .label-wrap {
+    color: #a1a7b4 !important;
+}
+
+/* ── Code blocks — L1 recessed ── */
+body.dark .message-row pre {
+    border: 1px solid rgba(255,255,255,0.07) !important;
+    background: #151921 !important;
+    color: #b0b8c7 !important;
+}
+
+/* ── Example prompt cards — must beat Svelte scoped styles ── */
+body.dark button[class*="example"],
+body.dark .placeholder-content button,
+body.dark .bubble-wrap button[class*="example"] {
+    border: 1px solid rgba(255,255,255,0.07) !important;
+    background: #14171c !important;
+    color: #a1a7b4 !important;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.02) inset, 0 2px 6px rgba(0,0,0,0.2) !important;
+}
+
+body.dark button[class*="example"]:hover,
+body.dark .placeholder-content button:hover,
+body.dark .bubble-wrap button[class*="example"]:hover {
+    border-color: rgba(59,171,142,0.25) !important;
+    color: #cdd1d8 !important;
+    background: #191d24 !important;
+    box-shadow: 0 0 0 1px rgba(59,171,142,0.08), 0 4px 12px rgba(0,0,0,0.3) !important;
+    transform: translateY(-1px) !important;
+}
+
+/* Example card inner text — keep hierarchy, preserve icon color */
+body.dark button.example span,
+body.dark .examples button span {
+    color: #a1a7b4 !important;
+}
+
+/* Preserve teal-tinted Aa icon badges instead of washing them gray */
+body.dark button.example .icon,
+body.dark .examples button .icon,
+body.dark button.example svg,
+body.dark .examples button svg {
+    color: #5cbfa5 !important;
+    opacity: 0.8;
+}
+
+/* ── Input area — L2 surface ── */
+body.dark .textbox textarea {
+    background: #1c2028 !important;
+    border-color: rgba(255,255,255,0.10) !important;
+    color: #cdd1d8 !important;
+}
+
+body.dark .textbox textarea::placeholder {
+    color: #6e7681 !important;
+}
+
+body.dark .textbox textarea:focus {
+    border-color: rgba(59,171,142,0.35) !important;
+    box-shadow: 0 0 0 2px rgba(59,171,142,0.10) !important;
+    background: #1f242d !important;
+}
+
+/* ── Chatbot label + toolbar icons ── */
+body.dark .chatbot span, .dark .chatbot label {
+    color: #6e7681 !important;
+}
+body.dark button svg {
+    opacity: 0.7;
+}
+body.dark button:hover svg {
+    opacity: 1;
+}
+
+/* ── Bot message markdown ── */
+body.dark .message-row.bot-row .message-bubble blockquote {
+    border-left: 3px solid #2a2f3a !important;
+    background: #151921 !important;
+    color: #8b92a0 !important;
+}
+
+body.dark .message-row.bot-row .message-bubble hr {
+    border-color: rgba(255,255,255,0.08) !important;
+}
+
+body.dark .message-row.bot-row .message-bubble h2,
+body.dark .message-row.bot-row .message-bubble h3 {
+    color: #e2e4e9 !important;
+}
+
+body.dark .message-row.bot-row .message-bubble table {
+    border-color: rgba(255,255,255,0.08) !important;
+}
+
+body.dark .message-row.bot-row .message-bubble th {
+    border-color: rgba(255,255,255,0.10) !important;
+    color: #a1a7b4 !important;
+    background: #151921 !important;
+}
+
+body.dark .message-row.bot-row .message-bubble td {
+    border-color: rgba(255,255,255,0.08) !important;
+}
+
+/* ── Scrollbar ── */
+body.dark ::-webkit-scrollbar-thumb {
+    background: #2a2f3a;
+}
+body.dark ::-webkit-scrollbar-thumb:hover {
+    background: #353b47;
+}
+
+/* ── Footer — raised to meet AA (4.5:1 minimum) ── */
+body.dark footer {
+    opacity: 1 !important;
+}
+body.dark footer,
+body.dark footer *,
+body.dark footer button,
+body.dark footer a,
+body.dark footer div {
+    color: #6e7681 !important;
+}
 """
 
 # ---------------------------------------------------------------------------
@@ -705,5 +945,28 @@ with gr.Blocks(title="Copilot Studio Agent Chat") as demo:
         ],
     )
 
+# JS to fix Gradio ChatInterface example buttons in dark mode.
+# These buttons use Svelte scoped styles that ignore theme variables,
+# so we inject a style tag with the exact scoped class after render.
+_dark_fix_js = """
+() => {
+    const fix = () => {
+        const btn = document.querySelector('button.example');
+        if (!btn || !document.body.classList.contains('dark')) return;
+        const sc = Array.from(btn.classList).find(c => c.startsWith('svelte-'));
+        if (!sc || document.getElementById('df')) return;
+        const s = document.createElement('style'); s.id = 'df';
+        s.textContent = `
+            body.dark button.example.${sc} { background:transparent!important; border:1px solid rgba(255,255,255,.06)!important; color:#8b92a0!important; }
+            body.dark button.example.${sc}:hover { background:rgba(255,255,255,.03)!important; border-color:rgba(59,171,142,.2)!important; color:#a1a7b4!important; }
+            body.dark button.example.${sc} * { color:inherit!important; }
+            body.dark .examples.${sc} { background:transparent!important; }
+        `;
+        document.head.appendChild(s);
+    };
+    new MutationObserver(fix).observe(document.body, {childList:true, subtree:true});
+}
+"""
+
 if __name__ == "__main__":
-    demo.launch(theme=theme, css=custom_css)
+    demo.launch(theme=theme, css=custom_css, js=_dark_fix_js)
