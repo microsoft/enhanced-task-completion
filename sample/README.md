@@ -64,9 +64,9 @@ Publish both agents, then open **ETC - Order Management** and try these prompts:
 
 Tests: `search_orders` -> `get_order` (x3) -> `request_return` — a multi-step return flow.
 
-> I'm Emily Chen. Can you pull up all my orders and create a chart showing how much I've spent per month this year?
+> I'm Emily Chen. I returned a damaged Blu-ray disc a couple weeks ago — can you check if my refund has been processed yet, and also tell me where my ergonomic chair delivery is right now?
 
-Tests: `search_orders` -> `get_order` (multiple) -> chart generation from order data.
+Tests: `search_orders` -> `get_order` -> `get_return_status` + `get_shipment` — return tracking and delivery tracking in one conversation.
 
 > I'm James Rivera. I have two pending orders — can you give me a full status update on both? I want to know exactly where each one is in the process, when they'll ship, and if anything is out of stock, what alternatives do I have?
 
