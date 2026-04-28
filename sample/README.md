@@ -101,7 +101,6 @@ VITE_ENVIRONMENT_ID=6cc0c98e-3fe6-e0d5-8eba-ba51c9da1d13
 VITE_AGENT_SCHEMA=cr26e_orderManagement
 VITE_TENANT_ID=8a235459-...
 VITE_CLIENT_ID=abc12345-...
-VITE_GUIDE_URL=https://microsoft.github.io/enhanced-task-completion/
 ```
 
 Then:
