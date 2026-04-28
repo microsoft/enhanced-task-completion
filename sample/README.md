@@ -62,7 +62,7 @@ The `chat-ui-lite/` folder contains a lightweight web frontend built with Vite a
 
 1. Go to the [Azure portal](https://portal.azure.com) > **Microsoft Entra ID** > **App registrations** > **New registration**
 2. Name it anything (e.g., "ETC Chat UI")
-3. Under **Supported account types**, select **Single tenant**
+3. Under **Supported account types**, select **Accounts in this organizational directory only**
 4. Under **Redirect URI**, select **Single-page application (SPA)** and enter `http://localhost:5173`
 5. Click **Register**
 6. Copy the **Application (client) ID** and **Directory (tenant) ID** from the Overview page
@@ -70,9 +70,13 @@ The `chat-ui-lite/` folder contains a lightweight web frontend built with Vite a
 ### 2. Configure API permissions
 
 1. In your app registration, go to **API permissions** > **Add a permission**
-2. Select **APIs my organization uses**, search for **CopilotStudio** (or **Power Virtual Agents**)
-3. Select **Delegated permissions** and check the available scope
-4. Click **Add permissions**
+2. Select the **APIs my organization uses** tab
+3. Search for **Power Platform API** and select it
+4. Under **Delegated permissions**, check `CopilotStudio.Copilots.Invoke`
+5. Click **Add permissions**
+6. Optionally, click **Grant admin consent** to skip per-user consent prompts
+
+> If **Power Platform API** doesn't appear, it may need to be registered with your tenant first. See the [Copilot Studio WebChat sample](https://github.com/microsoft/Agents/tree/main/samples/nodejs/copilotstudio-webclient) for details.
 
 ### 3. Find your environment ID and agent schema name
 
