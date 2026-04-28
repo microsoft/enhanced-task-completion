@@ -4,64 +4,64 @@ import Base from '../../layouts/Base.astro';
 const base = import.meta.env.BASE_URL;
 ---
 
-<Base title="Reasoning & Recovery | Enhanced Task Completion">
+<Base title="Conversational Guidance | Enhanced Task Completion">
   <article class="scenario">
     <div class="container">
       <a href={base} class="back">&larr; All scenarios</a>
 
       <header class="scenario__header">
-        <span class="badge badge--primary">Adaptive Reasoning</span>
-        <h1>Reasoning & Recovery</h1>
+        <span class="badge badge--primary">Slot-Filling</span>
+        <h1>Conversational Guidance</h1>
         <p class="scenario__lead">
-          The agent handles errors and unexpected tool results gracefully — reasoning about failures,
-          explaining them clearly to the user, and suggesting practical next steps.
+          The user makes a vague request. Instead of guessing, the agent asks clarifying questions
+          to gather the inputs that tools require — interleaving conversation with action.
         </p>
       </header>
 
       <!-- Screenshot -->
       <div class="scenario__screenshot">
-        <img src={`${base}images/scenario-reasoning.png`} alt="Adaptive reasoning and error recovery in the Gradio chat UI" />
+        <img src={`${base}images/scenario-reasoning.png`} alt="Conversational slot-filling in the Gradio chat UI" />
       </div>
 
       <!-- What happens -->
       <section class="scenario__section">
         <h2>What happens</h2>
-        <p>When the user asks <em>"Can you check where my Kindle delivery is right now?"</em>, the agent:</p>
+        <p>When the user says <em>"I want to return something I bought recently"</em>, the agent:</p>
 
         <ol class="scenario__steps">
           <li>
             <div class="step">
-              <div class="step__icon">&#x1F50D;</div>
-              <div class="step__content">
-                <strong>Calls <code>search_orders</code> to find the Kindle order</strong>
-                <p>Locates the user's Kindle order and retrieves its order ID for further lookup.</p>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="step">
-              <div class="step__icon">&#x1F4E6;</div>
-              <div class="step__content">
-                <strong>Calls <code>get_shipment</code> for tracking details</strong>
-                <p>Attempts to retrieve shipping and tracking information for the order.</p>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="step">
-              <div class="step__icon">&#x26A0;&#xFE0F;</div>
-              <div class="step__content">
-                <strong>Receives an error — order still processing, no tracking yet</strong>
-                <p>The tool returns an error indicating the order hasn't shipped yet, so no tracking number or carrier information exists.</p>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="step">
               <div class="step__icon">&#x1F9E0;</div>
               <div class="step__content">
-                <strong>Reasons about the failure</strong>
-                <p>Instead of showing a raw error, the agent interprets it: the order is still being processed, shipping hasn't started, and this is a normal state — not a problem.</p>
+                <strong>Recognizes missing information</strong>
+                <p>The return tool needs an order ID and a reason, but the user hasn't provided either. The agent decides to ask instead of guessing.</p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="step">
+              <div class="step__icon">&#x1F4AC;</div>
+              <div class="step__content">
+                <strong>Asks for the customer's name</strong>
+                <p>"Sure, I can help with that! What's your name so I can look up your recent orders?"</p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="step">
+              <div class="step__icon">&#x1F50D;</div>
+              <div class="step__content">
+                <strong>Calls <code>search_orders</code> and presents options</strong>
+                <p>Finds the user's recent orders and asks which item they want to return, rather than assuming.</p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="step">
+              <div class="step__icon">&#x1F4AC;</div>
+              <div class="step__content">
+                <strong>Asks what went wrong</strong>
+                <p>"What's the reason for the return? For example: defective, wrong item, changed your mind?"</p>
               </div>
             </div>
           </li>
@@ -69,8 +69,8 @@ const base = import.meta.env.BASE_URL;
             <div class="step">
               <div class="step__icon">&#x2705;</div>
               <div class="step__content">
-                <strong>Explains clearly and suggests next steps</strong>
-                <p>Tells the user their order hasn't shipped yet, explains the current processing status, and suggests watching for a shipping confirmation email with tracking details.</p>
+                <strong>Confirms and processes</strong>
+                <p>With all the information gathered, the agent calls <code>request_return</code> and provides the return details.</p>
               </div>
             </div>
           </li>
@@ -82,16 +82,16 @@ const base = import.meta.env.BASE_URL;
         <h2>Why it matters</h2>
         <div class="value-grid">
           <div class="value-card">
-            <h3>Graceful error handling</h3>
-            <p>Tool errors don't crash the conversation. The agent catches failures, understands their meaning, and continues helping the user instead of giving up.</p>
+            <h3>No guessing</h3>
+            <p>Traditional agents either fail on missing inputs or make assumptions. ETC agents ask the user, just like a human support agent would.</p>
           </div>
           <div class="value-card">
-            <h3>Transparent reasoning</h3>
-            <p>The agent explains <em>why</em> something failed — not just <em>that</em> it failed — so the user understands the situation without needing technical knowledge.</p>
+            <h3>Natural conversation flow</h3>
+            <p>Questions and tool calls interleave naturally. The agent gathers context incrementally rather than demanding all inputs upfront.</p>
           </div>
           <div class="value-card">
-            <h3>User-friendly error explanation</h3>
-            <p>Raw API errors become plain-language explanations with actionable suggestions, turning a dead end into a helpful interaction.</p>
+            <h3>Tool-aware reasoning</h3>
+            <p>The agent knows what each tool requires and plans its questions accordingly — it won't ask for information it can look up itself.</p>
           </div>
         </div>
       </section>
@@ -102,7 +102,7 @@ const base = import.meta.env.BASE_URL;
         <div class="try-prompt">
           <p class="try-prompt__label">Copy this prompt:</p>
           <blockquote class="try-prompt__text">
-            I'm Emily Chen. I returned a damaged Blu-ray disc a couple weeks ago — can you check if my refund has been processed yet, and also tell me where my ergonomic chair delivery is right now?
+            I want to return something I bought recently.
           </blockquote>
         </div>
       </section>

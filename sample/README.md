@@ -34,7 +34,9 @@ Open **ETC - Order Management** in Copilot Studio and try these prompts in the t
 
 > Hi, I'm Sarah Mitchell. I ordered some Sony headphones recently but they arrived with a crackling sound in the left ear. I'd like to return them. Also, can you check where my other order is — the Kindle I ordered last week?
 
-> I'm Emily Chen. I returned a damaged Blu-ray disc a couple weeks ago — can you check if my refund has been processed yet, and also tell me where my ergonomic chair delivery is right now?
+> I want to return something I bought recently.
+
+Tests conversational slot-filling: the agent asks which order, what's wrong, and confirms before calling any tools.
 
 > I'm James Rivera. I have two pending orders — can you give me a full status update on both? I want to know exactly where each one is in the process, when they'll ship, and if anything is out of stock, what alternatives do I have?
 

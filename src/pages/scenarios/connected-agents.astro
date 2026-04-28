@@ -60,8 +60,17 @@ const base = import.meta.env.BASE_URL;
             <div class="step">
               <div class="step__icon">&#x1F3ED;</div>
               <div class="step__content">
-                <strong>Warehouse Agent calls <code>check_stock</code> + <code>get_fulfillment_status</code></strong>
-                <p>The Warehouse Agent checks current stock levels for each item and retrieves fulfillment pipeline status for both orders.</p>
+                <strong>Warehouse Agent calls <code>check_stock</code> + <code>find_alternatives</code></strong>
+                <p>The Warehouse Agent checks stock levels, finds an out-of-stock item, and looks up alternatives.</p>
+              </div>
+            </div>
+          </li>
+          <li>
+            <div class="step">
+              <div class="step__icon">&#x1F4AC;</div>
+              <div class="step__content">
+                <strong>Warehouse Agent asks a question — relayed to the user</strong>
+                <p>The Warehouse Agent asks "Would you like a similar console or a different category?" — the Orders Agent relays this question back to the user and waits for their answer.</p>
               </div>
             </div>
           </li>
@@ -70,7 +79,7 @@ const base = import.meta.env.BASE_URL;
               <div class="step__icon">&#x2705;</div>
               <div class="step__content">
                 <strong>Combines results into a unified response</strong>
-                <p>The Orders Agent merges data from both agents — order details, stock availability, shipping timelines, and alternatives for out-of-stock items — into a single structured answer.</p>
+                <p>The Orders Agent merges data from both agents — order details, stock availability, shipping timelines, and the user's preference — into a single structured answer.</p>
               </div>
             </div>
           </li>

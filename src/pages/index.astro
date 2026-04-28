@@ -105,7 +105,7 @@ const base = import.meta.env.BASE_URL;
         <ScenarioCard
           title="Connected Agents"
           capability="Agent Delegation"
-          description="The Orders Agent delegates warehouse queries to the Warehouse Agent, which calls its own MCP server for stock levels, fulfillment status, and alternatives."
+          description="The Orders Agent delegates to the Warehouse Agent, which checks stock, finds alternatives, and asks the user a clarifying question — relayed back through the parent agent."
           href={`${base}scenarios/connected-agents`}
           image={`${base}images/scenario-agents.png`}
         />
@@ -117,10 +117,10 @@ const base = import.meta.env.BASE_URL;
           image={`${base}images/scenario-files.png`}
         />
         <ScenarioCard
-          title="Reasoning & Recovery"
-          capability="Adaptive Reasoning"
-          description="When tool calls fail or return unexpected results, the agent reasons about what went wrong and tries alternative approaches."
-          href={`${base}scenarios/reasoning-and-recovery`}
+          title="Conversational Guidance"
+          capability="Slot-Filling"
+          description="The user makes a vague request. The agent asks clarifying questions to gather the inputs tools need before acting — mixing conversation with action."
+          href={`${base}scenarios/conversational-guidance`}
           image={`${base}images/scenario-reasoning.png`}
         />
       </div>
