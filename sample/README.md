@@ -38,7 +38,9 @@ Open **ETC - Order Management** in Copilot Studio and try these prompts in the t
 
 Tests conversational slot-filling: the agent asks which order, what's wrong, and confirms before calling any tools.
 
-> I'm James Rivera. I have two pending orders — can you give me a full status update on both? I want to know exactly where each one is in the process, when they'll ship, and if anything is out of stock, what alternatives do I have?
+> I'm James Rivera. I ordered a Nintendo Switch bundle about 10 days ago and it still hasn't shipped. What's going on?
+
+Tests cross-agent delegation: Order agent checks with Warehouse, discovers out-of-stock item, asks user about alternatives, delegates back to Warehouse — a multi-turn cross-agent conversation.
 
 > I'm about to upload a CSV with order IDs. For each order, fill in all the empty columns and return the completed CSV.
 

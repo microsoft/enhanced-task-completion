@@ -711,6 +711,7 @@ button.example:hover,
     margin: 14px 0 !important;
 }
 
+
 /* ── Scrollbar ── */
 ::-webkit-scrollbar {
     width: 5px;
@@ -962,6 +963,14 @@ body.dark footer div {
 # Gradio UI
 # ---------------------------------------------------------------------------
 
+def new_conversation():
+    """Reset conversation state for a fresh session."""
+    global _conversation_id, _tool_id_counter
+    _conversation_id = None
+    _tool_id_counter = 0
+    LOG_FILE.write_text("")
+
+
 with gr.Blocks(title="Copilot Studio Agent Chat") as demo:
     guide_url = os.getenv("GUIDE_URL", "https://microsoft.github.io/enhanced-task-completion/")
     gr.HTML(f"""
@@ -978,16 +987,18 @@ with gr.Blocks(title="Copilot Studio Agent Chat") as demo:
         <p>Explore scenarios, chain tools across MCP servers, and see adaptive orchestration in action.</p>
     </div>
     """)
-    gr.ChatInterface(
+    chat_ui = gr.ChatInterface(
         fn=chat,
         multimodal=True,
         examples=[
             "Hi, I'm Sarah Mitchell. I ordered some Sony headphones recently but they arrived with a crackling sound in the left ear. I'd like to return them. Also, can you check where my other order is — the Kindle I ordered last week?",
             "I want to return something I bought recently.",
-            "I'm James Rivera. I have two pending orders — can you give me a full status update on both? I want to know exactly where each one is in the process, when they'll ship, and if anything is out of stock, what alternatives do I have?",
+            "I'm James Rivera. I ordered a Nintendo Switch bundle about 10 days ago and it still hasn't shipped. What's going on?",
             "I'm about to upload a CSV with order IDs. For each order, fill in all the empty columns and return the completed CSV.",
         ],
     )
+    # Reset SDK conversation when the user clears the chat
+    chat_ui.chatbot.clear(fn=new_conversation)
 
 # JS to fix Gradio ChatInterface example buttons in dark mode.
 # These buttons use Svelte scoped styles that ignore theme variables,
