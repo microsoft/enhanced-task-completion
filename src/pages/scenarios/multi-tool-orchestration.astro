@@ -10,71 +10,46 @@ const base = import.meta.env.BASE_URL;
       <a href={base} class="back">&larr; All scenarios</a>
 
       <header class="scenario__header">
-        <span class="badge badge--primary">Tool Chaining</span>
+        <span class="badge badge--primary">MCP Tool Chaining</span>
         <h1>Multi-tool Orchestration</h1>
         <p class="scenario__lead">
-          The agent dynamically chains 5 interdependent tools across the Order Management MCP server,
+          The agent dynamically chains 5 tools across the Order Management MCP server,
           parallelizing independent calls and keeping the user informed at every step.
         </p>
       </header>
 
-      <!-- Screenshot -->
-      <div class="scenario__screenshot">
-        <img src={`${base}images/scenario-tools.png`} alt="Multi-tool orchestration in the Gradio chat UI" />
-      </div>
-
-      <!-- What happens -->
       <section class="scenario__section">
-        <h2>What happens</h2>
-        <p>When the user says <em>"I'm Sarah Mitchell, I want to return my headphones and check on my Kindle order"</em>, the agent:</p>
+        <h2>Follow along</h2>
+        <p>Open the chat UI in another tab, then follow each step below.</p>
 
-        <ol class="scenario__steps">
-          <li>
-            <div class="step">
-              <div class="step__icon">&#x1F9E0;</div>
-              <div class="step__content">
-                <strong>Reasons about the request</strong>
-                <p>Identifies two tasks: process a return and check an order status. Decides to search for all orders first.</p>
-              </div>
+        <div class="turn">
+          <div class="turn__label">Step 1</div>
+          <div class="turn__you">
+            <span class="turn__who">You say:</span>
+            <div class="try-prompt">
+              <blockquote class="try-prompt__text">Hi, I'm Sarah Mitchell. I ordered some Sony headphones recently but they arrived with a crackling sound in the left ear. I'd like to return them. Also, can you check where my other order is — the Kindle I ordered last week?</blockquote>
             </div>
-          </li>
-          <li>
-            <div class="step">
-              <div class="step__icon">&#x1F50D;</div>
-              <div class="step__content">
-                <strong>Calls <code>search_orders</code></strong>
-                <p>Finds 3 orders for Sarah Mitchell — the headphones, the Kindle, and an older delivered order.</p>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="step">
-              <div class="step__icon">&#x1F4E6;</div>
-              <div class="step__content">
-                <strong>Calls <code>get_order</code> &times; 3 in parallel</strong>
-                <p>Fetches full details for all three orders simultaneously. Identifies which one has the headphones and which is the Kindle.</p>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="step">
-              <div class="step__icon">&#x1F504;</div>
-              <div class="step__content">
-                <strong>Calls <code>request_return</code> + <code>get_shipment</code> in parallel</strong>
-                <p>Initiates the headphones return while simultaneously checking the Kindle's shipping status.</p>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="step">
-              <div class="step__icon">&#x2705;</div>
-              <div class="step__content">
-                <strong>Delivers a structured response</strong>
-                <p>Returns a formatted summary with return ID, refund details, return label link, and Kindle order status.</p>
-              </div>
-            </div>
-          </li>
-        </ol>
+          </div>
+          <div class="turn__expect">
+            <span class="turn__who">The agent:</span>
+            <ul>
+              <li>Identifies two tasks: process a return and check an order status</li>
+              <li>Calls <code>search_orders</code> to find all orders for Sarah Mitchell</li>
+              <li>Calls <code>get_order</code> &times;3 in parallel to fetch details</li>
+              <li>Identifies the headphones (ORD-10421) and Kindle (ORD-10422)</li>
+              <li>Calls <code>request_return</code> + <code>get_shipment</code> in parallel</li>
+              <li>Returns the return ID, refund details, label link, and Kindle status</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Screenshot -->
+      <section class="scenario__section">
+        <h2>What it looks like</h2>
+        <div class="scenario__screenshot">
+          <img src={`${base}images/scenario-tools.png`} alt="Multi-tool orchestration in the chat UI" />
+        </div>
       </section>
 
       <!-- Why it matters -->
@@ -82,12 +57,12 @@ const base = import.meta.env.BASE_URL;
         <h2>Why it matters</h2>
         <div class="value-grid">
           <div class="value-card">
-            <h3>Tool dependency awareness</h3>
-            <p>The agent knows it needs order IDs from <code>search_orders</code> before it can call <code>get_order</code>. It sequences dependent calls automatically.</p>
+            <h3>Dependency awareness</h3>
+            <p>The agent knows it needs order IDs from <code>search_orders</code> before calling <code>get_order</code>. It sequences dependent calls automatically.</p>
           </div>
           <div class="value-card">
             <h3>Parallel execution</h3>
-            <p>Independent calls (like fetching details for multiple orders) run simultaneously, reducing total response time.</p>
+            <p>Independent calls (fetching multiple orders, return + shipment) run simultaneously, reducing total response time.</p>
           </div>
           <div class="value-card">
             <h3>Intermediate narration</h3>
@@ -95,146 +70,33 @@ const base = import.meta.env.BASE_URL;
           </div>
         </div>
       </section>
-
-      <!-- Try it -->
-      <section class="scenario__section">
-        <h2>Try it yourself</h2>
-        <div class="try-prompt">
-          <p class="try-prompt__label">Copy this prompt:</p>
-          <blockquote class="try-prompt__text">
-            Hi, I'm Sarah Mitchell. I ordered some Sony headphones recently but they arrived with a crackling sound in the left ear. I'd like to return them. Also, can you check where my other order is — the Kindle I ordered last week?
-          </blockquote>
-        </div>
-      </section>
     </div>
   </article>
 </Base>
 
 <style>
-  .scenario {
-    padding: var(--space-3xl) 0;
-  }
-  .back {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: var(--c-text-muted);
-    margin-bottom: var(--space-xl);
-  }
+  .scenario { padding: var(--space-3xl) 0; }
+  .back { display: inline-flex; align-items: center; gap: 4px; font-size: 0.85rem; font-weight: 500; color: var(--c-text-muted); margin-bottom: var(--space-xl); }
   .back:hover { color: var(--c-primary); }
-
-  .scenario__header {
-    max-width: 680px;
-  }
-  .scenario__header h1 {
-    margin-top: var(--space-md);
-  }
-  .scenario__lead {
-    margin-top: var(--space-lg);
-    font-size: 1.1rem;
-    color: var(--c-text-secondary);
-    line-height: 1.7;
-  }
-
-  .scenario__screenshot {
-    margin-top: var(--space-2xl);
-    border: 1px solid var(--c-border);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.06);
-  }
-  .scenario__screenshot img {
-    width: 100%;
-  }
-
-  .scenario__section {
-    margin-top: var(--space-3xl);
-  }
-  .scenario__section h2 {
-    margin-bottom: var(--space-lg);
-  }
-  .scenario__section > p {
-    color: var(--c-text-secondary);
-    margin-bottom: var(--space-lg);
-  }
-
-  .scenario__steps {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-  }
-  .step {
-    display: flex;
-    gap: var(--space-md);
-    padding: var(--space-lg);
-    background: var(--c-surface);
-    border: 1px solid var(--c-border-subtle);
-    border-radius: var(--radius-md);
-    transition: border-color 0.2s ease;
-  }
-  .step:hover { border-color: var(--c-border); }
-  .step__icon {
-    font-size: 1.3rem;
-    flex-shrink: 0;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .step__content strong {
-    display: block;
-    font-size: 0.95rem;
-    margin-bottom: 2px;
-  }
-  .step__content p {
-    font-size: 0.88rem;
-    color: var(--c-text-secondary);
-    line-height: 1.6;
-  }
-
-  .value-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: var(--space-lg);
-  }
-  .value-card {
-    padding: var(--space-lg);
-    background: var(--c-surface-raised);
-    border: 1px solid var(--c-border-subtle);
-    border-radius: var(--radius-md);
-  }
-  .value-card h3 {
-    font-size: 0.95rem;
-    margin-bottom: var(--space-xs);
-  }
-  .value-card p {
-    font-size: 0.85rem;
-    color: var(--c-text-secondary);
-    line-height: 1.6;
-  }
-
-  .try-prompt {
-    background: var(--c-surface);
-    border: 1px solid var(--c-border);
-    border-radius: var(--radius-md);
-    padding: var(--space-lg);
-  }
-  .try-prompt__label {
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: var(--c-text-muted);
-    margin-bottom: var(--space-sm);
-  }
-  .try-prompt__text {
-    font-size: 0.95rem;
-    color: var(--c-text);
-    line-height: 1.65;
-    border-left: 3px solid var(--c-primary);
-    padding-left: var(--space-md);
-    margin: 0;
-  }
+  .scenario__header { max-width: 680px; }
+  .scenario__header h1 { margin-top: var(--space-md); }
+  .scenario__lead { margin-top: var(--space-lg); font-size: 1.05rem; color: var(--c-text-secondary); line-height: 1.7; }
+  .scenario__section { margin-top: var(--space-3xl); }
+  .scenario__section h2 { margin-bottom: var(--space-lg); }
+  .scenario__section > p { color: var(--c-text-secondary); margin-bottom: var(--space-lg); }
+  .scenario__screenshot { border: 1px solid var(--c-border); border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.06); }
+  .scenario__screenshot img { width: 100%; }
+  .turn { margin-bottom: var(--space-xl); padding: var(--space-lg); background: var(--c-surface); border: 1px solid var(--c-border-subtle); border-radius: var(--radius-lg); }
+  .turn__label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-purple); margin-bottom: var(--space-md); }
+  .turn__who { font-size: 0.78rem; font-weight: 700; color: var(--c-text-muted); text-transform: uppercase; letter-spacing: 0.04em; display: block; margin-bottom: var(--space-xs); }
+  .turn__you { margin-bottom: var(--space-md); }
+  .turn__you .try-prompt { background: var(--c-surface-raised); border: 1px solid var(--c-border-subtle); border-radius: var(--radius-md); padding: var(--space-md); }
+  .turn__you .try-prompt__text { font-size: 0.92rem; color: var(--c-text); line-height: 1.6; border-left: 3px solid var(--c-primary); padding-left: var(--space-md); margin: 0; }
+  .turn__expect ul { padding-left: 20px; margin: 0; font-size: 0.88rem; color: var(--c-text-secondary); line-height: 1.7; }
+  .turn__expect li { margin-bottom: 4px; }
+  .turn__expect code { font-family: var(--font-mono); font-size: 0.85em; background: var(--c-surface-raised); padding: 1px 5px; border-radius: 4px; border: 1px solid var(--c-border-subtle); }
+  .value-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-lg); }
+  .value-card { padding: var(--space-lg); background: var(--c-surface-raised); border: 1px solid var(--c-border-subtle); border-radius: var(--radius-md); }
+  .value-card h3 { font-size: 0.95rem; margin-bottom: var(--space-xs); }
+  .value-card p { font-size: 0.85rem; color: var(--c-text-secondary); line-height: 1.6; }
 </style>

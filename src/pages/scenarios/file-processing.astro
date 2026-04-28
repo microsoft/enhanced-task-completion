@@ -10,71 +10,46 @@ const base = import.meta.env.BASE_URL;
       <a href={base} class="back">&larr; All scenarios</a>
 
       <header class="scenario__header">
-        <span class="badge badge--primary">File Upload & Download</span>
+        <span class="badge badge--accent">File Upload &amp; Download</span>
         <h1>File Processing</h1>
         <p class="scenario__lead">
-          The agent accepts a CSV file upload, reads its contents, enriches each row by calling tools for every order ID,
-          and returns a fully populated CSV as a downloadable file.
+          Upload a CSV of order IDs. The agent reads the file, calls tools for each order to
+          enrich the data, and returns a completed spreadsheet.
         </p>
+        <p class="scenario__note">File download only works in the Copilot Studio test pane at copilotstudio.microsoft.com.</p>
       </header>
 
-      <!-- Screenshot -->
-      <div class="scenario__screenshot">
-        <img src={`${base}images/scenario-files.png`} alt="File upload and download processing in the Gradio chat UI" />
-      </div>
-
-      <!-- What happens -->
       <section class="scenario__section">
-        <h2>What happens</h2>
-        <p>When the user uploads <em>demo-orders.csv</em> and says <em>"Fill in all the empty columns and return the completed CSV"</em>, the agent:</p>
+        <h2>Follow along</h2>
+        <p>This scenario works best in the <strong>Copilot Studio test pane</strong>. Open the ETC - Order Management agent, click Test, and follow the steps below.</p>
 
-        <ol class="scenario__steps">
-          <li>
-            <div class="step">
-              <div class="step__icon">&#x1F4C4;</div>
-              <div class="step__content">
-                <strong>Reads the uploaded CSV file</strong>
-                <p>Parses the file structure, identifies the order ID column, and detects which columns are empty and need to be populated.</p>
-              </div>
+        <div class="turn">
+          <div class="turn__label">Step 1</div>
+          <div class="turn__you">
+            <span class="turn__who">You say:</span>
+            <div class="try-prompt">
+              <blockquote class="try-prompt__text">I'm about to upload a CSV with order IDs. For each order, fill in all the empty columns and return the completed CSV.</blockquote>
             </div>
-          </li>
-          <li>
-            <div class="step">
-              <div class="step__icon">&#x1F504;</div>
-              <div class="step__content">
-                <strong>Iterates through each order ID</strong>
-                <p>Plans a batch operation — for every row in the CSV, it prepares to fetch the full order details from the MCP server.</p>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="step">
-              <div class="step__icon">&#x1F4E6;</div>
-              <div class="step__content">
-                <strong>Calls <code>get_order</code> for each row</strong>
-                <p>Retrieves complete order data — customer name, items, status, dates, totals — for every order ID in the spreadsheet.</p>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="step">
-              <div class="step__icon">&#x1F4DD;</div>
-              <div class="step__content">
-                <strong>Populates the missing columns</strong>
-                <p>Maps the returned data to the correct CSV columns, filling in every blank cell with the retrieved values.</p>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="step">
-              <div class="step__icon">&#x2705;</div>
-              <div class="step__content">
-                <strong>Returns the completed CSV as a download</strong>
-                <p>Generates the enriched file and presents it as a downloadable attachment in the chat, ready for the user to save.</p>
-              </div>
-            </div>
-          </li>
-        </ol>
+          </div>
+          <div class="turn__expect">
+            <span class="turn__who">Then:</span>
+            <ul>
+              <li>Upload the CSV file (<code>chat-ui/data/demo-orders.csv</code> from the sample)</li>
+              <li>The agent reads the file, identifies the order ID column</li>
+              <li>Calls <code>search_orders</code> and <code>get_order</code> for each row</li>
+              <li>Populates missing columns (status, total, items, shipping address)</li>
+              <li>Returns the completed CSV as a downloadable file</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Screenshot -->
+      <section class="scenario__section">
+        <h2>What it looks like</h2>
+        <div class="scenario__screenshot">
+          <img src={`${base}images/scenario-files.png`} alt="File processing in the Copilot Studio test pane" />
+        </div>
       </section>
 
       <!-- Why it matters -->
@@ -82,28 +57,17 @@ const base = import.meta.env.BASE_URL;
         <h2>Why it matters</h2>
         <div class="value-grid">
           <div class="value-card">
-            <h3>Structured data processing</h3>
-            <p>The agent understands tabular data formats, correctly mapping tool results back to CSV columns without losing structure or introducing errors.</p>
+            <h3>Bulk tool execution</h3>
+            <p>The agent processes each row individually, calling the right tools for each order. It handles the iteration logic autonomously.</p>
           </div>
           <div class="value-card">
-            <h3>Batch operations</h3>
-            <p>Rather than asking the user to query one order at a time, the agent processes an entire spreadsheet in a single interaction — turning minutes of manual work into seconds.</p>
+            <h3>File round-trip</h3>
+            <p>Upload a file, the agent reads it, enriches it with live data, and returns a new file. The full input-process-output cycle runs within one conversation.</p>
           </div>
           <div class="value-card">
-            <h3>File I/O protocol</h3>
-            <p>Demonstrates the full file lifecycle — upload, read, transform, and download — showing that agents can work with files as naturally as they handle text.</p>
+            <h3>Code interpreter</h3>
+            <p>The agent uses code interpreter to parse the CSV, manipulate the data, and generate the output file — combining tool calls with computation.</p>
           </div>
-        </div>
-      </section>
-
-      <!-- Try it -->
-      <section class="scenario__section">
-        <h2>Try it yourself</h2>
-        <div class="try-prompt">
-          <p class="try-prompt__label">Copy this prompt:</p>
-          <blockquote class="try-prompt__text">
-            I've uploaded a CSV with order IDs. For each order, fill in all the empty columns and return the completed CSV.
-          </blockquote>
         </div>
       </section>
     </div>
@@ -111,130 +75,29 @@ const base = import.meta.env.BASE_URL;
 </Base>
 
 <style>
-  .scenario {
-    padding: var(--space-3xl) 0;
-  }
-  .back {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: var(--c-text-muted);
-    margin-bottom: var(--space-xl);
-  }
+  .scenario { padding: var(--space-3xl) 0; }
+  .back { display: inline-flex; align-items: center; gap: 4px; font-size: 0.85rem; font-weight: 500; color: var(--c-text-muted); margin-bottom: var(--space-xl); }
   .back:hover { color: var(--c-primary); }
-
-  .scenario__header {
-    max-width: 680px;
-  }
-  .scenario__header h1 {
-    margin-top: var(--space-md);
-  }
-  .scenario__lead {
-    margin-top: var(--space-lg);
-    font-size: 1.1rem;
-    color: var(--c-text-secondary);
-    line-height: 1.7;
-  }
-
-  .scenario__screenshot {
-    margin-top: var(--space-2xl);
-    border: 1px solid var(--c-border);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.06);
-  }
-  .scenario__screenshot img {
-    width: 100%;
-  }
-
-  .scenario__section {
-    margin-top: var(--space-3xl);
-  }
-  .scenario__section h2 {
-    margin-bottom: var(--space-lg);
-  }
-  .scenario__section > p {
-    color: var(--c-text-secondary);
-    margin-bottom: var(--space-lg);
-  }
-
-  .scenario__steps {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-  }
-  .step {
-    display: flex;
-    gap: var(--space-md);
-    padding: var(--space-lg);
-    background: var(--c-surface);
-    border: 1px solid var(--c-border-subtle);
-    border-radius: var(--radius-md);
-    transition: border-color 0.2s ease;
-  }
-  .step:hover { border-color: var(--c-border); }
-  .step__icon {
-    font-size: 1.3rem;
-    flex-shrink: 0;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .step__content strong {
-    display: block;
-    font-size: 0.95rem;
-    margin-bottom: 2px;
-  }
-  .step__content p {
-    font-size: 0.88rem;
-    color: var(--c-text-secondary);
-    line-height: 1.6;
-  }
-
-  .value-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: var(--space-lg);
-  }
-  .value-card {
-    padding: var(--space-lg);
-    background: var(--c-surface-raised);
-    border: 1px solid var(--c-border-subtle);
-    border-radius: var(--radius-md);
-  }
-  .value-card h3 {
-    font-size: 0.95rem;
-    margin-bottom: var(--space-xs);
-  }
-  .value-card p {
-    font-size: 0.85rem;
-    color: var(--c-text-secondary);
-    line-height: 1.6;
-  }
-
-  .try-prompt {
-    background: var(--c-surface);
-    border: 1px solid var(--c-border);
-    border-radius: var(--radius-md);
-    padding: var(--space-lg);
-  }
-  .try-prompt__label {
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: var(--c-text-muted);
-    margin-bottom: var(--space-sm);
-  }
-  .try-prompt__text {
-    font-size: 0.95rem;
-    color: var(--c-text);
-    line-height: 1.65;
-    border-left: 3px solid var(--c-primary);
-    padding-left: var(--space-md);
-    margin: 0;
-  }
+  .scenario__header { max-width: 680px; }
+  .scenario__header h1 { margin-top: var(--space-md); }
+  .scenario__lead { margin-top: var(--space-lg); font-size: 1.05rem; color: var(--c-text-secondary); line-height: 1.7; }
+  .scenario__note { margin-top: var(--space-sm); font-size: 0.85rem; color: var(--c-text-muted); font-style: italic; }
+  .scenario__section { margin-top: var(--space-3xl); }
+  .scenario__section h2 { margin-bottom: var(--space-lg); }
+  .scenario__section > p { color: var(--c-text-secondary); margin-bottom: var(--space-lg); }
+  .scenario__screenshot { border: 1px solid var(--c-border); border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.06); }
+  .scenario__screenshot img { width: 100%; }
+  .turn { margin-bottom: var(--space-xl); padding: var(--space-lg); background: var(--c-surface); border: 1px solid var(--c-border-subtle); border-radius: var(--radius-lg); }
+  .turn__label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-purple); margin-bottom: var(--space-md); }
+  .turn__who { font-size: 0.78rem; font-weight: 700; color: var(--c-text-muted); text-transform: uppercase; letter-spacing: 0.04em; display: block; margin-bottom: var(--space-xs); }
+  .turn__you { margin-bottom: var(--space-md); }
+  .turn__you .try-prompt { background: var(--c-surface-raised); border: 1px solid var(--c-border-subtle); border-radius: var(--radius-md); padding: var(--space-md); }
+  .turn__you .try-prompt__text { font-size: 0.92rem; color: var(--c-text); line-height: 1.6; border-left: 3px solid var(--c-primary); padding-left: var(--space-md); margin: 0; }
+  .turn__expect ul { padding-left: 20px; margin: 0; font-size: 0.88rem; color: var(--c-text-secondary); line-height: 1.7; }
+  .turn__expect li { margin-bottom: 4px; }
+  .turn__expect code { font-family: var(--font-mono); font-size: 0.85em; background: var(--c-surface-raised); padding: 1px 5px; border-radius: 4px; border: 1px solid var(--c-border-subtle); }
+  .value-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-lg); }
+  .value-card { padding: var(--space-lg); background: var(--c-surface-raised); border: 1px solid var(--c-border-subtle); border-radius: var(--radius-md); }
+  .value-card h3 { font-size: 0.95rem; margin-bottom: var(--space-xs); }
+  .value-card p { font-size: 0.85rem; color: var(--c-text-secondary); line-height: 1.6; }
 </style>

@@ -39,6 +39,26 @@ const base = import.meta.env.BASE_URL;
 
     <slot />
 
+    <script>
+      document.querySelectorAll('.try-prompt').forEach(prompt => {
+        const text = prompt.querySelector('.try-prompt__text')?.textContent?.trim();
+        if (!text) return;
+        const btn = document.createElement('button');
+        btn.className = 'copy-btn';
+        btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copy';
+        btn.onclick = async () => {
+          await navigator.clipboard.writeText(text);
+          btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg> Copied!';
+          btn.classList.add('copied');
+          setTimeout(() => {
+            btn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg> Copy';
+            btn.classList.remove('copied');
+          }, 2000);
+        };
+        prompt.appendChild(btn);
+      });
+    </script>
+
     <footer class="footer">
       <div class="container">
         <div class="footer__inner">

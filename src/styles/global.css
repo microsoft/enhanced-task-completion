@@ -156,3 +156,34 @@ h3 { font-size: 1.15rem; }
   background: var(--gradient-brand);
   border-radius: 2px;
 }
+
+/* ── Copy button on prompts ── */
+.try-prompt {
+  position: relative;
+}
+.copy-btn {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  font-family: var(--font-body);
+  color: var(--c-text-muted);
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.copy-btn:hover {
+  color: var(--c-primary);
+  border-color: var(--c-primary);
+}
+.copy-btn.copied {
+  color: #22c55e;
+  border-color: #22c55e;
+}

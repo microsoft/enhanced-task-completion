@@ -13,68 +13,60 @@ const base = import.meta.env.BASE_URL;
         <span class="badge badge--primary">Slot-Filling</span>
         <h1>Conversational Guidance</h1>
         <p class="scenario__lead">
-          The user makes a vague request. Instead of guessing, the agent asks clarifying questions
-          to gather the inputs that tools require — interleaving conversation with action.
+          The user gives fuzzy, incomplete info. The agent reasons through it, calls the right tools,
+          and asks targeted follow-up questions — only for the details it can't figure out on its own.
         </p>
       </header>
 
-      <!-- Screenshot -->
-      <div class="scenario__screenshot">
-        <img src={`${base}images/scenario-reasoning.png`} alt="Conversational slot-filling in the Gradio chat UI" />
-      </div>
-
-      <!-- What happens -->
       <section class="scenario__section">
-        <h2>What happens</h2>
-        <p>When the user says <em>"I want to return something I bought recently"</em>, the agent:</p>
+        <h2>Follow along</h2>
+        <p>Open the chat UI in another tab, then follow each step below.</p>
 
-        <ol class="scenario__steps">
-          <li>
-            <div class="step">
-              <div class="step__icon">&#x1F9E0;</div>
-              <div class="step__content">
-                <strong>Recognizes missing information</strong>
-                <p>The return tool needs an order ID and a reason, but the user hasn't provided either. The agent decides to ask instead of guessing.</p>
-              </div>
+        <div class="turn">
+          <div class="turn__label">Step 1</div>
+          <div class="turn__you">
+            <span class="turn__who">You say:</span>
+            <div class="try-prompt">
+              <blockquote class="try-prompt__text">I want to return something. I'm Emily Chen, I think the order was 104-something from around April 14</blockquote>
             </div>
-          </li>
-          <li>
-            <div class="step">
-              <div class="step__icon">&#x1F4AC;</div>
-              <div class="step__content">
-                <strong>Asks for the customer's name</strong>
-                <p>"Sure, I can help with that! What's your name so I can look up your recent orders?"</p>
-              </div>
+          </div>
+          <div class="turn__expect">
+            <span class="turn__who">The agent:</span>
+            <ul>
+              <li>Extracts the name "Emily Chen" and the fuzzy order hint "104-something, April 14"</li>
+              <li>Calls <code>search_orders</code> to find Emily's orders</li>
+              <li>Matches the fuzzy info to <strong>ORD-10478</strong> ($299, April 14)</li>
+              <li>Calls <code>get_order</code> to pull the full details</li>
+              <li>Shows the item (ErgoMax Office Chair) and asks: <em>"What's the reason for the return?"</em></li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="turn">
+          <div class="turn__label">Step 2</div>
+          <div class="turn__you">
+            <span class="turn__who">You say:</span>
+            <div class="try-prompt">
+              <blockquote class="try-prompt__text">Yeah the armrest broke after just a week</blockquote>
             </div>
-          </li>
-          <li>
-            <div class="step">
-              <div class="step__icon">&#x1F50D;</div>
-              <div class="step__content">
-                <strong>Calls <code>search_orders</code> and presents options</strong>
-                <p>Finds the user's recent orders and asks which item they want to return, rather than assuming.</p>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="step">
-              <div class="step__icon">&#x1F4AC;</div>
-              <div class="step__content">
-                <strong>Asks what went wrong</strong>
-                <p>"What's the reason for the return? For example: defective, wrong item, changed your mind?"</p>
-              </div>
-            </div>
-          </li>
-          <li>
-            <div class="step">
-              <div class="step__icon">&#x2705;</div>
-              <div class="step__content">
-                <strong>Confirms and processes</strong>
-                <p>With all the information gathered, the agent calls <code>request_return</code> and provides the return details.</p>
-              </div>
-            </div>
-          </li>
-        </ol>
+          </div>
+          <div class="turn__expect">
+            <span class="turn__who">The agent:</span>
+            <ul>
+              <li>Recognizes this as a defect — no further questions needed</li>
+              <li>Calls <code>request_return</code> with the order ID and reason</li>
+              <li>Returns the return ID, refund amount, and return label link</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Screenshot -->
+      <section class="scenario__section">
+        <h2>What it looks like</h2>
+        <div class="scenario__screenshot">
+          <img src={`${base}images/scenario-reasoning.png`} alt="Slot-filling conversation in the chat UI" />
+        </div>
       </section>
 
       <!-- Why it matters -->
@@ -82,28 +74,17 @@ const base = import.meta.env.BASE_URL;
         <h2>Why it matters</h2>
         <div class="value-grid">
           <div class="value-card">
-            <h3>No guessing</h3>
-            <p>Traditional agents either fail on missing inputs or make assumptions. ETC agents ask the user, just like a human support agent would.</p>
+            <h3>Fuzzy input handling</h3>
+            <p>"104-something from April 14" is enough. The agent searches, compares dates and amounts, and deduces the right order without asking the user to be precise.</p>
           </div>
           <div class="value-card">
-            <h3>Natural conversation flow</h3>
-            <p>Questions and tool calls interleave naturally. The agent gathers context incrementally rather than demanding all inputs upfront.</p>
+            <h3>Minimal questions</h3>
+            <p>The agent only asks for what it can't figure out. It doesn't ask for the order number (it found it), the item (there's only one), or the email — just the return reason.</p>
           </div>
           <div class="value-card">
             <h3>Tool-aware reasoning</h3>
-            <p>The agent knows what each tool requires and plans its questions accordingly — it won't ask for information it can look up itself.</p>
+            <p>The agent knows <code>request_return</code> needs an order ID and a reason. It gets the ID from the search, and asks the user only for the reason.</p>
           </div>
-        </div>
-      </section>
-
-      <!-- Try it -->
-      <section class="scenario__section">
-        <h2>Try it yourself</h2>
-        <div class="try-prompt">
-          <p class="try-prompt__label">Copy this prompt:</p>
-          <blockquote class="try-prompt__text">
-            I want to return something I bought recently.
-          </blockquote>
         </div>
       </section>
     </div>
@@ -111,130 +92,83 @@ const base = import.meta.env.BASE_URL;
 </Base>
 
 <style>
-  .scenario {
-    padding: var(--space-3xl) 0;
-  }
+  .scenario { padding: var(--space-3xl) 0; }
   .back {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 0.85rem;
-    font-weight: 500;
-    color: var(--c-text-muted);
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 0.85rem; font-weight: 500; color: var(--c-text-muted);
     margin-bottom: var(--space-xl);
   }
   .back:hover { color: var(--c-primary); }
-
-  .scenario__header {
-    max-width: 680px;
-  }
-  .scenario__header h1 {
-    margin-top: var(--space-md);
-  }
+  .scenario__header { max-width: 680px; }
+  .scenario__header h1 { margin-top: var(--space-md); }
   .scenario__lead {
-    margin-top: var(--space-lg);
-    font-size: 1.1rem;
-    color: var(--c-text-secondary);
-    line-height: 1.7;
+    margin-top: var(--space-lg); font-size: 1.05rem;
+    color: var(--c-text-secondary); line-height: 1.7;
   }
-
-  .scenario__screenshot {
-    margin-top: var(--space-2xl);
-    border: 1px solid var(--c-border);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.06);
-  }
-  .scenario__screenshot img {
-    width: 100%;
-  }
-
-  .scenario__section {
-    margin-top: var(--space-3xl);
-  }
-  .scenario__section h2 {
-    margin-bottom: var(--space-lg);
-  }
+  .scenario__section { margin-top: var(--space-3xl); }
+  .scenario__section h2 { margin-bottom: var(--space-lg); }
   .scenario__section > p {
-    color: var(--c-text-secondary);
-    margin-bottom: var(--space-lg);
+    color: var(--c-text-secondary); margin-bottom: var(--space-lg);
   }
+  .scenario__screenshot {
+    border: 1px solid var(--c-border); border-radius: var(--radius-lg);
+    overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.06);
+  }
+  .scenario__screenshot img { width: 100%; }
 
-  .scenario__steps {
-    list-style: none;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-md);
-  }
-  .step {
-    display: flex;
-    gap: var(--space-md);
+  /* ── Turns ── */
+  .turn {
+    margin-bottom: var(--space-xl);
     padding: var(--space-lg);
     background: var(--c-surface);
     border: 1px solid var(--c-border-subtle);
+    border-radius: var(--radius-lg);
+  }
+  .turn__label {
+    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--c-purple);
+    margin-bottom: var(--space-md);
+  }
+  .turn__who {
+    font-size: 0.78rem; font-weight: 700; color: var(--c-text-muted);
+    text-transform: uppercase; letter-spacing: 0.04em;
+    display: block; margin-bottom: var(--space-xs);
+  }
+  .turn__you { margin-bottom: var(--space-md); }
+  .turn__you .try-prompt {
+    background: var(--c-surface-raised);
+    border: 1px solid var(--c-border-subtle);
     border-radius: var(--radius-md);
-    transition: border-color 0.2s ease;
+    padding: var(--space-md);
   }
-  .step:hover { border-color: var(--c-border); }
-  .step__icon {
-    font-size: 1.3rem;
-    flex-shrink: 0;
-    width: 36px;
-    height: 36px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  .turn__you .try-prompt__text {
+    font-size: 0.92rem; color: var(--c-text); line-height: 1.6;
+    border-left: 3px solid var(--c-primary);
+    padding-left: var(--space-md); margin: 0;
   }
-  .step__content strong {
-    display: block;
-    font-size: 0.95rem;
-    margin-bottom: 2px;
+  .turn__expect ul {
+    padding-left: 20px; margin: 0;
+    font-size: 0.88rem; color: var(--c-text-secondary); line-height: 1.7;
   }
-  .step__content p {
-    font-size: 0.88rem;
-    color: var(--c-text-secondary);
-    line-height: 1.6;
+  .turn__expect li { margin-bottom: 4px; }
+  .turn__expect code {
+    font-family: var(--font-mono); font-size: 0.85em;
+    background: var(--c-surface-raised); padding: 1px 5px; border-radius: 4px;
+    border: 1px solid var(--c-border-subtle);
   }
 
+  /* ── Value cards ── */
   .value-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: var(--space-lg);
   }
   .value-card {
-    padding: var(--space-lg);
-    background: var(--c-surface-raised);
-    border: 1px solid var(--c-border-subtle);
-    border-radius: var(--radius-md);
+    padding: var(--space-lg); background: var(--c-surface-raised);
+    border: 1px solid var(--c-border-subtle); border-radius: var(--radius-md);
   }
-  .value-card h3 {
-    font-size: 0.95rem;
-    margin-bottom: var(--space-xs);
-  }
+  .value-card h3 { font-size: 0.95rem; margin-bottom: var(--space-xs); }
   .value-card p {
-    font-size: 0.85rem;
-    color: var(--c-text-secondary);
-    line-height: 1.6;
-  }
-
-  .try-prompt {
-    background: var(--c-surface);
-    border: 1px solid var(--c-border);
-    border-radius: var(--radius-md);
-    padding: var(--space-lg);
-  }
-  .try-prompt__label {
-    font-size: 0.82rem;
-    font-weight: 600;
-    color: var(--c-text-muted);
-    margin-bottom: var(--space-sm);
-  }
-  .try-prompt__text {
-    font-size: 0.95rem;
-    color: var(--c-text);
-    line-height: 1.65;
-    border-left: 3px solid var(--c-primary);
-    padding-left: var(--space-md);
-    margin: 0;
+    font-size: 0.85rem; color: var(--c-text-secondary); line-height: 1.6;
   }
 </style>
