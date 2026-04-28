@@ -1,0 +1,17 @@
+{
+  "name": "etc-chat-ui",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@azure/msal-browser": "^4.13.1",
+    "@microsoft/agents-copilotstudio-client": "^1.3.1"
+  },
+  "devDependencies": {
+    "vite": "^6.0.0"
+  }
+}

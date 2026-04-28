@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Enhanced Task Completion | Copilot Studio CAT</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div class="gradient-bar"></div>
+
+  <div class="shell">
+    <!-- Compact top bar -->
+    <header class="topbar">
+      <div class="topbar-left">
+        <img src="https://raw.githubusercontent.com/microsoft/mcscatblog/main/assets/img/paw.png" alt="" class="topbar-paw" />
+        <div class="topbar-text">
+          <span class="topbar-title">Enhanced Task Completion</span>
+          <span class="topbar-sub">Copilot Studio CAT &middot; Feature Guide</span>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <a id="guide-link" href="#" target="_blank" class="topbar-link">View guide</a>
+      </div>
+    </header>
+
+    <!-- Chat area -->
+    <div id="chat" class="chat">
+      <!-- Messages go here -->
+      <div id="messages" class="messages"></div>
+
+      <!-- Welcome state with scenario cards -->
+      <div id="welcome" class="welcome">
+        <div class="welcome-intro">
+          <p class="welcome-heading">Try a scenario</p>
+          <p class="welcome-desc">Click a card to populate the prompt, then send. Each demonstrates a different ETC capability.</p>
+        </div>
+        <div class="scenarios">
+          <button class="scenario-card" data-prompt="Hi, I'm Sarah Mitchell. I ordered some Sony headphones recently but they arrived with a crackling sound in the left ear. I'd like to return them. Also, can you check where my other order is — the Kindle I ordered last week?">
+            <span class="scenario-cap">MCP Tool Chaining</span>
+            <span class="scenario-text">Return defective headphones + track another order</span>
+            <a class="scenario-link" data-scenario="/scenarios/multi-tool-orchestration" onclick="event.stopPropagation()">View scenario &rarr;</a>
+          </button>
+          <button class="scenario-card" data-prompt="I want to return something I bought recently.">
+            <span class="scenario-cap">Slot-Filling</span>
+            <span class="scenario-text">Vague request, agent asks clarifying questions</span>
+            <a class="scenario-link" data-scenario="/scenarios/conversational-guidance" onclick="event.stopPropagation()">View scenario &rarr;</a>
+          </button>
+          <button class="scenario-card" data-prompt="I'm James Rivera. I ordered a Nintendo Switch bundle about 10 days ago and it still hasn't shipped. What's going on?">
+            <span class="scenario-cap">Connected Agents</span>
+            <span class="scenario-text">Investigate delayed order across warehouse agent</span>
+            <a class="scenario-link" data-scenario="/scenarios/connected-agents" onclick="event.stopPropagation()">View scenario &rarr;</a>
+          </button>
+          <button class="scenario-card" data-prompt="I'm about to upload a CSV with order IDs. For each order, fill in all the empty columns and return the completed CSV.">
+            <span class="scenario-cap">File Processing</span>
+            <span class="scenario-text">Upload CSV, enrich with tool calls, download result</span>
+            <span class="scenario-note">* File download only works in the Copilot Studio test pane</span>
+            <a class="scenario-link" data-scenario="/scenarios/file-processing" onclick="event.stopPropagation()">View scenario &rarr;</a>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Input -->
+    <form id="input-form" class="input-bar">
+      <input id="input" type="text" placeholder="Ask about an order, request a return, or try a scenario above..." autocomplete="off" />
+      <button type="submit" id="send-btn" class="btn-send" disabled>
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+      </button>
+    </form>
+
+    <footer class="footer">
+      From the <a href="https://microsoft.github.io/mcscatblog/" target="_blank">Copilot Studio CAT</a> team
+    </footer>
+  </div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

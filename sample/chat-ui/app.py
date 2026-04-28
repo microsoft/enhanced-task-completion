@@ -712,6 +712,26 @@ button.example:hover,
 }
 
 
+/* ── Scenario links inside example cards ── */
+.scenario-link {
+    display: block;
+    font-size: 0.78em;
+    color: #0078D4 !important;
+    text-decoration: none;
+    margin-top: 10px;
+    padding-top: 8px;
+    border-top: 1px solid #e1dfdd;
+    opacity: 0.65;
+    transition: opacity 0.15s ease;
+}
+.scenario-link:hover {
+    opacity: 1;
+}
+body.dark .scenario-link {
+    color: #5B8DEF !important;
+    border-top-color: rgba(255,255,255,0.08);
+}
+
 /* ── Scrollbar ── */
 ::-webkit-scrollbar {
     width: 5px;
@@ -971,7 +991,7 @@ def new_conversation():
     LOG_FILE.write_text("")
 
 
-with gr.Blocks(title="Copilot Studio Agent Chat") as demo:
+with gr.Blocks(title="Copilot Studio Agent Chat", head=f"<script>document.addEventListener('DOMContentLoaded', {_dark_fix_js});</script>") as demo:
     guide_url = os.getenv("GUIDE_URL", "https://microsoft.github.io/enhanced-task-completion/")
     gr.HTML(f"""
     <div class="header-bar">
@@ -1024,8 +1044,35 @@ _dark_fix_js = """
         childList: true, subtree: true
     });
     applyDark();
+
+    // Inject scenario links under example cards
+    var guideUrl = document.querySelector('.header-link')?.href || 'https://microsoft.github.io/enhanced-task-completion/';
+    var guideBase = guideUrl.endsWith('/') ? guideUrl.slice(0, -1) : guideUrl;
+    const scenarioPaths = [
+        '/scenarios/multi-tool-orchestration',
+        '/scenarios/conversational-guidance',
+        '/scenarios/connected-agents',
+        '/scenarios/file-processing',
+    ];
+    const tryInjectLinks = setInterval(function() {
+        if (document.querySelector('.scenario-link')) { clearInterval(tryInjectLinks); return; }
+        var btns = document.querySelectorAll('button.example');
+        if (btns.length < 4) return;
+        clearInterval(tryInjectLinks);
+        for (var i = 0; i < btns.length && i < scenarioPaths.length; i++) {
+            var link = document.createElement('a');
+            link.href = guideBase + scenarioPaths[i];
+            link.target = '_blank';
+            link.textContent = 'View scenario \u2192';
+            link.className = 'scenario-link';
+            link.onclick = function(e) { e.stopPropagation(); };
+            btns[i].appendChild(link);
+        }
+    }, 500);
 }
 """
 
 if __name__ == "__main__":
     demo.launch(theme=theme, css=custom_css, js=_dark_fix_js)
+    # Note: if js= doesn't work, add head= to Blocks:
+    # with gr.Blocks(..., head=f"<script>({_dark_fix_js})()</script>") as demo:
