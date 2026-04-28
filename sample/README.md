@@ -30,29 +30,7 @@ In Copilot Studio, open each agent (**ETC - Order Management** and **ETC - Wareh
 
 ### 4. Test
 
-Open **ETC - Order Management** in Copilot Studio and try these prompts in the test pane:
-
-**Multi-tool orchestration** (chains 5 tools, parallelizes independent calls):
-
-> Hi, I'm Sarah Mitchell. I ordered some Sony headphones recently but they arrived with a crackling sound in the left ear. I'd like to return them. Also, can you check where my other order is, the Kindle I ordered last week?
-
-**Conversational guidance** (slot-filling with fuzzy info):
-
-> I want to return something. I'm Emily Chen, I think the order was 104-something from around April 14
-
-The agent searches, deduces the right order from partial info, and asks only for the return reason.
-
-**Connected agents** (cross-agent delegation to Warehouse):
-
-> I'm James Rivera. I ordered a Nintendo Switch bundle about 10 days ago and it still hasn't shipped. What's going on?
-
-Follow up with: *"Yes, can you check what alternatives are available for the Switch?"*
-
-**File processing** (upload CSV, enrich with tool calls):
-
-> I'm about to upload a CSV with order IDs. For each order, fill in all the empty columns and return the completed CSV.
-
-Upload [`chat-ui-lite/data/demo-orders.csv`](chat-ui-lite/data/demo-orders.csv) along with the prompt. The agent reads the file, calls tools for each row, and returns a completed table. File download works in the Copilot Studio test pane.
+Open **ETC - Order Management** in Copilot Studio and try the prompts in the test pane. The [scenario guide](https://microsoft.github.io/enhanced-task-completion/#scenarios) has four walkthroughs with copyable prompts covering multi-tool orchestration, conversational guidance, connected agents, and file processing.
 
 ## Chat UI (optional)
 
