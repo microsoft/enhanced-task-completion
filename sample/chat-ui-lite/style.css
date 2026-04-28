@@ -326,27 +326,87 @@ body {
 /* ── Input bar ── */
 .input-bar {
   display: flex;
+  align-items: flex-end;
   gap: 8px;
   padding: 10px 0;
   flex-shrink: 0;
 }
-.input-bar input {
+.btn-attach {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px; height: 40px;
+  border: none;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--c-text-muted);
+  cursor: pointer;
+  transition: all 0.15s;
+  flex-shrink: 0;
+}
+.btn-attach:hover { color: var(--c-primary); background: var(--c-primary-light); }
+.input-wrap {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: 24px;
+  overflow: hidden;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+.input-wrap:focus-within {
+  border-color: var(--c-primary);
+  box-shadow: 0 0 0 3px rgba(0,120,212,0.08);
+}
+.input-wrap input {
   flex: 1;
   padding: 11px 18px;
   font-size: 0.88rem;
   font-family: var(--font-body);
-  background: var(--c-surface);
-  border: 1px solid var(--c-border);
-  border-radius: 24px;
+  background: transparent;
+  border: none;
   outline: none;
-  transition: border-color 0.15s, box-shadow 0.15s;
   color: var(--c-text);
 }
-.input-bar input:focus {
-  border-color: var(--c-primary);
-  box-shadow: 0 0 0 3px rgba(0,120,212,0.08);
+.input-wrap input::placeholder { color: var(--c-text-muted); }
+
+/* File chip */
+.file-chip {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 6px 12px 2px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--c-primary);
 }
-.input-bar input::placeholder { color: var(--c-text-muted); }
+.file-chip.hidden { display: none; }
+.file-chip svg { opacity: 0.7; }
+.file-remove {
+  border: none;
+  background: none;
+  color: var(--c-text-muted);
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 0 2px;
+  line-height: 1;
+}
+.file-remove:hover { color: var(--c-pink); }
+
+/* Attachment badge in user message */
+.msg-attachment {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 6px;
+  padding: 3px 8px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  background: rgba(255,255,255,0.15);
+  border-radius: 6px;
+}
+
 .btn-send {
   display: flex;
   align-items: center;

@@ -24,8 +24,45 @@ const inputForm = document.getElementById("input-form");
 const inputEl = document.getElementById("input");
 const sendBtn = document.getElementById("send-btn");
 const guideLink = document.getElementById("guide-link");
+const fileInput = document.getElementById("file-input");
+const attachBtn = document.getElementById("attach-btn");
+const fileChip = document.getElementById("file-chip");
+const fileNameEl = document.getElementById("file-name");
+const fileRemoveBtn = document.getElementById("file-remove");
 
 guideLink.href = config.guideUrl;
+
+// ---------------------------------------------------------------------------
+// File attachment state
+// ---------------------------------------------------------------------------
+let pendingFile = null; // { name, contentType, base64 }
+
+attachBtn.addEventListener("click", () => fileInput.click());
+
+fileInput.addEventListener("change", async () => {
+  const file = fileInput.files[0];
+  if (!file) return;
+  const base64 = await fileToBase64(file);
+  pendingFile = { name: file.name, contentType: file.type || "text/csv", base64 };
+  fileNameEl.textContent = file.name;
+  fileChip.classList.remove("hidden");
+  sendBtn.disabled = false;
+  fileInput.value = "";
+});
+
+fileRemoveBtn.addEventListener("click", () => {
+  pendingFile = null;
+  fileChip.classList.add("hidden");
+  sendBtn.disabled = !inputEl.value.trim();
+});
+
+function fileToBase64(file) {
+  return new Promise((resolve) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result.split(",")[1]);
+    reader.readAsDataURL(file);
+  });
+}
 
 // Set scenario links
 document.querySelectorAll(".scenario-link").forEach((link) => {
@@ -259,8 +296,8 @@ function renderMarkdown(text) {
 // ---------------------------------------------------------------------------
 let sending = false;
 
-async function sendMessage(text) {
-  if (!text.trim() || sending) return;
+async function sendMessage(text, file = null) {
+  if ((!text.trim() && !file) || sending) return;
   sending = true;
   inputEl.disabled = true;
   sendBtn.disabled = true;
@@ -270,7 +307,11 @@ async function sendMessage(text) {
   document.querySelector(".conv-action")?.remove();
 
   // Show user message
-  addMessage("user", escapeHtml(text));
+  let userHtml = escapeHtml(text);
+  if (file) {
+    userHtml += `<div class="msg-attachment"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg> ${escapeHtml(file.name)}</div>`;
+  }
+  addMessage("user", userHtml);
 
   // Show typing
   addTypingIndicator();
@@ -285,22 +326,26 @@ async function sendMessage(text) {
   try {
     const c = await ensureClient();
 
+    // Build the activity
+    const activity = { type: "message", text: text || "" };
+    if (file) {
+      activity.attachments = [{
+        name: file.name,
+        contentType: file.contentType,
+        contentUrl: `data:${file.contentType};base64,${file.base64}`,
+      }];
+    }
+
     // Use streaming API to get typing events with ETC metadata in real-time
     let activityStream;
     if (conversationId) {
-      activityStream = c.sendActivityStreaming(
-        { type: "message", text },
-        conversationId
-      );
+      activityStream = c.sendActivityStreaming(activity, conversationId);
     } else {
       // Start conversation first
       for await (const a of c.startConversationStreaming(true)) {
         if (a.conversation?.id) conversationId = a.conversation.id;
       }
-      activityStream = c.sendActivityStreaming(
-        { type: "message", text },
-        conversationId
-      );
+      activityStream = c.sendActivityStreaming(activity, conversationId);
     }
 
     for await (const activity of activityStream) {
@@ -392,16 +437,19 @@ async function sendMessage(text) {
 // Event handlers
 // ---------------------------------------------------------------------------
 inputEl.addEventListener("input", () => {
-  sendBtn.disabled = !inputEl.value.trim();
+  sendBtn.disabled = !inputEl.value.trim() && !pendingFile;
 });
 
 inputForm.addEventListener("submit", (e) => {
   e.preventDefault();
   const text = inputEl.value.trim();
-  if (!text) return;
+  const file = pendingFile;
+  if (!text && !file) return;
   inputEl.value = "";
+  pendingFile = null;
+  fileChip.classList.add("hidden");
   sendBtn.disabled = true;
-  sendMessage(text);
+  sendMessage(text, file);
 });
 
 // Scenario cards

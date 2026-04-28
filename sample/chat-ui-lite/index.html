@@ -38,7 +38,7 @@
           <p class="welcome-desc">Click a card to populate the prompt, then send. Each demonstrates a different ETC capability.</p>
         </div>
         <div class="scenarios">
-          <button class="scenario-card" data-prompt="Hi, I'm Sarah Mitchell. I ordered some Sony headphones recently but they arrived with a crackling sound in the left ear. I'd like to return them. Also, can you check where my other order is — the Kindle I ordered last week?">
+          <button class="scenario-card" data-prompt="Hi, I'm Sarah Mitchell. I ordered some Sony headphones recently but they arrived with a crackling sound in the left ear. I'd like to return them. Also, can you check where my other order is, the Kindle I ordered last week?">
             <span class="scenario-cap">MCP Tool Chaining</span>
             <span class="scenario-text">Return defective headphones + track another order</span>
             <a class="scenario-link" data-scenario="/scenarios/multi-tool-orchestration" onclick="event.stopPropagation()">View scenario &rarr;</a>
@@ -54,7 +54,7 @@
             <a class="scenario-link" data-scenario="/scenarios/connected-agents" onclick="event.stopPropagation()">View scenario &rarr;</a>
           </button>
           <button class="scenario-card" data-prompt="I'm about to upload a CSV with order IDs. For each order, fill in all the empty columns and return the completed CSV.">
-            <span class="scenario-cap">File Processing</span>
+            <span class="scenario-cap">File Analysis &amp; Generation</span>
             <span class="scenario-text">Upload CSV, enrich with tool calls, download result</span>
             <span class="scenario-note">* File download only works in the Copilot Studio test pane</span>
             <a class="scenario-link" data-scenario="/scenarios/file-processing" onclick="event.stopPropagation()">View scenario &rarr;</a>
@@ -65,7 +65,18 @@
 
     <!-- Input -->
     <form id="input-form" class="input-bar">
-      <input id="input" type="text" placeholder="Ask about an order, request a return, or try a scenario above..." autocomplete="off" />
+      <input id="file-input" type="file" accept=".csv,.txt,.json,.xlsx" hidden />
+      <button type="button" id="attach-btn" class="btn-attach" title="Attach file">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>
+      </button>
+      <div class="input-wrap">
+        <div id="file-chip" class="file-chip hidden">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          <span id="file-name"></span>
+          <button type="button" id="file-remove" class="file-remove">&times;</button>
+        </div>
+        <input id="input" type="text" placeholder="Ask about an order, request a return, or try a scenario above..." autocomplete="off" />
+      </div>
       <button type="submit" id="send-btn" class="btn-send" disabled>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
       </button>

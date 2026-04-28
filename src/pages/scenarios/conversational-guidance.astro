@@ -76,16 +76,16 @@ const base = import.meta.env.BASE_URL;
         <h2>ETC capabilities demonstrated</h2>
         <div class="value-grid">
           <div class="value-card">
-            <h3>Fuzzy input handling</h3>
-            <p>"104-something from April 14" is enough. The agent searches, compares dates and amounts, and deduces the right order without asking the user to be precise.</p>
+            <h3>Ask clarifying questions</h3>
+            <p>The agent knows <code>request_return</code> needs a reason. Rather than guessing, it asks the user for the one piece of information it can't figure out on its own.</p>
           </div>
           <div class="value-card">
-            <h3>Minimal questions</h3>
-            <p>The agent only asks for what it can't figure out. It doesn't ask for the order number (it found it), the item (there's only one), or the email. Just the return reason.</p>
+            <h3>Chain tools intelligently</h3>
+            <p>"104-something from April 14" is enough. The agent calls <code>search_orders</code>, then <code>get_order</code>, compares dates and IDs, and deduces the right order without asking the user to be precise.</p>
           </div>
           <div class="value-card">
-            <h3>Tool-aware reasoning</h3>
-            <p>The agent knows <code>request_return</code> needs an order ID and a reason. It gets the ID from the search, and asks the user only for the reason.</p>
+            <h3>Follow instructions closely</h3>
+            <p>The agent only asks for what it truly needs. It doesn't ask for the order number (it found it), the item (there's only one), or the email. Just the return reason, because the tool requires it.</p>
           </div>
         </div>
       </section>

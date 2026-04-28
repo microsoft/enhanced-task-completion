@@ -20,7 +20,7 @@ const base = import.meta.env.BASE_URL;
         </div>
         <h1 class="hero__title">Enhanced Task<br />Completion</h1>
         <p class="hero__subtitle">
-          This guide helps you get started with Enhanced Task Completion —
+          This guide helps you get started with Enhanced Task Completion,
           a new orchestration mode that lets agents reason dynamically, chain tools,
           delegate to other agents, and recover from failures. Explore the scenarios
           below, then try the deployable sample.
@@ -41,14 +41,14 @@ const base = import.meta.env.BASE_URL;
             <span class="hero__dot hero__dot--green"></span>
           </div>
           <div class="hero__card-body">
-            <div class="hero__msg hero__msg--user">I'm Sarah Mitchell. I'd like to return my Sony headphones — they have a crackling sound. Also, where's my Kindle order?</div>
+            <div class="hero__msg hero__msg--user">I'm Sarah Mitchell. I'd like to return my Sony headphones, they have a crackling sound. Also, where's my Kindle order?</div>
             <div class="hero__msg hero__msg--bot">Let me look up your orders!</div>
             <div class="hero__tool"><span class="hero__tool-icon">&#x1F50D;</span> search_orders</div>
             <div class="hero__msg hero__msg--bot">Found 3 orders. Pulling details...</div>
             <div class="hero__tool"><span class="hero__tool-icon">&#x1F4E6;</span> get_order <span class="hero__tool-badge">&times;2</span></div>
             <div class="hero__tool"><span class="hero__tool-icon">&#x1F504;</span> request_return</div>
             <div class="hero__tool"><span class="hero__tool-icon">&#x1F69A;</span> get_shipment</div>
-            <div class="hero__msg hero__msg--bot">Return initiated! <strong>RA-50022</strong> &mdash; your $349.99 refund is on the way.</div>
+            <div class="hero__msg hero__msg--bot">Return initiated! <strong>RA-50022</strong> &ndash; your $349.99 refund is on the way.</div>
           </div>
         </div>
       </div>
@@ -59,29 +59,39 @@ const base = import.meta.env.BASE_URL;
   <section class="how">
     <div class="container">
       <p class="section-label">How it works</p>
-      <h2>From plan-then-execute to adaptive orchestration</h2>
-      <p class="how__intro">Traditional agents select all tools upfront, then execute a fixed plan. Enhanced Task Completion takes a fundamentally different approach.</p>
+      <h2>What your agent can do with ETC</h2>
+      <p class="how__intro">With Enhanced Task Completion enabled, your agent gains six capabilities that let it handle complex, multi-step tasks autonomously.</p>
 
       <div class="how__grid">
         <div class="how__item">
           <div class="how__icon" style="color: var(--c-primary);">&#x1F9E0;</div>
-          <h3>Reasons before acting</h3>
-          <p>Asks clarifying questions and gathers context before calling any tools. Visible reasoning steps show the agent's thought process.</p>
+          <h3>Ask clarifying questions</h3>
+          <p>Instead of guessing, the agent asks targeted follow-up questions to gather the information it needs before taking action.</p>
         </div>
         <div class="how__item">
-          <div class="how__icon" style="color: var(--c-purple);">&#x26A1;</div>
-          <h3>Dynamic orchestration</h3>
-          <p>Recognizes dependencies between tool outputs, parallelizes independent calls, and adjusts strategy based on intermediate results.</p>
+          <div class="how__icon" style="color: var(--c-purple);">&#x1F517;</div>
+          <h3>Chain tools intelligently</h3>
+          <p>Recognizes when one tool's output feeds into another, sequences dependent calls, and parallelizes independent ones.</p>
         </div>
         <div class="how__item">
           <div class="how__icon" style="color: var(--c-pink);">&#x1F504;</div>
-          <h3>Conversation + actions</h3>
-          <p>Fluidly mixes questions, tool calls, and responses across multiple turns. Keeps the user informed at every step.</p>
+          <h3>Adapt its plan</h3>
+          <p>Adjusts its approach mid-conversation based on what it learns from tool results, user responses, and changing context.</p>
         </div>
         <div class="how__item">
-          <div class="how__icon" style="color: var(--c-orange);">&#x1F6E1;&#xFE0F;</div>
-          <h3>Failure recovery</h3>
-          <p>When a tool call fails, the agent retries with different parameters or finds alternative approaches rather than giving up.</p>
+          <div class="how__icon" style="color: var(--c-orange);">&#x1F4AC;</div>
+          <h3>Natural conversation</h3>
+          <p>Interleaves questions, tool calls, and responses fluidly across multiple turns. Keeps the user informed at every step.</p>
+        </div>
+        <div class="how__item">
+          <div class="how__icon" style="color: var(--c-green, #22c55e);">&#x2705;</div>
+          <h3>Follow instructions closely</h3>
+          <p>Adheres to the instructions you provide, resulting in more consistent and predictable behavior.</p>
+        </div>
+        <div class="how__item">
+          <div class="how__icon" style="color: var(--c-red, #ef4444);">&#x1F6E1;&#xFE0F;</div>
+          <h3>Recover from errors</h3>
+          <p>When a tool call fails, the agent retries with corrected parameters or finds an alternative approach rather than giving up.</p>
         </div>
       </div>
     </div>
@@ -98,20 +108,20 @@ const base = import.meta.env.BASE_URL;
         <ScenarioCard
           title="Multi-tool Orchestration"
           capability="MCP Tool Chaining"
-          description="The agent dynamically chains search_orders, get_order, request_return, and get_shipment — parallelizing independent calls and narrating each step."
+          description="The agent dynamically chains search_orders, get_order, request_return, and get_shipment, parallelizing independent calls and narrating each step."
           href={`${base}scenarios/multi-tool-orchestration`}
           image={`${base}images/scenario-tools.png`}
         />
         <ScenarioCard
           title="Connected Agents"
           capability="Agent Delegation"
-          description="The Orders Agent delegates to the Warehouse Agent, which checks stock, finds alternatives, and asks the user a clarifying question — relayed back through the parent agent."
+          description="The Orders Agent delegates to the Warehouse Agent, which checks stock and finds alternatives. Results are relayed back through the parent agent."
           href={`${base}scenarios/connected-agents`}
           image={`${base}images/scenario-agents.png`}
         />
         <ScenarioCard
           title="File Processing"
-          capability="File Upload & Download"
+          capability="File Analysis & Generation"
           description="Upload a CSV of order IDs. The agent reads the file, calls tools for each order, populates the missing data, and returns a completed CSV."
           href={`${base}scenarios/file-processing`}
           image={`${base}images/scenario-files.png`}
@@ -120,7 +130,7 @@ const base = import.meta.env.BASE_URL;
         <ScenarioCard
           title="Conversational Guidance"
           capability="Slot-Filling"
-          description="The user makes a vague request. The agent asks clarifying questions to gather the inputs tools need before acting — mixing conversation with action."
+          description="The user gives fuzzy info. The agent asks clarifying questions to gather the inputs tools need before acting, mixing conversation with action."
           href={`${base}scenarios/conversational-guidance`}
           image={`${base}images/scenario-reasoning.png`}
         />
@@ -135,7 +145,7 @@ const base = import.meta.env.BASE_URL;
         <div class="cta__text">
           <p class="section-label">Get started</p>
           <h2>Try it yourself</h2>
-          <p class="cta__desc">Import one solution zip, create connections, publish, and start testing. No servers or code needed — everything runs inside the Power Platform.</p>
+          <p class="cta__desc">Import one solution zip, create connections, publish, and start testing. No servers or code needed, everything runs inside the Power Platform.</p>
           <div class="cta__actions">
             <a href="https://github.com/microsoft/enhanced-task-completion/tree/main/sample" class="btn btn--primary">
               Get the sample

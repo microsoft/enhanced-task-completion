@@ -19,48 +19,54 @@ const base = import.meta.env.BASE_URL;
         </p>
       </header>
 
-      <section class="scenario__section">
-        <h2>Follow along</h2>
-        <p>Open the chat UI in another tab, then follow each step below.</p>
+      <section class="convo">
+        <h2>The conversation</h2>
+        <p class="convo__intro">Open the chat UI side by side. Copy each prompt, send it, and watch the agent delegate across agents.</p>
 
-        <div class="turn">
-          <div class="turn__label">Step 1</div>
-          <div class="turn__you">
-            <span class="turn__who">You say:</span>
-            <div class="try-prompt">
-              <blockquote class="try-prompt__text">I'm James Rivera. I ordered a Nintendo Switch bundle about 10 days ago and it still hasn't shipped. What's going on?</blockquote>
+        <ol class="timeline">
+          <li class="tl-user">
+            <div class="tl-marker">1</div>
+            <div class="tl-content">
+              <div class="tl-label">You</div>
+              <div class="try-prompt">
+                <blockquote class="try-prompt__text">I'm James Rivera. I ordered a Nintendo Switch bundle about 10 days ago and it still hasn't shipped. What's going on?</blockquote>
+              </div>
             </div>
-          </div>
-          <div class="turn__expect">
-            <span class="turn__who">The agent:</span>
-            <ul>
-              <li>Calls <code>search_orders</code> and identifies the Switch bundle (ORD-10460)</li>
-              <li>Calls <code>get_order</code>, sees it's stuck in "processing" for 10 days</li>
-              <li>Delegates to <strong>ETC - Warehouse Management</strong> to investigate why</li>
-              <li>Warehouse Agent calls <code>check_stock</code>, finds Switch OLED is out of stock</li>
-              <li>Reports the issue: out of stock, restock expected today, presents options (wait / split / cancel)</li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="turn">
-          <div class="turn__label">Step 2</div>
-          <div class="turn__you">
-            <span class="turn__who">You say:</span>
-            <div class="try-prompt">
-              <blockquote class="try-prompt__text">Yes, can you check what alternatives are available for the Switch?</blockquote>
+          </li>
+          <li class="tl-agent">
+            <div class="tl-marker"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+            <div class="tl-content">
+              <div class="tl-label">Agent</div>
+              <div class="tl-steps">
+                <div class="tl-tool"><span class="tl-tool-name">search_orders</span> identifies the Switch bundle (<strong>ORD-10460</strong>)</div>
+                <div class="tl-tool"><span class="tl-tool-name">get_order</span> sees it's stuck in "processing" for 10 days</div>
+                <p>Delegates to <strong>ETC - Warehouse Management</strong> to investigate</p>
+                <div class="tl-tool"><span class="tl-tool-name">check_stock</span> finds Switch OLED is out of stock</div>
+                <p>Reports the issue: out of stock, restock expected today. Presents options (wait / split / cancel).</p>
+              </div>
             </div>
-          </div>
-          <div class="turn__expect">
-            <span class="turn__who">The agent:</span>
-            <ul>
-              <li>Delegates to <strong>ETC - Warehouse Management</strong> again for alternatives</li>
-              <li>Warehouse Agent calls <code>find_alternatives</code></li>
-              <li>Reports back: no gaming console alternatives in stock, only unrelated electronics</li>
-              <li>Recommends waiting for today's restock (30 units expected)</li>
-            </ul>
-          </div>
-        </div>
+          </li>
+          <li class="tl-user">
+            <div class="tl-marker">2</div>
+            <div class="tl-content">
+              <div class="tl-label">You</div>
+              <div class="try-prompt">
+                <blockquote class="try-prompt__text">Yes, can you check what alternatives are available for the Switch?</blockquote>
+              </div>
+            </div>
+          </li>
+          <li class="tl-agent">
+            <div class="tl-marker"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+            <div class="tl-content">
+              <div class="tl-label">Agent</div>
+              <div class="tl-steps">
+                <p>Delegates to <strong>ETC - Warehouse Management</strong> again</p>
+                <div class="tl-tool"><span class="tl-tool-name">find_alternatives</span> searches for similar products</div>
+                <p>No gaming console alternatives in stock, only unrelated electronics. Recommends waiting for today's restock (30 units expected).</p>
+              </div>
+            </div>
+          </li>
+        </ol>
       </section>
 
       <!-- Screenshot -->
@@ -76,16 +82,16 @@ const base = import.meta.env.BASE_URL;
         <h2>ETC capabilities demonstrated</h2>
         <div class="value-grid">
           <div class="value-card">
-            <h3>Multi-turn delegation</h3>
-            <p>The Warehouse Agent is called twice across two user turns. The conversation spans agent boundaries naturally, without manual handoff logic.</p>
+            <h3>Chain tools intelligently</h3>
+            <p>The Orders Agent calls its own tools first, then delegates to the Warehouse Agent, which calls <code>check_stock</code> and <code>find_alternatives</code> across two turns.</p>
           </div>
           <div class="value-card">
-            <h3>Autonomous investigation</h3>
-            <p>The user just says "hasn't shipped", the agent autonomously decides to check with the warehouse, discovers the out-of-stock issue, and explains the full picture.</p>
+            <h3>Adapt its plan</h3>
+            <p>The user just says "hasn't shipped." The agent discovers the order is stuck in processing, autonomously decides to check with the warehouse, and adjusts its approach based on the out-of-stock finding.</p>
           </div>
           <div class="value-card">
-            <h3>Separate MCP tools</h3>
-            <p>Each agent has its own MCP connector with different tools. The Orders Agent can't check stock directly, it delegates to the specialist.</p>
+            <h3>Natural conversation throughout</h3>
+            <p>The conversation spans two agents across multiple turns. The agent interleaves tool calls, delegation, and responses fluidly, presenting options and relaying results naturally.</p>
           </div>
         </div>
       </section>
@@ -102,18 +108,30 @@ const base = import.meta.env.BASE_URL;
   .scenario__lead { margin-top: var(--space-lg); font-size: 1.05rem; color: var(--c-text-secondary); line-height: 1.7; }
   .scenario__section { margin-top: var(--space-3xl); }
   .scenario__section h2 { margin-bottom: var(--space-lg); }
-  .scenario__section > p { color: var(--c-text-secondary); margin-bottom: var(--space-lg); }
   .scenario__screenshot { border: 1px solid var(--c-border); border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.06); }
   .scenario__screenshot img { width: 100%; }
-  .turn { margin-bottom: var(--space-xl); padding: var(--space-lg); background: var(--c-surface); border: 1px solid var(--c-border-subtle); border-radius: var(--radius-lg); }
-  .turn__label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-purple); margin-bottom: var(--space-md); }
-  .turn__who { font-size: 0.78rem; font-weight: 700; color: var(--c-text-muted); text-transform: uppercase; letter-spacing: 0.04em; display: block; margin-bottom: var(--space-xs); }
-  .turn__you { margin-bottom: var(--space-md); }
-  .turn__you .try-prompt { background: var(--c-surface-raised); border: 1px solid var(--c-border-subtle); border-radius: var(--radius-md); padding: var(--space-md); }
-  .turn__you .try-prompt__text { font-size: 0.92rem; color: var(--c-text); line-height: 1.6; border-left: 3px solid var(--c-primary); padding-left: var(--space-md); margin: 0; }
-  .turn__expect ul { padding-left: 20px; margin: 0; font-size: 0.88rem; color: var(--c-text-secondary); line-height: 1.7; }
-  .turn__expect li { margin-bottom: 4px; }
-  .turn__expect code { font-family: var(--font-mono); font-size: 0.85em; background: var(--c-surface-raised); padding: 1px 5px; border-radius: 4px; border: 1px solid var(--c-border-subtle); }
+
+  /* ── Conversation timeline ── */
+  .convo { margin-top: var(--space-3xl); }
+  .convo h2 { margin-bottom: var(--space-sm); }
+  .convo__intro { color: var(--c-text-secondary); margin-bottom: var(--space-xl); font-size: 0.92rem; }
+  .timeline { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+  .timeline li { display: grid; grid-template-columns: 40px 1fr; gap: var(--space-md); padding: var(--space-md) 0; }
+  .tl-marker { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.78rem; font-weight: 700; }
+  .tl-user .tl-marker { background: var(--c-primary); color: white; }
+  .tl-agent .tl-marker { background: var(--c-surface-raised); border: 2px solid var(--c-border); color: var(--c-text-muted); }
+  .tl-content { min-width: 0; }
+  .tl-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+  .tl-user .tl-label { color: var(--c-primary); }
+  .tl-agent .tl-label { color: var(--c-text-muted); }
+  .tl-user .try-prompt { background: var(--c-surface); border: 1px solid var(--c-border); border-radius: var(--radius-md); padding: var(--space-md); }
+  .tl-user .try-prompt__text { font-size: 0.92rem; color: var(--c-text); line-height: 1.6; border: none; padding: 0; margin: 0; }
+  .tl-steps { font-size: 0.88rem; color: var(--c-text-secondary); line-height: 1.65; padding: var(--space-md); background: var(--c-surface-raised); border-radius: var(--radius-md); border: 1px solid var(--c-border-subtle); }
+  .tl-steps p { margin-top: 8px; }
+  .tl-tool { display: flex; align-items: baseline; gap: 8px; padding: 3px 0; }
+  .tl-tool-name { font-family: var(--font-mono); font-size: 0.78em; font-weight: 600; color: var(--c-primary); background: var(--c-primary-light); padding: 2px 8px; border-radius: 4px; white-space: nowrap; }
+
+  /* ── Value cards ── */
   .value-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-lg); }
   .value-card { padding: var(--space-lg); background: var(--c-surface-raised); border: 1px solid var(--c-border-subtle); border-radius: var(--radius-md); }
   .value-card h3 { font-size: 0.95rem; margin-bottom: var(--space-xs); }

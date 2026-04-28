@@ -1,6 +1,6 @@
-# Enhanced Task Completion — Sample
+# Enhanced Task Completion - Sample
 
-An e-commerce customer service demo for **Enhanced Task Completion** in Microsoft Copilot Studio. Two agents chain 9 tools across two inline MCP connectors — everything runs inside the Power Platform, no external servers needed.
+An e-commerce customer service demo for **Enhanced Task Completion** in Microsoft Copilot Studio. Two agents chain 9 tools across two inline MCP connectors. Everything runs inside the Power Platform, no external servers needed.
 
 ## What's in the solution
 
@@ -22,7 +22,7 @@ An e-commerce customer service demo for **Enhanced Task Completion** in Microsof
 
 ### 2. Create connections
 
-After import, go to **Custom connectors** in the left nav. For each MCP connector (**Order Management MCP** and **Warehouse MCP**), click **Create connection** — no auth needed, just click **Create**.
+After import, go to **Custom connectors** in the left nav. For each MCP connector (**Order Management MCP** and **Warehouse MCP**), click **Create connection**. No auth needed, just click **Create**.
 
 ### 3. Publish agents
 
@@ -32,23 +32,31 @@ In Copilot Studio, open each agent (**ETC - Order Management** and **ETC - Wareh
 
 Open **ETC - Order Management** in Copilot Studio and try these prompts in the test pane:
 
-> Hi, I'm Sarah Mitchell. I ordered some Sony headphones recently but they arrived with a crackling sound in the left ear. I'd like to return them. Also, can you check where my other order is — the Kindle I ordered last week?
+**Multi-tool orchestration** (chains 5 tools, parallelizes independent calls):
 
-> I want to return something I bought recently.
+> Hi, I'm Sarah Mitchell. I ordered some Sony headphones recently but they arrived with a crackling sound in the left ear. I'd like to return them. Also, can you check where my other order is, the Kindle I ordered last week?
 
-Tests conversational slot-filling: the agent asks which order, what's wrong, and confirms before calling any tools.
+**Conversational guidance** (slot-filling with fuzzy info):
+
+> I want to return something. I'm Emily Chen, I think the order was 104-something from around April 14
+
+The agent searches, deduces the right order from partial info, and asks only for the return reason.
+
+**Connected agents** (cross-agent delegation to Warehouse):
 
 > I'm James Rivera. I ordered a Nintendo Switch bundle about 10 days ago and it still hasn't shipped. What's going on?
 
-Tests cross-agent delegation: Order agent checks with Warehouse, discovers out-of-stock item, asks user about alternatives, delegates back to Warehouse — a multi-turn cross-agent conversation.
+Follow up with: *"Yes, can you check what alternatives are available for the Switch?"*
+
+**File processing** (upload CSV, enrich with tool calls):
 
 > I'm about to upload a CSV with order IDs. For each order, fill in all the empty columns and return the completed CSV.
 
-For the CSV prompt, upload [`chat-ui/data/demo-orders.csv`](chat-ui/data/demo-orders.csv).
+Upload [`chat-ui-lite/data/demo-orders.csv`](chat-ui-lite/data/demo-orders.csv) along with the prompt. The agent reads the file, calls tools for each row, and returns a completed table. File download works in the Copilot Studio test pane.
 
-## Optional: Chat UI
+## Chat UI
 
-The `chat-ui-lite/` folder contains a lightweight web frontend that renders reasoning steps, tool calls, and agent responses inline. It uses the Copilot Studio JS SDK with MSAL browser auth.
+The `chat-ui-lite/` folder contains a lightweight web frontend built with Vite and the Copilot Studio JS SDK. It renders reasoning steps, tool calls, file uploads, and agent responses inline.
 
 ```bash
 cd chat-ui-lite
@@ -58,11 +66,15 @@ npm install
 npm run dev
 ```
 
-Requires an Entra ID App Registration with `http://localhost:5173` as a SPA redirect URI.
+Open `http://localhost:5173` in your browser. On first message, a popup will prompt you to sign in.
+
+**Prerequisites:**
+- An Entra ID App Registration with `http://localhost:5173` as a **SPA** redirect URI
+- The app must have the Copilot Studio API scope configured
 
 ## How it works
 
-The connectors use the [Power MCP Template](https://github.com/troystaylor/SharingIsCaring/tree/main/Connector-Code/Power%20MCP%20Template) pattern — a C# script inside each custom connector implements a full MCP server. When Copilot Studio calls the connector, the script handles `initialize`, `tools/list`, and `tools/call` with static mock data. No external servers, no dev tunnels, no Node.js.
+The connectors use the [Power MCP Template](https://github.com/troystaylor/SharingIsCaring/tree/main/Connector-Code/Power%20MCP%20Template) pattern: a C# script inside each custom connector implements a full MCP server. When Copilot Studio calls the connector, the script handles `initialize`, `tools/list`, and `tools/call` with static mock data. No external servers, no dev tunnels, no Node.js.
 
 The connector source is in `connectors/` for reference:
 

@@ -10,7 +10,7 @@ const base = import.meta.env.BASE_URL;
       <a href={base} class="back">&larr; All scenarios</a>
 
       <header class="scenario__header">
-        <span class="badge badge--accent">File Upload &amp; Download</span>
+        <span class="badge badge--accent">File Analysis &amp; Generation</span>
         <h1>File Processing</h1>
         <p class="scenario__lead">
           Upload a CSV of order IDs. The agent reads the file, calls tools for each order to
@@ -19,29 +19,35 @@ const base = import.meta.env.BASE_URL;
         <p class="scenario__note">File download only works in the Copilot Studio test pane at copilotstudio.microsoft.com.</p>
       </header>
 
-      <section class="scenario__section">
-        <h2>Follow along</h2>
-        <p>This scenario works best in the <strong>Copilot Studio test pane</strong>. Open the ETC - Order Management agent, click Test, and follow the steps below.</p>
+      <section class="convo">
+        <h2>The conversation</h2>
+        <p class="convo__intro">This works in the chat UI (with file upload) or the Copilot Studio test pane. Copy the prompt, attach the CSV, and send.</p>
 
-        <div class="turn">
-          <div class="turn__label">Step 1</div>
-          <div class="turn__you">
-            <span class="turn__who">You say:</span>
-            <div class="try-prompt">
-              <blockquote class="try-prompt__text">I'm about to upload a CSV with order IDs. For each order, fill in all the empty columns and return the completed CSV.</blockquote>
+        <ol class="timeline">
+          <li class="tl-user">
+            <div class="tl-marker">1</div>
+            <div class="tl-content">
+              <div class="tl-label">You</div>
+              <div class="try-prompt">
+                <blockquote class="try-prompt__text">I'm about to upload a CSV with order IDs. For each order, fill in all the empty columns and return the completed CSV.</blockquote>
+              </div>
+              <p class="tl-note">Attach <code>chat-ui-lite/data/demo-orders.csv</code> from the sample</p>
             </div>
-          </div>
-          <div class="turn__expect">
-            <span class="turn__who">Then:</span>
-            <ul>
-              <li>Upload the CSV file (<code>chat-ui/data/demo-orders.csv</code> from the sample)</li>
-              <li>The agent reads the file, identifies the order ID column</li>
-              <li>Calls <code>search_orders</code> and <code>get_order</code> for each row</li>
-              <li>Populates missing columns (status, total, items, shipping address)</li>
-              <li>Returns the completed CSV as a downloadable file</li>
-            </ul>
-          </div>
-        </div>
+          </li>
+          <li class="tl-agent">
+            <div class="tl-marker"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+            <div class="tl-content">
+              <div class="tl-label">Agent</div>
+              <div class="tl-steps">
+                <p>Reads the CSV, identifies 6 orders with empty columns</p>
+                <div class="tl-tool"><span class="tl-tool-name">get_order</span> &times;6 in parallel for all rows</div>
+                <div class="tl-tool"><span class="tl-tool-name">get_shipment</span> &times;3 for shipped/delivered orders</div>
+                <div class="tl-tool"><span class="tl-tool-name">ETC - Warehouse Management</span> for stock and fulfillment info</div>
+                <p>Compiles results into a completed table and generates the output CSV.</p>
+              </div>
+            </div>
+          </li>
+        </ol>
       </section>
 
       <!-- Screenshot -->
@@ -57,16 +63,16 @@ const base = import.meta.env.BASE_URL;
         <h2>ETC capabilities demonstrated</h2>
         <div class="value-grid">
           <div class="value-card">
-            <h3>Bulk tool execution</h3>
-            <p>The agent processes each row individually, calling the right tools for each order. It handles the iteration logic autonomously.</p>
+            <h3>Chain tools intelligently</h3>
+            <p>The agent reads the CSV, identifies the order ID column, then calls <code>search_orders</code> and <code>get_order</code> for each row, chaining file parsing with tool calls to enrich the data.</p>
           </div>
           <div class="value-card">
-            <h3>File round-trip</h3>
-            <p>Upload a file, the agent reads it, enriches it with live data, and returns a new file. The full input-process-output cycle runs within one conversation.</p>
+            <h3>Adapt its plan</h3>
+            <p>The agent figures out the CSV structure, determines which columns need filling, and iterates through rows. It adjusts its approach based on the file content it discovers.</p>
           </div>
           <div class="value-card">
-            <h3>Code interpreter</h3>
-            <p>The agent uses code interpreter to parse the CSV, manipulate the data, and generate the output file, combining tool calls with computation.</p>
+            <h3>File analysis and generation</h3>
+            <p>The agent uses built-in tools (code interpreter) to parse the uploaded CSV, manipulate the data, and generate a completed file, combining tool calls with computation.</p>
           </div>
         </div>
       </section>
@@ -84,18 +90,32 @@ const base = import.meta.env.BASE_URL;
   .scenario__note { margin-top: var(--space-sm); font-size: 0.85rem; color: var(--c-text-muted); font-style: italic; }
   .scenario__section { margin-top: var(--space-3xl); }
   .scenario__section h2 { margin-bottom: var(--space-lg); }
-  .scenario__section > p { color: var(--c-text-secondary); margin-bottom: var(--space-lg); }
   .scenario__screenshot { border: 1px solid var(--c-border); border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.06); }
   .scenario__screenshot img { width: 100%; }
-  .turn { margin-bottom: var(--space-xl); padding: var(--space-lg); background: var(--c-surface); border: 1px solid var(--c-border-subtle); border-radius: var(--radius-lg); }
-  .turn__label { font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-purple); margin-bottom: var(--space-md); }
-  .turn__who { font-size: 0.78rem; font-weight: 700; color: var(--c-text-muted); text-transform: uppercase; letter-spacing: 0.04em; display: block; margin-bottom: var(--space-xs); }
-  .turn__you { margin-bottom: var(--space-md); }
-  .turn__you .try-prompt { background: var(--c-surface-raised); border: 1px solid var(--c-border-subtle); border-radius: var(--radius-md); padding: var(--space-md); }
-  .turn__you .try-prompt__text { font-size: 0.92rem; color: var(--c-text); line-height: 1.6; border-left: 3px solid var(--c-primary); padding-left: var(--space-md); margin: 0; }
-  .turn__expect ul { padding-left: 20px; margin: 0; font-size: 0.88rem; color: var(--c-text-secondary); line-height: 1.7; }
-  .turn__expect li { margin-bottom: 4px; }
-  .turn__expect code { font-family: var(--font-mono); font-size: 0.85em; background: var(--c-surface-raised); padding: 1px 5px; border-radius: 4px; border: 1px solid var(--c-border-subtle); }
+
+  /* ── Conversation timeline ── */
+  .convo { margin-top: var(--space-3xl); }
+  .convo h2 { margin-bottom: var(--space-sm); }
+  .convo__intro { color: var(--c-text-secondary); margin-bottom: var(--space-xl); font-size: 0.92rem; }
+  .timeline { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 2px; }
+  .timeline li { display: grid; grid-template-columns: 40px 1fr; gap: var(--space-md); padding: var(--space-md) 0; }
+  .tl-marker { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 0.78rem; font-weight: 700; }
+  .tl-user .tl-marker { background: var(--c-primary); color: white; }
+  .tl-agent .tl-marker { background: var(--c-surface-raised); border: 2px solid var(--c-border); color: var(--c-text-muted); }
+  .tl-content { min-width: 0; }
+  .tl-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; }
+  .tl-user .tl-label { color: var(--c-primary); }
+  .tl-agent .tl-label { color: var(--c-text-muted); }
+  .tl-user .try-prompt { background: var(--c-surface); border: 1px solid var(--c-border); border-radius: var(--radius-md); padding: var(--space-md); }
+  .tl-user .try-prompt__text { font-size: 0.92rem; color: var(--c-text); line-height: 1.6; border: none; padding: 0; margin: 0; }
+  .tl-note { margin-top: 8px; font-size: 0.82rem; color: var(--c-text-muted); }
+  .tl-note code { font-family: var(--font-mono); font-size: 0.88em; background: var(--c-surface-raised); padding: 1px 5px; border-radius: 4px; }
+  .tl-steps { font-size: 0.88rem; color: var(--c-text-secondary); line-height: 1.65; padding: var(--space-md); background: var(--c-surface-raised); border-radius: var(--radius-md); border: 1px solid var(--c-border-subtle); }
+  .tl-steps p { margin-top: 8px; }
+  .tl-tool { display: flex; align-items: baseline; gap: 8px; padding: 3px 0; }
+  .tl-tool-name { font-family: var(--font-mono); font-size: 0.78em; font-weight: 600; color: var(--c-primary); background: var(--c-primary-light); padding: 2px 8px; border-radius: 4px; white-space: nowrap; }
+
+  /* ── Value cards ── */
   .value-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-lg); }
   .value-card { padding: var(--space-lg); background: var(--c-surface-raised); border: 1px solid var(--c-border-subtle); border-radius: var(--radius-md); }
   .value-card h3 { font-size: 0.95rem; margin-bottom: var(--space-xs); }
