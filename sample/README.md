@@ -46,16 +46,19 @@ Tests cross-agent delegation: Order agent checks with Warehouse, discovers out-o
 
 For the CSV prompt, upload [`chat-ui/data/demo-orders.csv`](chat-ui/data/demo-orders.csv).
 
-## Optional: Gradio Chat UI
+## Optional: Chat UI
 
-The `chat-ui/` folder contains a Python frontend that renders reasoning steps, tool calls, and file attachments inline — useful for testing outside Copilot Studio. It requires an Entra ID App Registration with `CopilotStudio.Copilots.Invoke` permission.
+The `chat-ui-lite/` folder contains a lightweight web frontend that renders reasoning steps, tool calls, and agent responses inline. It uses the Copilot Studio JS SDK with MSAL browser auth.
 
 ```bash
-cp chat-ui/.env.sample chat-ui/.env
+cd chat-ui-lite
+cp .env.sample .env
 # Edit .env with your environment ID, agent schema name, tenant ID, and client ID
-pip install -r chat-ui/requirements.txt
-python chat-ui/app.py
+npm install
+npm run dev
 ```
+
+Requires an Entra ID App Registration with `http://localhost:5173` as a SPA redirect URI.
 
 ## How it works
 

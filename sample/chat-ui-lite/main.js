@@ -164,36 +164,24 @@ function removeTypingIndicator() {
 function addToolCall(name, status) {
   const div = document.createElement("div");
   div.className = `msg-tool ${status}`;
-  div.innerHTML = `<span class="tool-icon">${status === "pending" ? "&#9676;" : "&#10003;"}</span><span class="tool-name">${escapeHtml(name)}</span><span class="tool-status"></span>`;
+  div.innerHTML = `<div class="tool-header">
+    <span class="tool-icon">${status === "pending" ? "&#9676;" : "&#10003;"}</span>
+    <span class="tool-name">${escapeHtml(name)}</span>
+    <span class="tool-status"></span>
+  </div>
+  <pre class="tool-result"></pre>`;
+  div.querySelector(".tool-header").onclick = () => div.classList.toggle("expanded");
   messagesEl.appendChild(div);
   scrollToBottom();
   return div;
 }
 
-function addToolResult(result) {
-  const hidden = new Set(["conversation_id", "id", "botId", "bot_id", "agent_id", "is_error"]);
-  let text;
-  if (typeof result === "object" && result !== null) {
-    const cleaned = Object.fromEntries(Object.entries(result).filter(([k]) => !hidden.has(k)));
-    text = Object.keys(cleaned).length ? JSON.stringify(cleaned, null, 2) : "Done";
-  } else {
-    text = String(result || "Done");
-  }
-  const div = document.createElement("div");
-  div.className = "tool-result";
-  div.textContent = text;
-  messagesEl.appendChild(div);
-  scrollToBottom();
-}
 
 function addReasoning(thought) {
   const div = document.createElement("div");
   div.className = "msg-reasoning";
-  div.innerHTML = `<div class="reasoning-header" onclick="this.parentElement.classList.toggle('expanded')">
-    <span>💭 Reasoning</span>
-    <svg class="reasoning-chevron" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
-  </div>
-  <div class="reasoning-body">${escapeHtml(thought)}</div>`;
+  div.textContent = thought;
+  div.onclick = () => div.classList.toggle("expanded");
   messagesEl.appendChild(div);
   scrollToBottom();
 }
@@ -224,6 +212,24 @@ function escapeHtml(s) {
 
 // Markdown renderer — handles common patterns from agent responses
 function renderMarkdown(text) {
+  // Extract and render tables first (before other transforms break the pipes)
+  text = text.replace(/((?:^\|.+\|$\n?)+)/gm, (tableBlock) => {
+    const rows = tableBlock.trim().split("\n").filter(r => r.trim());
+    if (rows.length < 2) return tableBlock;
+    // Skip separator row (|---|---|)
+    const dataRows = rows.filter(r => !/^\|[\s-:|]+\|$/.test(r));
+    if (dataRows.length === 0) return tableBlock;
+    const parseRow = (r) => r.split("|").slice(1, -1).map(c => c.trim());
+    const headers = parseRow(dataRows[0]);
+    const body = dataRows.slice(1).map(parseRow);
+    let html = "<table><thead><tr>" + headers.map(h => `<th>${h}</th>`).join("") + "</tr></thead><tbody>";
+    for (const row of body) {
+      html += "<tr>" + row.map(c => `<td>${c}</td>`).join("") + "</tr>";
+    }
+    html += "</tbody></table>";
+    return html;
+  });
+
   return text
     // Headings
     .replace(/^### (.+)$/gm, "<h3>$1</h3>")
@@ -233,7 +239,7 @@ function renderMarkdown(text) {
     // Bold
     .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
     // Italic
-    .replace(/\*(.+?)\*/g, "<em>$1</em>")
+    .replace(/(?<!\*)\*([^*]+)\*(?!\*)/g, "<em>$1</em>")
     // Links
     .replace(/\[(.*?)\]\((.*?)\)/g, '<a href="$2" target="_blank">$1</a>')
     // Inline code
@@ -339,6 +345,19 @@ async function sendMessage(text) {
               el.querySelector(".tool-icon").textContent = "\u2713";
               const dur = tc.duration_ms || tc.durationMs;
               el.querySelector(".tool-status").textContent = dur ? `${(dur / 1000).toFixed(1)}s` : "";
+              // Populate result
+              const result = tc.result || tc.result_raw;
+              if (result) {
+                const hidden = new Set(["conversation_id", "id", "botId", "bot_id", "agent_id", "is_error"]);
+                let text;
+                if (typeof result === "object" && result !== null) {
+                  const cleaned = Object.fromEntries(Object.entries(result).filter(([k]) => !hidden.has(k)));
+                  text = Object.keys(cleaned).length ? JSON.stringify(cleaned, null, 2) : "";
+                } else {
+                  text = String(result);
+                }
+                if (text) el.querySelector(".tool-result").textContent = text;
+              }
             }
           }
         }

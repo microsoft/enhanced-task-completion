@@ -238,56 +238,34 @@ body {
 .msg-bot a { color: var(--c-primary); }
 
 /* ── Reasoning ── */
-/* ── Reasoning accordion ── */
+/* ── Reasoning ── */
 .msg-reasoning {
   align-self: flex-start;
   max-width: 82%;
-  background: var(--c-surface);
-  border: 1px solid var(--c-border-subtle);
-  border-radius: var(--radius-sm);
-  overflow: hidden;
-  animation: msgIn 0.2s ease;
-}
-.reasoning-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 6px 12px;
-  font-size: 0.76rem;
-  font-weight: 600;
+  padding: 5px 10px;
+  font-size: 0.75rem;
+  line-height: 1.5;
   color: var(--c-text-muted);
   cursor: pointer;
   user-select: none;
-  transition: background 0.15s;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  animation: msgIn 0.2s ease;
 }
-.reasoning-header:hover { background: var(--c-surface-raised); }
-.reasoning-chevron {
-  transition: transform 0.2s ease;
-}
-.msg-reasoning.expanded .reasoning-chevron {
-  transform: rotate(180deg);
-}
-.reasoning-body {
-  display: none;
-  padding: 0 12px 10px;
-  font-size: 0.78rem;
-  line-height: 1.55;
-  color: var(--c-text-secondary);
-  border-top: 1px solid var(--c-border-subtle);
-  padding-top: 8px;
-  margin-top: 2px;
-}
-.msg-reasoning.expanded .reasoning-body {
-  display: block;
+.msg-reasoning::before { content: '💭 '; }
+.msg-reasoning.expanded {
+  white-space: normal;
+  background: var(--c-surface);
+  border: 1px solid var(--c-border-subtle);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px;
 }
 
 /* ── Tool calls ── */
 .msg-tool {
   align-self: flex-start;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 12px;
+  max-width: 82%;
   background: var(--c-surface);
   border: 1px solid var(--c-border-subtle);
   border-left: 3px solid var(--c-primary);
@@ -296,7 +274,16 @@ body {
   font-size: 0.76rem;
   color: var(--c-text-secondary);
   animation: msgIn 0.15s ease;
+  overflow: hidden;
 }
+.tool-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  cursor: pointer;
+}
+.tool-header:hover { background: var(--c-surface-raised); }
 .msg-tool .tool-icon { font-size: 0.82rem; opacity: 0.5; }
 .msg-tool .tool-name { font-weight: 600; }
 .msg-tool .tool-status { font-size: 0.68rem; color: var(--c-text-muted); }
@@ -306,20 +293,21 @@ body {
 @keyframes spin { to { transform: rotate(360deg); } }
 
 .tool-result {
-  align-self: flex-start;
-  max-width: 82%;
-  font-size: 0.72rem;
+  display: none;
+  margin: 0;
+  padding: 8px 12px;
+  font-size: 0.7rem;
+  line-height: 1.45;
   color: var(--c-text-muted);
   background: var(--c-surface-raised);
-  border: 1px solid var(--c-border-subtle);
-  border-radius: var(--radius-sm);
-  padding: 6px 10px;
-  max-height: 100px;
+  border-top: 1px solid var(--c-border-subtle);
+  max-height: 150px;
   overflow-y: auto;
-  font-family: var(--font-mono);
   white-space: pre-wrap;
-  animation: msgIn 0.15s ease;
+  word-break: break-all;
 }
+.tool-result:empty { display: none !important; }
+.msg-tool.expanded .tool-result { display: block; }
 
 /* ── Typing ── */
 .msg-typing {

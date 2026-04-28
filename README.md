@@ -19,7 +19,7 @@ The sample includes two Copilot Studio agents that chain 9 tools across two MCP 
 sample/
   solution/          Solution zip — import into any Power Platform environment
   connectors/        Inline MCP connector source (C# scripts + swagger)
-  chat-ui/           Optional Gradio frontend with reasoning + tool call rendering
+  chat-ui-lite/      Optional web chat UI with inline reasoning + tool call rendering
 ```
 
 See [`sample/README.md`](./sample/README.md) for step-by-step setup.
