@@ -38,6 +38,8 @@ The Copilot Studio test pane is all you need to try the scenarios above. The cha
 
 The `chat-ui-lite/` folder contains a lightweight web frontend built with Vite and the [Copilot Studio JS SDK](https://www.npmjs.com/package/@microsoft/agents-copilotstudio-client). It renders reasoning steps, tool calls, and file uploads inline, giving visibility into how ETC orchestrates behind the scenes.
 
+![Chat UI](chat-ui-lite/screenshot.png)
+
 ### 1. Create an Entra ID App Registration
 
 1. Go to the [Azure portal](https://portal.azure.com) > **Microsoft Entra ID** > **App registrations** > **New registration**
