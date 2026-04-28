@@ -56,21 +56,54 @@ Upload [`chat-ui-lite/data/demo-orders.csv`](chat-ui-lite/data/demo-orders.csv) 
 
 ## Chat UI
 
-The `chat-ui-lite/` folder contains a lightweight web frontend built with Vite and the Copilot Studio JS SDK. It renders reasoning steps, tool calls, file uploads, and agent responses inline.
+The `chat-ui-lite/` folder contains a lightweight web frontend built with Vite and the [Copilot Studio JS SDK](https://www.npmjs.com/package/@microsoft/agents-copilotstudio-client). It renders reasoning steps, tool calls, file uploads, and agent responses inline.
+
+### 1. Create an Entra ID App Registration
+
+1. Go to the [Azure portal](https://portal.azure.com) > **Microsoft Entra ID** > **App registrations** > **New registration**
+2. Name it anything (e.g., "ETC Chat UI")
+3. Under **Supported account types**, select **Single tenant**
+4. Under **Redirect URI**, select **Single-page application (SPA)** and enter `http://localhost:5173`
+5. Click **Register**
+6. Copy the **Application (client) ID** and **Directory (tenant) ID** from the Overview page
+
+### 2. Configure API permissions
+
+1. In your app registration, go to **API permissions** > **Add a permission**
+2. Select **APIs my organization uses**, search for **CopilotStudio** (or **Power Virtual Agents**)
+3. Select **Delegated permissions** and check the available scope
+4. Click **Add permissions**
+
+### 3. Find your environment ID and agent schema name
+
+- **Environment ID**: In [Copilot Studio](https://copilotstudio.microsoft.com), click the environment picker in the top bar. The ID is in the URL: `environments/{environment-id}/...`
+- **Agent schema name**: Open your agent in Copilot Studio, go to **Settings** > **Agent details**. The schema name looks like `cr26e_orderManagement`
+
+### 4. Run the chat UI
 
 ```bash
 cd chat-ui-lite
 cp .env.sample .env
-# Edit .env with your environment ID, agent schema name, tenant ID, and client ID
+```
+
+Edit `.env` with your values:
+
+```
+VITE_ENVIRONMENT_ID=6cc0c98e-3fe6-e0d5-8eba-ba51c9da1d13
+VITE_AGENT_SCHEMA=cr26e_orderManagement
+VITE_TENANT_ID=8a235459-...
+VITE_CLIENT_ID=abc12345-...
+VITE_GUIDE_URL=https://microsoft.github.io/enhanced-task-completion/
+```
+
+Then:
+
+```bash
 npm install
 npm run dev
 ```
 
-Open `http://localhost:5173` in your browser. On first message, a popup will prompt you to sign in.
-
-**Prerequisites:**
-- An Entra ID App Registration with `http://localhost:5173` as a **SPA** redirect URI
-- The app must have the Copilot Studio API scope configured
+Open `http://localhost:5173` in your browser. On first message, a popup will prompt you to sign in with your Microsoft account.
 
 ## How it works
 
