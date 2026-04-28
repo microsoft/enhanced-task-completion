@@ -54,9 +54,11 @@ Follow up with: *"Yes, can you check what alternatives are available for the Swi
 
 Upload [`chat-ui-lite/data/demo-orders.csv`](chat-ui-lite/data/demo-orders.csv) along with the prompt. The agent reads the file, calls tools for each row, and returns a completed table. File download works in the Copilot Studio test pane.
 
-## Chat UI
+## Chat UI (optional)
 
-The `chat-ui-lite/` folder contains a lightweight web frontend built with Vite and the [Copilot Studio JS SDK](https://www.npmjs.com/package/@microsoft/agents-copilotstudio-client). It renders reasoning steps, tool calls, file uploads, and agent responses inline.
+The Copilot Studio test pane is all you need to try the scenarios above. The chat UI is an optional add-on for demos and presentations where you want to show the agent to people who don't have access to Copilot Studio (non-makers, stakeholders, external audiences).
+
+The `chat-ui-lite/` folder contains a lightweight web frontend built with Vite and the [Copilot Studio JS SDK](https://www.npmjs.com/package/@microsoft/agents-copilotstudio-client). It renders reasoning steps, tool calls, and file uploads inline, giving visibility into how ETC orchestrates behind the scenes.
 
 ### 1. Create an Entra ID App Registration
 
