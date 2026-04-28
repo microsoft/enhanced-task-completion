@@ -51,37 +51,37 @@ public class Script : ScriptBase
     // ── Static Data ─────────────────────────────────────────────────────
 
     private static readonly JArray Stock = JArray.Parse(@"[
-        {""sku"":""SKU-WH1000"",""name"":""Sony WH-1000XM5 Headphones"",""category"":""electronics"",""quantity"":3,""warehouse"":""Seattle-WA1"",""aisle"":""E-14"",""availableForShipping"":true},
+        {""sku"":""SKU-APEX5"",""name"":""Apex NoiseGuard 5 Headphones"",""category"":""electronics"",""quantity"":3,""warehouse"":""Seattle-WA1"",""aisle"":""E-14"",""availableForShipping"":true},
         {""sku"":""SKU-USBC3"",""name"":""USB-C Charging Cable (3-pack)"",""category"":""electronics"",""quantity"":142,""warehouse"":""Seattle-WA1"",""aisle"":""A-02"",""availableForShipping"":true},
-        {""sku"":""SKU-KINDLE"",""name"":""Kindle Paperwhite (16GB)"",""category"":""electronics"",""quantity"":0,""warehouse"":""Chicago-IL1"",""aisle"":""E-08"",""availableForShipping"":false},
-        {""sku"":""SKU-AIRPOD"",""name"":""AirPods Pro (2nd Gen)"",""category"":""electronics"",""quantity"":17,""warehouse"":""Seattle-WA1"",""aisle"":""E-12"",""availableForShipping"":true},
-        {""sku"":""SKU-SWITCH"",""name"":""Nintendo Switch OLED"",""category"":""electronics"",""quantity"":0,""warehouse"":""Chicago-IL1"",""aisle"":""E-22"",""availableForShipping"":false},
-        {""sku"":""SKU-ZELDA"",""name"":""The Legend of Zelda: Tears of the Kingdom"",""category"":""electronics"",""quantity"":24,""warehouse"":""Chicago-IL1"",""aisle"":""G-05"",""availableForShipping"":true},
-        {""sku"":""SKU-WH900"",""name"":""Sony WH-1000XM4 Headphones (Previous Gen)"",""category"":""electronics"",""quantity"":8,""warehouse"":""Seattle-WA1"",""aisle"":""E-14"",""availableForShipping"":true},
-        {""sku"":""SKU-BOSE700"",""name"":""Bose 700 Noise Cancelling Headphones"",""category"":""electronics"",""quantity"":6,""warehouse"":""Seattle-WA1"",""aisle"":""E-15"",""availableForShipping"":true},
-        {""sku"":""SKU-AIRMAX"",""name"":""AirPods Max - Space Gray"",""category"":""electronics"",""quantity"":2,""warehouse"":""Seattle-WA1"",""aisle"":""E-13"",""availableForShipping"":true},
-        {""sku"":""SKU-HOODIE"",""name"":""Nike Tech Fleece Hoodie - Black (L)"",""category"":""clothing"",""quantity"":4,""warehouse"":""Dallas-TX1"",""aisle"":""C-07"",""availableForShipping"":true},
-        {""sku"":""SKU-HOODIE-XL"",""name"":""Nike Tech Fleece Hoodie - Black (XL)"",""category"":""clothing"",""quantity"":7,""warehouse"":""Dallas-TX1"",""aisle"":""C-07"",""availableForShipping"":true},
-        {""sku"":""SKU-HOODIE-GRY"",""name"":""Nike Tech Fleece Hoodie - Grey (L)"",""category"":""clothing"",""quantity"":2,""warehouse"":""Dallas-TX1"",""aisle"":""C-07"",""availableForShipping"":true},
-        {""sku"":""SKU-JOGGER"",""name"":""Nike Sportswear Joggers - Grey (L)"",""category"":""clothing"",""quantity"":11,""warehouse"":""Dallas-TX1"",""aisle"":""C-09"",""availableForShipping"":true},
-        {""sku"":""SKU-DUNE2"",""name"":""Dune: Part Two (4K Blu-ray)"",""category"":""media"",""quantity"":9,""warehouse"":""Chicago-IL1"",""aisle"":""M-03"",""availableForShipping"":true},
-        {""sku"":""SKU-ERGOCHAIR"",""name"":""ErgoChair Pro - Matte Black"",""category"":""furniture"",""quantity"":1,""warehouse"":""Seattle-WA1"",""aisle"":""F-01"",""availableForShipping"":true},
-        {""sku"":""SKU-ERGOCHAIR-W"",""name"":""ErgoChair Pro - White"",""category"":""furniture"",""quantity"":3,""warehouse"":""Seattle-WA1"",""aisle"":""F-01"",""availableForShipping"":true},
+        {""sku"":""SKU-LUMI"",""name"":""LumiRead E-Reader (16GB)"",""category"":""electronics"",""quantity"":0,""warehouse"":""Chicago-IL1"",""aisle"":""E-08"",""availableForShipping"":false},
+        {""sku"":""SKU-PULSE"",""name"":""PulseWave Pro Earbuds"",""category"":""electronics"",""quantity"":17,""warehouse"":""Seattle-WA1"",""aisle"":""E-12"",""availableForShipping"":true},
+        {""sku"":""SKU-VORTEX"",""name"":""Vortex Gaming Console OLED"",""category"":""electronics"",""quantity"":0,""warehouse"":""Chicago-IL1"",""aisle"":""E-22"",""availableForShipping"":false},
+        {""sku"":""SKU-REALM"",""name"":""Realm of Legends: The Lost Crown"",""category"":""electronics"",""quantity"":24,""warehouse"":""Chicago-IL1"",""aisle"":""G-05"",""availableForShipping"":true},
+        {""sku"":""SKU-APEX4"",""name"":""Apex NoiseGuard 4 Headphones (Previous Gen)"",""category"":""electronics"",""quantity"":8,""warehouse"":""Seattle-WA1"",""aisle"":""E-14"",""availableForShipping"":true},
+        {""sku"":""SKU-CLAR7"",""name"":""Clarity NC700 Headphones"",""category"":""electronics"",""quantity"":6,""warehouse"":""Seattle-WA1"",""aisle"":""E-15"",""availableForShipping"":true},
+        {""sku"":""SKU-PWMAX"",""name"":""PulseWave Max Headphones - Space Gray"",""category"":""electronics"",""quantity"":2,""warehouse"":""Seattle-WA1"",""aisle"":""E-13"",""availableForShipping"":true},
+        {""sku"":""SKU-HOODIE"",""name"":""TrailMark Fleece Hoodie - Black (L)"",""category"":""clothing"",""quantity"":4,""warehouse"":""Dallas-TX1"",""aisle"":""C-07"",""availableForShipping"":true},
+        {""sku"":""SKU-HOODIE-XL"",""name"":""TrailMark Fleece Hoodie - Black (XL)"",""category"":""clothing"",""quantity"":7,""warehouse"":""Dallas-TX1"",""aisle"":""C-07"",""availableForShipping"":true},
+        {""sku"":""SKU-HOODIE-GRY"",""name"":""TrailMark Fleece Hoodie - Grey (L)"",""category"":""clothing"",""quantity"":2,""warehouse"":""Dallas-TX1"",""aisle"":""C-07"",""availableForShipping"":true},
+        {""sku"":""SKU-JOGGER"",""name"":""TrailMark Sport Joggers - Grey (L)"",""category"":""clothing"",""quantity"":11,""warehouse"":""Dallas-TX1"",""aisle"":""C-09"",""availableForShipping"":true},
+        {""sku"":""SKU-STAR2"",""name"":""Starfall: Part Two (4K Blu-ray)"",""category"":""media"",""quantity"":9,""warehouse"":""Chicago-IL1"",""aisle"":""M-03"",""availableForShipping"":true},
+        {""sku"":""SKU-COMFT"",""name"":""ComfortEdge Pro - Matte Black"",""category"":""furniture"",""quantity"":1,""warehouse"":""Seattle-WA1"",""aisle"":""F-01"",""availableForShipping"":true},
+        {""sku"":""SKU-COMFT-W"",""name"":""ComfortEdge Pro - White"",""category"":""furniture"",""quantity"":3,""warehouse"":""Seattle-WA1"",""aisle"":""F-01"",""availableForShipping"":true},
         {""sku"":""SKU-DESKMAT"",""name"":""Felt Desk Mat - Dark Grey (90x40cm)"",""category"":""furniture"",""quantity"":30,""warehouse"":""Seattle-WA1"",""aisle"":""F-04"",""availableForShipping"":true}
     ]");
 
     private static readonly JObject Fulfillment = JObject.Parse(@"{
-        ""ORD-10422"":{""order_id"":""ORD-10422"",""warehouse"":""Chicago-IL1"",""assigned_worker"":""Mike Torres"",""current_stage"":""received"",""estimated_ship_date"":""2026-04-23"",""notes"":""Kindle Paperwhite — awaiting restock. Item reserved from incoming shipment."",""pipeline"":[{""stage"":""received"",""completed_at"":""2026-04-15T09:30:00Z""}]},
-        ""ORD-10460"":{""order_id"":""ORD-10460"",""warehouse"":""Chicago-IL1"",""assigned_worker"":""Lisa Park"",""current_stage"":""picked"",""estimated_ship_date"":""2026-04-21"",""notes"":""Switch OLED on backorder — Zelda game picked, holding for bundle ship."",""pipeline"":[{""stage"":""received"",""completed_at"":""2026-04-18T10:00:00Z""},{""stage"":""picked"",""completed_at"":""2026-04-19T14:20:00Z""}]},
-        ""ORD-10421"":{""order_id"":""ORD-10421"",""warehouse"":""Seattle-WA1"",""assigned_worker"":""Carlos Mendez"",""current_stage"":""handed_to_carrier"",""estimated_ship_date"":""2026-04-13"",""notes"":""Shipped via FedEx. Two items in single box."",""pipeline"":[{""stage"":""received"",""completed_at"":""2026-04-11T08:00:00Z""},{""stage"":""picked"",""completed_at"":""2026-04-11T11:30:00Z""},{""stage"":""packed"",""completed_at"":""2026-04-12T09:15:00Z""},{""stage"":""labeled"",""completed_at"":""2026-04-12T10:00:00Z""},{""stage"":""handed_to_carrier"",""completed_at"":""2026-04-13T08:45:00Z""}]},
-        ""ORD-10455"":{""order_id"":""ORD-10455"",""warehouse"":""Dallas-TX1"",""assigned_worker"":""Rachel Kim"",""current_stage"":""handed_to_carrier"",""estimated_ship_date"":""2026-04-14"",""notes"":""Shipped via UPS. Hoodie + joggers in one package."",""pipeline"":[{""stage"":""received"",""completed_at"":""2026-04-12T11:00:00Z""},{""stage"":""picked"",""completed_at"":""2026-04-13T09:00:00Z""},{""stage"":""packed"",""completed_at"":""2026-04-13T14:30:00Z""},{""stage"":""labeled"",""completed_at"":""2026-04-14T08:00:00Z""},{""stage"":""handed_to_carrier"",""completed_at"":""2026-04-14T15:00:00Z""}]}
+        ""ORD-10422"":{""order_id"":""ORD-10422"",""warehouse"":""Chicago-IL1"",""assigned_worker"":""Mike Torres"",""current_stage"":""received"",""estimated_ship_date"":""2026-04-23"",""notes"":""LumiRead E-Reader — awaiting restock. Item reserved from incoming shipment."",""pipeline"":[{""stage"":""received"",""completed_at"":""2026-04-15T09:30:00Z""}]},
+        ""ORD-10460"":{""order_id"":""ORD-10460"",""warehouse"":""Chicago-IL1"",""assigned_worker"":""Lisa Park"",""current_stage"":""picked"",""estimated_ship_date"":""2026-04-21"",""notes"":""Vortex Console on backorder, Realm of Legends picked, holding for bundle ship."",""pipeline"":[{""stage"":""received"",""completed_at"":""2026-04-18T10:00:00Z""},{""stage"":""picked"",""completed_at"":""2026-04-19T14:20:00Z""}]},
+        ""ORD-10421"":{""order_id"":""ORD-10421"",""warehouse"":""Seattle-WA1"",""assigned_worker"":""Carlos Mendez"",""current_stage"":""handed_to_carrier"",""estimated_ship_date"":""2026-04-13"",""notes"":""Shipped via SwiftShip. Two items in single box."",""pipeline"":[{""stage"":""received"",""completed_at"":""2026-04-11T08:00:00Z""},{""stage"":""picked"",""completed_at"":""2026-04-11T11:30:00Z""},{""stage"":""packed"",""completed_at"":""2026-04-12T09:15:00Z""},{""stage"":""labeled"",""completed_at"":""2026-04-12T10:00:00Z""},{""stage"":""handed_to_carrier"",""completed_at"":""2026-04-13T08:45:00Z""}]},
+        ""ORD-10455"":{""order_id"":""ORD-10455"",""warehouse"":""Dallas-TX1"",""assigned_worker"":""Rachel Kim"",""current_stage"":""handed_to_carrier"",""estimated_ship_date"":""2026-04-14"",""notes"":""Shipped via PrimeFreight. Hoodie + joggers in one package."",""pipeline"":[{""stage"":""received"",""completed_at"":""2026-04-12T11:00:00Z""},{""stage"":""picked"",""completed_at"":""2026-04-13T09:00:00Z""},{""stage"":""packed"",""completed_at"":""2026-04-13T14:30:00Z""},{""stage"":""labeled"",""completed_at"":""2026-04-14T08:00:00Z""},{""stage"":""handed_to_carrier"",""completed_at"":""2026-04-14T15:00:00Z""}]}
     }");
 
     private static readonly JArray Restock = JArray.Parse(@"[
-        {""sku"":""SKU-KINDLE"",""name"":""Kindle Paperwhite (16GB)"",""current_quantity"":0,""next_shipment_date"":""2026-04-22"",""expected_quantity"":50,""supplier"":""Amazon Devices Distribution"",""notes"":""Delayed from original April 18 date. Supplier confirmed new ETA.""},
-        {""sku"":""SKU-SWITCH"",""name"":""Nintendo Switch OLED"",""current_quantity"":0,""next_shipment_date"":""2026-04-28"",""expected_quantity"":30,""supplier"":""Nintendo of America"",""notes"":""High demand — limited allocation. Next batch after this is mid-May.""},
-        {""sku"":""SKU-WH1000"",""name"":""Sony WH-1000XM5 Headphones"",""current_quantity"":3,""next_shipment_date"":""2026-05-05"",""expected_quantity"":20,""supplier"":""Sony Electronics Inc."",""notes"":""Regular replenishment cycle. Current stock sufficient for 1-2 weeks.""},
-        {""sku"":""SKU-ERGOCHAIR"",""name"":""ErgoChair Pro - Matte Black"",""current_quantity"":1,""next_shipment_date"":""2026-04-30"",""expected_quantity"":10,""supplier"":""Autonomous Inc."",""notes"":""Low stock alert triggered. Express shipment arranged.""}
+        {""sku"":""SKU-LUMI"",""name"":""LumiRead E-Reader (16GB)"",""current_quantity"":0,""next_shipment_date"":""2026-04-22"",""expected_quantity"":50,""supplier"":""LumiRead Distribution Co."",""notes"":""Delayed from original April 18 date. Supplier confirmed new ETA.""},
+        {""sku"":""SKU-VORTEX"",""name"":""Vortex Gaming Console OLED"",""current_quantity"":0,""next_shipment_date"":""2026-04-28"",""expected_quantity"":30,""supplier"":""Vortex Games Inc."",""notes"":""High demand — limited allocation. Next batch after this is mid-May.""},
+        {""sku"":""SKU-APEX5"",""name"":""Apex NoiseGuard 5 Headphones"",""current_quantity"":3,""next_shipment_date"":""2026-05-05"",""expected_quantity"":20,""supplier"":""Apex Audio Corp."",""notes"":""Regular replenishment cycle. Current stock sufficient for 1-2 weeks.""},
+        {""sku"":""SKU-COMFT"",""name"":""ComfortEdge Pro - Matte Black"",""current_quantity"":1,""next_shipment_date"":""2026-04-30"",""expected_quantity"":10,""supplier"":""ComfortEdge Furniture Co."",""notes"":""Low stock alert triggered. Express shipment arranged.""}
     ]");
 
     // ── Tool Registration ───────────────────────────────────────────────
@@ -91,7 +91,7 @@ public class Script : ScriptBase
         // 1. check_stock
         handler.AddTool("check_stock",
             "Check warehouse inventory for a product by SKU. Returns quantity on hand, warehouse location, aisle, and whether the item is available for shipping. If quantity is 0, use get_restock_date for restock info.",
-            schemaConfig: s => s.String("sku", "Product SKU (e.g. 'SKU-WH1000'). Use SKUs from order line items.", required: true),
+            schemaConfig: s => s.String("sku", "Product SKU (e.g. 'SKU-APEX5'). Use SKUs from order line items.", required: true),
             handler: async (args, ct) =>
             {
                 var sku = args.Value<string>("sku") ?? "";
@@ -170,7 +170,7 @@ public class Script : ScriptBase
         // 4. get_restock_date
         handler.AddTool("get_restock_date",
             "Get the next restock date and supplier info for a product. Use this when check_stock shows an item is out of stock or low stock. Returns expected delivery date, quantity, and supplier details.",
-            schemaConfig: s => s.String("sku", "Product SKU (e.g. 'SKU-KINDLE'). Typically used after check_stock shows low/no stock.", required: true),
+            schemaConfig: s => s.String("sku", "Product SKU (e.g. 'SKU-LUMI'). Typically used after check_stock shows low/no stock.", required: true),
             handler: async (args, ct) =>
             {
                 var sku = args.Value<string>("sku") ?? "";
