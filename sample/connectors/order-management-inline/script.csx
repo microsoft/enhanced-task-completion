@@ -18,7 +18,7 @@ using Newtonsoft.Json.Linq;
 
 public class Script : ScriptBase
 {
-    private const string APP_INSIGHTS_CONNECTION_STRING = "";
+
 
     private static readonly McpServerOptions Options = new McpServerOptions
     {
@@ -210,31 +210,6 @@ public class Script : ScriptBase
             });
     }
 
-    // ── App Insights (optional, from Power MCP Template) ────────────────
-
-    private async Task LogToAppInsights(string eventName, JObject data, string correlationId)
-    {
-        if (string.IsNullOrEmpty(APP_INSIGHTS_CONNECTION_STRING)) return;
-        try
-        {
-            var iKey = APP_INSIGHTS_CONNECTION_STRING.Split(';').FirstOrDefault(s => s.StartsWith("InstrumentationKey="))?.Split('=')[1] ?? "";
-            var endpoint = APP_INSIGHTS_CONNECTION_STRING.Split(';').FirstOrDefault(s => s.StartsWith("IngestionEndpoint="))?.Split('=')[1]?.TrimEnd('/') ?? "https://dc.services.visualstudio.com";
-            var envelope = new JObject
-            {
-                ["name"] = "Microsoft.ApplicationInsights.Event",
-                ["time"] = DateTime.UtcNow.ToString("o"),
-                ["iKey"] = iKey,
-                ["data"] = new JObject
-                {
-                    ["baseType"] = "EventData",
-                    ["baseData"] = new JObject { ["ver"] = 2, ["name"] = eventName, ["properties"] = new JObject { ["correlationId"] = correlationId, ["details"] = data?.ToString(Newtonsoft.Json.Formatting.None) ?? "{}" } }
-                }
-            };
-            var request = new HttpRequestMessage(HttpMethod.Post, $"{endpoint}/v2/track") { Content = new StringContent($"[{envelope}]", Encoding.UTF8, "application/json") };
-            await this.Context.SendAsync(request, this.CancellationToken).ConfigureAwait(false);
-        }
-        catch { }
-    }
 }
 
 // ║  SECTION 2: MCP FRAMEWORK                                                  ║
