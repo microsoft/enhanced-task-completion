@@ -78,10 +78,14 @@ The `chat-ui-lite/` folder contains a lightweight web frontend built with Vite a
 
 > If **Power Platform API** doesn't appear, it may need to be registered with your tenant first. See the [Copilot Studio WebChat sample](https://github.com/microsoft/Agents/tree/main/samples/nodejs/copilotstudio-webclient) for details.
 
-### 3. Find your environment ID and agent schema name
+### 3. Get your environment ID and agent schema name
 
-- **Environment ID**: In [Copilot Studio](https://copilotstudio.microsoft.com), click the environment picker in the top bar. The ID is in the URL: `environments/{environment-id}/...`
-- **Agent schema name**: Open your agent in Copilot Studio, go to **Settings** > **Agent details**. The schema name looks like `cr26e_orderManagement`
+Make sure your agent is published first (see Quick start step 3 above). Then:
+
+1. In Copilot Studio, open your agent
+2. Go to **Settings** > **Advanced** > **Metadata**
+3. Copy the **Schema name** (e.g., `cr26e_orderManagement`)
+4. Copy the **Environment ID** (also visible in the URL: `environments/{environment-id}/...`)
 
 ### 4. Run the chat UI
 
