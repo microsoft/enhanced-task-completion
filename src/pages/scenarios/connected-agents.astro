@@ -14,7 +14,7 @@ const base = import.meta.env.BASE_URL;
         <h1>Connected Agents</h1>
         <p class="scenario__lead">
           The Orders Agent delegates to the Warehouse Agent mid-conversation. The Warehouse Agent
-          calls its own MCP tools, and the parent agent relays the results — spanning two turns
+          calls its own MCP tools, and the parent agent relays the results, spanning two turns
           of cross-agent communication.
         </p>
       </header>
@@ -35,9 +35,9 @@ const base = import.meta.env.BASE_URL;
             <span class="turn__who">The agent:</span>
             <ul>
               <li>Calls <code>search_orders</code> and identifies the Switch bundle (ORD-10460)</li>
-              <li>Calls <code>get_order</code> — sees it's stuck in "processing" for 10 days</li>
+              <li>Calls <code>get_order</code>, sees it's stuck in "processing" for 10 days</li>
               <li>Delegates to <strong>ETC - Warehouse Management</strong> to investigate why</li>
-              <li>Warehouse Agent calls <code>check_stock</code> — finds Switch OLED is out of stock</li>
+              <li>Warehouse Agent calls <code>check_stock</code>, finds Switch OLED is out of stock</li>
               <li>Reports the issue: out of stock, restock expected today, presents options (wait / split / cancel)</li>
             </ul>
           </div>
@@ -81,11 +81,11 @@ const base = import.meta.env.BASE_URL;
           </div>
           <div class="value-card">
             <h3>Autonomous investigation</h3>
-            <p>The user just says "hasn't shipped" — the agent autonomously decides to check with the warehouse, discovers the out-of-stock issue, and explains the full picture.</p>
+            <p>The user just says "hasn't shipped", the agent autonomously decides to check with the warehouse, discovers the out-of-stock issue, and explains the full picture.</p>
           </div>
           <div class="value-card">
             <h3>Separate MCP tools</h3>
-            <p>Each agent has its own MCP connector with different tools. The Orders Agent can't check stock directly — it delegates to the specialist.</p>
+            <p>Each agent has its own MCP connector with different tools. The Orders Agent can't check stock directly, it delegates to the specialist.</p>
           </div>
         </div>
       </section>

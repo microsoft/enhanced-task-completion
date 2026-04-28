@@ -14,54 +14,57 @@ const base = import.meta.env.BASE_URL;
         <h1>Conversational Guidance</h1>
         <p class="scenario__lead">
           The user gives fuzzy, incomplete info. The agent reasons through it, calls the right tools,
-          and asks targeted follow-up questions — only for the details it can't figure out on its own.
+          and asks targeted follow-up questions only for the details it can't figure out on its own.
         </p>
       </header>
 
-      <section class="scenario__section">
-        <h2>Follow along</h2>
-        <p>Open the chat UI in another tab, then follow each step below.</p>
+      <section class="convo">
+        <h2>The conversation</h2>
+        <p class="convo__intro">Open the chat UI side by side. Copy each prompt, send it, and watch the agent work.</p>
 
-        <div class="turn">
-          <div class="turn__label">Step 1</div>
-          <div class="turn__you">
-            <span class="turn__who">You say:</span>
-            <div class="try-prompt">
-              <blockquote class="try-prompt__text">I want to return something. I'm Emily Chen, I think the order was 104-something from around April 14</blockquote>
+        <ol class="timeline">
+          <li class="tl-user">
+            <div class="tl-marker">1</div>
+            <div class="tl-content">
+              <div class="tl-label">You</div>
+              <div class="try-prompt">
+                <blockquote class="try-prompt__text">I want to return something. I'm Emily Chen, I think the order was 104-something from around April 14</blockquote>
+              </div>
             </div>
-          </div>
-          <div class="turn__expect">
-            <span class="turn__who">The agent:</span>
-            <ul>
-              <li>Extracts the name "Emily Chen" and the fuzzy order hint "104-something, April 14"</li>
-              <li>Calls <code>search_orders</code> to find Emily's orders</li>
-              <li>Matches the fuzzy info to <strong>ORD-10478</strong> ($299, April 14)</li>
-              <li>Calls <code>get_order</code> to pull the full details</li>
-              <li>Shows the item (ErgoMax Office Chair) and asks: <em>"What's the reason for the return?"</em></li>
-            </ul>
-          </div>
-        </div>
-
-        <div class="turn">
-          <div class="turn__label">Step 2</div>
-          <div class="turn__you">
-            <span class="turn__who">You say:</span>
-            <div class="try-prompt">
-              <blockquote class="try-prompt__text">Yeah the armrest broke after just a week</blockquote>
+          </li>
+          <li class="tl-agent">
+            <div class="tl-marker"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+            <div class="tl-content">
+              <div class="tl-label">Agent</div>
+              <div class="tl-steps">
+                <div class="tl-tool"><span class="tl-tool-name">search_orders</span> finds Emily's orders</div>
+                <div class="tl-tool"><span class="tl-tool-name">get_order</span> matches "104-something, April 14" to <strong>ORD-10478</strong> ($299)</div>
+                <p>Shows the item (ErgoMax Office Chair) and asks: <em>"What's the reason for the return?"</em></p>
+              </div>
             </div>
-          </div>
-          <div class="turn__expect">
-            <span class="turn__who">The agent:</span>
-            <ul>
-              <li>Recognizes this as a defect — no further questions needed</li>
-              <li>Calls <code>request_return</code> with the order ID and reason</li>
-              <li>Returns the return ID, refund amount, and return label link</li>
-            </ul>
-          </div>
-        </div>
+          </li>
+          <li class="tl-user">
+            <div class="tl-marker">2</div>
+            <div class="tl-content">
+              <div class="tl-label">You</div>
+              <div class="try-prompt">
+                <blockquote class="try-prompt__text">Yeah the armrest broke after just a week</blockquote>
+              </div>
+            </div>
+          </li>
+          <li class="tl-agent">
+            <div class="tl-marker"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg></div>
+            <div class="tl-content">
+              <div class="tl-label">Agent</div>
+              <div class="tl-steps">
+                <div class="tl-tool"><span class="tl-tool-name">request_return</span> processes the defective item return</div>
+                <p>Returns the return ID, refund amount ($299 to Amex), and a return label link.</p>
+              </div>
+            </div>
+          </li>
+        </ol>
       </section>
 
-      <!-- Screenshot -->
       <section class="scenario__section">
         <h2>What it looks like</h2>
         <div class="scenario__screenshot">
@@ -69,7 +72,6 @@ const base = import.meta.env.BASE_URL;
         </div>
       </section>
 
-      <!-- Why it matters -->
       <section class="scenario__section">
         <h2>Why it matters</h2>
         <div class="value-grid">
@@ -79,7 +81,7 @@ const base = import.meta.env.BASE_URL;
           </div>
           <div class="value-card">
             <h3>Minimal questions</h3>
-            <p>The agent only asks for what it can't figure out. It doesn't ask for the order number (it found it), the item (there's only one), or the email — just the return reason.</p>
+            <p>The agent only asks for what it can't figure out. It doesn't ask for the order number (it found it), the item (there's only one), or the email. Just the return reason.</p>
           </div>
           <div class="value-card">
             <h3>Tool-aware reasoning</h3>
@@ -93,82 +95,117 @@ const base = import.meta.env.BASE_URL;
 
 <style>
   .scenario { padding: var(--space-3xl) 0; }
-  .back {
-    display: inline-flex; align-items: center; gap: 4px;
-    font-size: 0.85rem; font-weight: 500; color: var(--c-text-muted);
-    margin-bottom: var(--space-xl);
-  }
+  .back { display: inline-flex; align-items: center; gap: 4px; font-size: 0.85rem; font-weight: 500; color: var(--c-text-muted); margin-bottom: var(--space-xl); }
   .back:hover { color: var(--c-primary); }
   .scenario__header { max-width: 680px; }
   .scenario__header h1 { margin-top: var(--space-md); }
-  .scenario__lead {
-    margin-top: var(--space-lg); font-size: 1.05rem;
-    color: var(--c-text-secondary); line-height: 1.7;
-  }
+  .scenario__lead { margin-top: var(--space-lg); font-size: 1.05rem; color: var(--c-text-secondary); line-height: 1.7; }
   .scenario__section { margin-top: var(--space-3xl); }
   .scenario__section h2 { margin-bottom: var(--space-lg); }
-  .scenario__section > p {
-    color: var(--c-text-secondary); margin-bottom: var(--space-lg);
-  }
-  .scenario__screenshot {
-    border: 1px solid var(--c-border); border-radius: var(--radius-lg);
-    overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.06);
-  }
+  .scenario__screenshot { border: 1px solid var(--c-border); border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 8px 30px rgba(0,0,0,0.06); }
   .scenario__screenshot img { width: 100%; }
 
-  /* ── Turns ── */
-  .turn {
-    margin-bottom: var(--space-xl);
-    padding: var(--space-lg);
-    background: var(--c-surface);
-    border: 1px solid var(--c-border-subtle);
-    border-radius: var(--radius-lg);
+  /* ── Conversation timeline ── */
+  .convo { margin-top: var(--space-3xl); }
+  .convo h2 { margin-bottom: var(--space-sm); }
+  .convo__intro { color: var(--c-text-secondary); margin-bottom: var(--space-xl); font-size: 0.92rem; }
+
+  .timeline {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
   }
-  .turn__label {
-    font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em;
-    text-transform: uppercase; color: var(--c-purple);
-    margin-bottom: var(--space-md);
+
+  .timeline li {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: var(--space-md);
+    padding: var(--space-md) 0;
   }
-  .turn__who {
-    font-size: 0.78rem; font-weight: 700; color: var(--c-text-muted);
-    text-transform: uppercase; letter-spacing: 0.04em;
-    display: block; margin-bottom: var(--space-xs);
+
+  .tl-marker {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-size: 0.78rem;
+    font-weight: 700;
   }
-  .turn__you { margin-bottom: var(--space-md); }
-  .turn__you .try-prompt {
+
+  .tl-user .tl-marker {
+    background: var(--c-primary);
+    color: white;
+  }
+  .tl-agent .tl-marker {
     background: var(--c-surface-raised);
-    border: 1px solid var(--c-border-subtle);
+    border: 2px solid var(--c-border);
+    color: var(--c-text-muted);
+  }
+
+  .tl-content { min-width: 0; }
+
+  .tl-label {
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    margin-bottom: 8px;
+  }
+  .tl-user .tl-label { color: var(--c-primary); }
+  .tl-agent .tl-label { color: var(--c-text-muted); }
+
+  .tl-user .try-prompt {
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
     border-radius: var(--radius-md);
     padding: var(--space-md);
+    position: relative;
   }
-  .turn__you .try-prompt__text {
-    font-size: 0.92rem; color: var(--c-text); line-height: 1.6;
-    border-left: 3px solid var(--c-primary);
-    padding-left: var(--space-md); margin: 0;
+  .tl-user .try-prompt__text {
+    font-size: 0.92rem;
+    color: var(--c-text);
+    line-height: 1.6;
+    border: none;
+    padding: 0;
+    margin: 0;
   }
-  .turn__expect ul {
-    padding-left: 20px; margin: 0;
-    font-size: 0.88rem; color: var(--c-text-secondary); line-height: 1.7;
-  }
-  .turn__expect li { margin-bottom: 4px; }
-  .turn__expect code {
-    font-family: var(--font-mono); font-size: 0.85em;
-    background: var(--c-surface-raised); padding: 1px 5px; border-radius: 4px;
+
+  .tl-steps {
+    font-size: 0.88rem;
+    color: var(--c-text-secondary);
+    line-height: 1.65;
+    padding: var(--space-md);
+    background: var(--c-surface-raised);
+    border-radius: var(--radius-md);
     border: 1px solid var(--c-border-subtle);
+  }
+  .tl-steps p { margin-top: 8px; }
+
+  .tl-tool {
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    padding: 3px 0;
+  }
+  .tl-tool-name {
+    font-family: var(--font-mono);
+    font-size: 0.78em;
+    font-weight: 600;
+    color: var(--c-primary);
+    background: var(--c-primary-light);
+    padding: 2px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
   }
 
   /* ── Value cards ── */
-  .value-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-    gap: var(--space-lg);
-  }
-  .value-card {
-    padding: var(--space-lg); background: var(--c-surface-raised);
-    border: 1px solid var(--c-border-subtle); border-radius: var(--radius-md);
-  }
+  .value-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: var(--space-lg); }
+  .value-card { padding: var(--space-lg); background: var(--c-surface-raised); border: 1px solid var(--c-border-subtle); border-radius: var(--radius-md); }
   .value-card h3 { font-size: 0.95rem; margin-bottom: var(--space-xs); }
-  .value-card p {
-    font-size: 0.85rem; color: var(--c-text-secondary); line-height: 1.6;
-  }
+  .value-card p { font-size: 0.85rem; color: var(--c-text-secondary); line-height: 1.6; }
 </style>
