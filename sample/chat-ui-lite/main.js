@@ -181,7 +181,6 @@ function addReasoning(thought) {
   const div = document.createElement("div");
   div.className = "msg-reasoning";
   div.textContent = thought;
-  div.onclick = () => div.classList.toggle("expanded");
   messagesEl.appendChild(div);
   scrollToBottom();
 }

@@ -242,25 +242,14 @@ body {
 .msg-reasoning {
   align-self: flex-start;
   max-width: 82%;
-  padding: 5px 10px;
+  padding: 6px 10px;
   font-size: 0.75rem;
   line-height: 1.5;
   color: var(--c-text-muted);
-  cursor: pointer;
-  user-select: none;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  font-style: italic;
   animation: msgIn 0.2s ease;
 }
-.msg-reasoning::before { content: '💭 '; }
-.msg-reasoning.expanded {
-  white-space: normal;
-  background: var(--c-surface);
-  border: 1px solid var(--c-border-subtle);
-  border-radius: var(--radius-sm);
-  padding: 8px 12px;
-}
+.msg-reasoning::before { content: '💭 '; font-style: normal; }
 
 /* ── Tool calls ── */
 .msg-tool {
