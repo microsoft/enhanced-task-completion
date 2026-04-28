@@ -179,6 +179,13 @@ const base = import.meta.env.BASE_URL;
               <p>Publish both agents, then try the prompts</p>
             </div>
           </div>
+          <div class="cta__step cta__step--optional">
+            <span class="cta__step-num">4</span>
+            <div>
+              <strong>Deploy the chat UI <span class="cta__optional">optional</span></strong>
+              <p>A lightweight web app for demos to non-makers</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -484,6 +491,21 @@ const base = import.meta.env.BASE_URL;
   }
   .cta__step:nth-child(2) .cta__step-num { background: var(--c-purple); }
   .cta__step:nth-child(3) .cta__step-num { background: var(--c-pink); }
+  .cta__step:nth-child(4) .cta__step-num { background: var(--c-orange); }
+  .cta__step--optional { border-style: dashed; }
+  .cta__optional {
+    font-size: 0.65rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: var(--c-text-muted);
+    background: var(--c-surface-raised);
+    padding: 1px 6px;
+    border-radius: 8px;
+    border: 1px solid var(--c-border-subtle);
+    margin-left: 6px;
+    vertical-align: middle;
+  }
   .cta__step strong {
     display: block;
     font-size: 0.92rem;
