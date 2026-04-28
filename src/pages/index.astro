@@ -5,18 +5,25 @@ import ScenarioCard from '../components/ScenarioCard.astro';
 const base = import.meta.env.BASE_URL;
 ---
 
-<Base title="Enhanced Task Completion | Microsoft Copilot Studio">
+<Base title="Enhanced Task Completion | CAT Guidance">
   <!-- Hero -->
   <section class="hero">
     <div class="hero__bg"></div>
     <div class="container hero__inner">
       <div class="hero__content">
-        <span class="badge badge--primary">Microsoft Copilot Studio</span>
+        <div class="hero__cat-mark">
+          <img src={`${base}images/paw.png`} alt="CAT" class="hero__paw" />
+          <div class="hero__cat-label">
+            <span class="hero__cat-name">Copilot Studio CAT</span>
+            <span class="hero__cat-type">Feature Guide</span>
+          </div>
+        </div>
         <h1 class="hero__title">Enhanced Task<br />Completion</h1>
         <p class="hero__subtitle">
-          A new orchestration mode that lets Copilot Studio agents reason dynamically,
-          chain tools across MCP servers, recover from failures, and interleave
-          conversation with actions — all in real time.
+          This guide helps you get started with Enhanced Task Completion —
+          a new orchestration mode that lets agents reason dynamically, chain tools,
+          delegate to other agents, and recover from failures. Explore the scenarios
+          below, then try the deployable sample.
         </p>
         <div class="hero__actions">
           <a href="#scenarios" class="btn btn--primary">Explore scenarios</a>
@@ -57,22 +64,22 @@ const base = import.meta.env.BASE_URL;
 
       <div class="how__grid">
         <div class="how__item">
-          <div class="how__icon">&#x1F9E0;</div>
+          <div class="how__icon" style="color: var(--c-primary);">&#x1F9E0;</div>
           <h3>Reasons before acting</h3>
           <p>Asks clarifying questions and gathers context before calling any tools. Visible reasoning steps show the agent's thought process.</p>
         </div>
         <div class="how__item">
-          <div class="how__icon">&#x26A1;</div>
+          <div class="how__icon" style="color: var(--c-purple);">&#x26A1;</div>
           <h3>Dynamic orchestration</h3>
           <p>Recognizes dependencies between tool outputs, parallelizes independent calls, and adjusts strategy based on intermediate results.</p>
         </div>
         <div class="how__item">
-          <div class="how__icon">&#x1F504;</div>
+          <div class="how__icon" style="color: var(--c-pink);">&#x1F504;</div>
           <h3>Conversation + actions</h3>
           <p>Fluidly mixes questions, tool calls, and responses across multiple turns. Keeps the user informed at every step.</p>
         </div>
         <div class="how__item">
-          <div class="how__icon">&#x1F6E1;&#xFE0F;</div>
+          <div class="how__icon" style="color: var(--c-orange);">&#x1F6E1;&#xFE0F;</div>
           <h3>Failure recovery</h3>
           <p>When a tool call fails, the agent retries with different parameters or finds alternative approaches rather than giving up.</p>
         </div>
@@ -91,7 +98,7 @@ const base = import.meta.env.BASE_URL;
         <ScenarioCard
           title="Multi-tool Orchestration"
           capability="Tool Chaining"
-          description="The agent dynamically chains search_orders → get_order → request_return → get_shipment, parallelizing independent calls and narrating each step."
+          description="The agent dynamically chains search_orders, get_order, request_return, and get_shipment — parallelizing independent calls and narrating each step."
           href={`${base}scenarios/multi-tool-orchestration`}
           image={`${base}images/scenario-tools.png`}
         />
@@ -123,18 +130,44 @@ const base = import.meta.env.BASE_URL;
   <!-- Try it -->
   <section class="cta">
     <div class="container">
-      <div class="cta__card">
-        <h2>Try it yourself</h2>
-        <p>Clone the repo, import the agents, start the MCP servers, and chat with the Gradio UI in under 10 minutes.</p>
-        <div class="cta__actions">
-          <a href="https://github.com/microsoft/enhanced-task-completion/tree/main/sample" class="btn btn--primary">
-            View the sample
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
-          </a>
-          <a href="https://github.com/microsoft/enhanced-task-completion" class="btn btn--secondary-dark">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-            GitHub repo
-          </a>
+      <div class="cta__layout">
+        <div class="cta__text">
+          <p class="section-label">Get started</p>
+          <h2>Try it yourself</h2>
+          <p class="cta__desc">Import one solution zip, create connections, publish, and start testing. No servers or code needed — everything runs inside the Power Platform.</p>
+          <div class="cta__actions">
+            <a href="https://github.com/microsoft/enhanced-task-completion/tree/main/sample" class="btn btn--primary">
+              Get the sample
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+            </a>
+            <a href="https://github.com/microsoft/enhanced-task-completion" class="btn btn--secondary">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+              GitHub repo
+            </a>
+          </div>
+        </div>
+        <div class="cta__steps">
+          <div class="cta__step">
+            <span class="cta__step-num">1</span>
+            <div>
+              <strong>Import the solution</strong>
+              <p>Upload the zip file in Power Apps</p>
+            </div>
+          </div>
+          <div class="cta__step">
+            <span class="cta__step-num">2</span>
+            <div>
+              <strong>Create connections</strong>
+              <p>Click Create for each MCP connector</p>
+            </div>
+          </div>
+          <div class="cta__step">
+            <span class="cta__step-num">3</span>
+            <div>
+              <strong>Publish &amp; test</strong>
+              <p>Publish both agents, then try the prompts</p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -152,8 +185,9 @@ const base = import.meta.env.BASE_URL;
     position: absolute;
     inset: 0;
     background:
-      radial-gradient(ellipse 80% 60% at 20% 40%, rgba(14,122,92,0.06), transparent),
-      radial-gradient(ellipse 60% 50% at 80% 30%, rgba(239,154,51,0.04), transparent);
+      radial-gradient(ellipse 70% 50% at 15% 35%, rgba(0,120,212,0.05), transparent),
+      radial-gradient(ellipse 50% 40% at 75% 25%, rgba(127,57,251,0.04), transparent),
+      radial-gradient(ellipse 40% 30% at 90% 60%, rgba(255,140,0,0.03), transparent);
     z-index: -1;
   }
   .hero__inner {
@@ -162,16 +196,45 @@ const base = import.meta.env.BASE_URL;
     gap: var(--space-3xl);
     align-items: center;
   }
+  .hero__cat-mark {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .hero__paw {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(127, 57, 251, 0.12);
+  }
+  .hero__cat-label {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+  }
+  .hero__cat-name {
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--c-text);
+    letter-spacing: -0.01em;
+  }
+  .hero__cat-type {
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--c-purple);
+  }
   .hero__title {
-    margin-top: var(--space-md);
+    margin-top: var(--space-lg);
     color: var(--c-dark);
   }
   .hero__subtitle {
     margin-top: var(--space-lg);
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     color: var(--c-text-secondary);
     line-height: 1.7;
-    max-width: 520px;
+    max-width: 500px;
   }
   .hero__actions {
     display: flex;
@@ -280,6 +343,9 @@ const base = import.meta.env.BASE_URL;
     color: var(--c-text-secondary);
     align-self: flex-start;
   }
+  .hero__tool:nth-child(6) { border-left-color: var(--c-purple); }
+  .hero__tool:nth-child(7) { border-left-color: var(--c-pink); }
+  .hero__tool:nth-child(8) { border-left-color: var(--c-orange); }
   .hero__tool-icon { font-size: 0.85rem; }
   .hero__tool-badge {
     background: var(--c-primary-light);
@@ -313,10 +379,11 @@ const base = import.meta.env.BASE_URL;
     border: 1px solid var(--c-border-subtle);
     border-radius: var(--radius-lg);
     background: var(--c-surface);
-    transition: border-color 0.2s ease;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
   }
   .how__item:hover {
     border-color: var(--c-border);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.04);
   }
   .how__icon {
     font-size: 1.5rem;
@@ -346,7 +413,7 @@ const base = import.meta.env.BASE_URL;
   }
   .scenarios__grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: var(--space-xl);
     margin-top: var(--space-2xl);
   }
@@ -355,46 +422,66 @@ const base = import.meta.env.BASE_URL;
   .cta {
     padding: var(--space-4xl) 0;
   }
-  .cta__card {
-    background: linear-gradient(135deg, var(--c-dark) 0%, var(--c-dark-soft) 50%, #145845 100%);
-    border-radius: var(--radius-xl);
-    padding: var(--space-3xl);
-    text-align: center;
-    color: white;
+  .cta__layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-3xl);
+    align-items: start;
   }
-  .cta__card h2 {
-    color: white;
-  }
-  .cta__card p {
-    color: #9ca3af;
+  .cta__desc {
+    color: var(--c-text-secondary);
     margin-top: var(--space-md);
-    max-width: 480px;
-    margin-left: auto;
-    margin-right: auto;
+    line-height: 1.7;
   }
   .cta__actions {
     display: flex;
     gap: var(--space-md);
     margin-top: var(--space-xl);
-    justify-content: center;
     flex-wrap: wrap;
   }
-  .cta__card .btn--primary {
-    background: white;
-    color: var(--c-dark);
+  .cta__steps {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
   }
-  .cta__card .btn--primary:hover {
-    background: #f1f3f5;
-    color: var(--c-dark);
+  .cta__step {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    background: var(--c-surface);
+    border: 1px solid var(--c-border-subtle);
+    border-radius: var(--radius-md);
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
   }
-  .btn--secondary-dark {
-    background: transparent;
-    color: #9ca3af;
-    border: 1px solid rgba(255,255,255,0.15);
+  .cta__step:hover {
+    border-color: var(--c-border);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.04);
   }
-  .btn--secondary-dark:hover {
+  .cta__step-num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--c-primary);
     color: white;
-    border-color: rgba(255,255,255,0.3);
+    font-size: 0.78rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .cta__step:nth-child(2) .cta__step-num { background: var(--c-purple); }
+  .cta__step:nth-child(3) .cta__step-num { background: var(--c-pink); }
+  .cta__step strong {
+    display: block;
+    font-size: 0.92rem;
+    margin-bottom: 2px;
+  }
+  .cta__step p {
+    font-size: 0.82rem;
+    color: var(--c-text-muted);
+    line-height: 1.5;
   }
 
   /* ── Responsive ── */
@@ -409,8 +496,8 @@ const base = import.meta.env.BASE_URL;
     .hero__card {
       max-width: 360px;
     }
-    .cta__card {
-      padding: var(--space-2xl);
+    .cta__layout {
+      grid-template-columns: 1fr;
     }
   }
 </style>

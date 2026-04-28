@@ -1,30 +1,40 @@
 /* ── Fonts ── */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=JetBrains+Mono:wght@400;500&display=swap');
 
 /* ── Reset ── */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  /* Palette */
-  --c-bg: #fafbfc;
+  /* CAT gradient spectrum */
+  --gradient-brand: linear-gradient(90deg,
+    #0078D4 0%,
+    #5B8DEF 18%,
+    #7F39FB 36%,
+    #C26CF3 54%,
+    #D83B73 72%,
+    #FF8C00 100%);
+
+  /* Palette — CAT-aligned */
+  --c-bg: #fafafa;
   --c-surface: #ffffff;
-  --c-surface-raised: #f4f6f8;
-  --c-border: #e2e6ea;
-  --c-border-subtle: #edf0f3;
-  --c-text: #111827;
-  --c-text-secondary: #4b5563;
-  --c-text-muted: #9ca3af;
-  --c-primary: #0e7a5c;
-  --c-primary-light: #e6f5f0;
-  --c-primary-dark: #065f46;
-  --c-accent: #ef9a33;
-  --c-accent-light: #fef7ee;
-  --c-dark: #0f172a;
-  --c-dark-soft: #1e293b;
+  --c-surface-raised: #f5f5f5;
+  --c-border: #e1dfdd;
+  --c-border-subtle: #edebe9;
+  --c-text: #242424;
+  --c-text-secondary: #616161;
+  --c-text-muted: #a19f9d;
+  --c-primary: #0078D4;
+  --c-primary-light: #e8f4fd;
+  --c-primary-dark: #005a9e;
+  --c-purple: #7F39FB;
+  --c-pink: #D83B73;
+  --c-orange: #FF8C00;
+  --c-dark: #1b1b1b;
+  --c-dark-soft: #292929;
 
   /* Typography */
-  --font-body: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-  --font-mono: 'IBM Plex Mono', ui-monospace, monospace;
+  --font-body: 'DM Sans', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
   /* Spacing */
   --space-xs: 0.25rem;
@@ -37,11 +47,15 @@
   --space-4xl: 6rem;
 
   /* Layout */
-  --max-width: 1200px;
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
+  --max-width: 1140px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+
+  /* Card gradient frame */
+  --card-frame-thickness: 2px;
+  --card-frame-radius: var(--radius-lg);
 }
 
 html {
@@ -75,7 +89,7 @@ img {
 
 code {
   font-family: var(--font-mono);
-  font-size: 0.875em;
+  font-size: 0.85em;
   background: var(--c-surface-raised);
   padding: 0.15em 0.4em;
   border-radius: 4px;
@@ -92,8 +106,8 @@ code {
 .badge {
   display: inline-block;
   font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
+  font-weight: 600;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
   padding: 4px 12px;
   border-radius: 20px;
@@ -102,13 +116,13 @@ code {
 .badge--primary {
   background: var(--c-primary-light);
   color: var(--c-primary);
-  border: 1px solid rgba(14, 122, 92, 0.15);
+  border: 1px solid rgba(0, 120, 212, 0.15);
 }
 
 .badge--accent {
-  background: var(--c-accent-light);
+  background: #fef4e8;
   color: #b45309;
-  border: 1px solid rgba(239, 154, 51, 0.2);
+  border: 1px solid rgba(255, 140, 0, 0.18);
 }
 
 .section-label {
@@ -116,22 +130,29 @@ code {
   font-weight: 700;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: var(--c-primary);
+  color: var(--c-purple);
   margin-bottom: var(--space-sm);
 }
 
 h1, h2, h3, h4 {
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.025em;
   line-height: 1.2;
 }
 
-h1 { font-size: clamp(2rem, 5vw, 3rem); }
-h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
-h3 { font-size: 1.25rem; }
+h1 { font-size: clamp(2rem, 5vw, 2.75rem); }
+h2 { font-size: clamp(1.4rem, 3vw, 1.85rem); }
+h3 { font-size: 1.15rem; }
 
 /* ── Selection ── */
 ::selection {
-  background: var(--c-primary-light);
-  color: var(--c-primary-dark);
+  background: rgba(127, 57, 251, 0.12);
+  color: var(--c-purple);
+}
+
+/* ── Gradient bar decoration ── */
+.gradient-bar {
+  height: 3px;
+  background: var(--gradient-brand);
+  border-radius: 2px;
 }

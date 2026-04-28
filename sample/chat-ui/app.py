@@ -438,27 +438,27 @@ def chat(user_message: str, history: list):
 
 theme = gr.themes.Base(
     primary_hue=gr.themes.Color(
-        c50="#f0f9f6", c100="#d5f0e8", c200="#a8e0cf", c300="#6ec9b0",
-        c400="#3bab8e", c500="#1e8c6e", c600="#187058", c700="#145845",
-        c800="#104437", c900="#0c332a", c950="#06201a",
+        c50="#e8f4fd", c100="#cce4f7", c200="#99c9ef", c300="#5baee7",
+        c400="#2196df", c500="#0078D4", c600="#0060aa", c700="#004a83",
+        c800="#00365f", c900="#002440", c950="#001526",
     ),
     secondary_hue=gr.themes.Color(
-        c50="#fef7ee", c100="#fdedd3", c200="#f9d7a5", c300="#f4bb6d",
-        c400="#ef9a33", c500="#e8801b", c600="#cf6612", c700="#ab4e12",
-        c800="#893f16", c900="#713615", c950="#3d1a09",
+        c50="#f3ecfe", c100="#e5d5fd", c200="#cbadfb", c300="#ae80f8",
+        c400="#9558f5", c500="#7F39FB", c600="#6628d1", c700="#4f1ea8",
+        c800="#3c1780", c900="#2a105c", c950="#180a36",
     ),
     neutral_hue=gr.themes.Color(
-        c50="#f8f9fa", c100="#f1f3f5", c200="#e5e7eb", c300="#d1d5db",
-        c400="#9ca3af", c500="#6b7280", c600="#4b5563", c700="#374151",
-        c800="#1f2937", c900="#111827", c950="#030712",
+        c50="#fafafa", c100="#f5f5f5", c200="#e1dfdd", c300="#d2d0ce",
+        c400="#a19f9d", c500="#605e5c", c600="#484644", c700="#323130",
+        c800="#242424", c900="#1b1b1b", c950="#0d0d0d",
     ),
-    font=[gr.themes.GoogleFont("Plus Jakarta Sans"), "system-ui", "sans-serif"],
-    font_mono=[gr.themes.GoogleFont("IBM Plex Mono"), "ui-monospace", "monospace"],
+    font=[gr.themes.GoogleFont("DM Sans"), "system-ui", "sans-serif"],
+    font_mono=[gr.themes.GoogleFont("JetBrains Mono"), "ui-monospace", "monospace"],
     radius_size=gr.themes.sizes.radius_lg,
     spacing_size=gr.themes.sizes.spacing_md,
 ).set(
     # Overall page
-    body_background_fill="#f8f9fa",
+    body_background_fill="#fafafa",
     body_background_fill_dark="#0e1117",
 
     # Blocks
@@ -472,7 +472,7 @@ theme = gr.themes.Base(
     button_primary_background_fill="*primary_500",
     button_primary_background_fill_hover="*primary_600",
     button_primary_text_color="white",
-    button_primary_shadow="0 1px 2px 0 rgba(30,140,110,0.2)",
+    button_primary_shadow="0 1px 2px 0 rgba(0,120,212,0.2)",
     button_secondary_background_fill="white",
     button_secondary_background_fill_hover="*neutral_50",
     button_secondary_border_color="*neutral_200",
@@ -491,7 +491,7 @@ theme = gr.themes.Base(
     input_border_color_dark="#2a2f3a",
     input_border_color_focus="*primary_400",
     input_shadow="none",
-    input_shadow_focus="0 0 0 3px rgba(30,140,110,0.1)",
+    input_shadow_focus="0 0 0 3px rgba(0,120,212,0.1)",
 
     # Labels & text
     block_label_text_color="*neutral_500",
@@ -538,7 +538,7 @@ custom_css = """
 /* ── Tool call accordions ── */
 .message-row .accordion {
     border: 1px solid #e5e7eb !important;
-    border-left: 3px solid #3bab8e !important;
+    border-left: 3px solid #0078D4 !important;
     border-radius: 2px 10px 10px 2px !important;
     background: #f8f9fa !important;
     overflow: hidden;
@@ -546,7 +546,7 @@ custom_css = """
 }
 
 .message-row .accordion:hover {
-    border-left-color: #1e8c6e !important;
+    border-left-color: #005a9e !important;
 }
 
 .message-row .accordion .label-wrap {
@@ -571,7 +571,7 @@ custom_css = """
 
 /* ── Header area ── */
 .header-bar {
-    background: linear-gradient(135deg, #111827 0%, #1f2937 50%, #145845 100%) !important;
+    background: linear-gradient(135deg, #1b1b1b 0%, #292929 50%, #1a2744 100%) !important;
     border-radius: 14px !important;
     padding: 28px 32px !important;
     margin: 0 !important;
@@ -596,18 +596,54 @@ custom_css = """
     font-weight: 400 !important;
 }
 
+.header-top {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+.header-paw {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(127, 57, 251, 0.15);
+}
+.header-identity {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+.header-team {
+    font-size: 0.82em;
+    font-weight: 600;
+    color: #e1dfdd;
+    letter-spacing: -0.01em;
+}
+.header-link {
+    margin-left: auto;
+    font-size: 0.82em;
+    font-weight: 600;
+    color: #5B8DEF !important;
+    text-decoration: none;
+    opacity: 0.85;
+    transition: opacity 0.15s ease;
+}
+.header-link:hover {
+    opacity: 1;
+    color: #7fa8f5 !important;
+}
 .header-bar .badge {
     display: inline-block;
-    background: rgba(62, 171, 142, 0.15);
-    color: #6ec9b0;
-    font-size: 0.72em;
+    width: fit-content;
+    background: rgba(0, 120, 212, 0.15);
+    color: #5B8DEF;
+    font-size: 0.65em;
     font-weight: 600;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    padding: 3px 10px;
+    padding: 2px 8px;
     border-radius: 20px;
-    border: 1px solid rgba(62, 171, 142, 0.2);
-    margin-bottom: 10px;
+    border: 1px solid rgba(0, 120, 212, 0.2);
 }
 
 /* ── Example buttons ── */
@@ -627,8 +663,8 @@ button.example,
 .example-btn:hover,
 button.example:hover,
 .examples button:hover {
-    border-color: #3bab8e !important;
-    color: #1e8c6e !important;
+    border-color: #0078D4 !important;
+    color: #005a9e !important;
     background: #f0f9f6 !important;
     box-shadow: 0 2px 8px rgba(30,140,110,0.08) !important;
     transform: translateY(-1px) !important;
@@ -714,7 +750,7 @@ footer {
      Primary   #e2e4e9  (contrast 12.5:1 on L2)
      Secondary #a1a7b4  (contrast  7.0:1 on L2)
      Tertiary  #6e7681  (contrast  4.5:1 on L0 — AA minimum)
-     Accent    #5cbfa5  (teal, used sparingly)
+     Accent    #5B8DEF  (teal, used sparingly)
    ══════════════════════════════════════════════════════════════════════ */
 
 body.dark .gradio-container {
@@ -727,17 +763,17 @@ body.dark .gradio-container::before {
     position: fixed;
     top: 0; left: 0; right: 0; bottom: 0;
     background:
-        radial-gradient(ellipse 50% 40% at 30% 20%, rgba(59,171,142,0.03), transparent),
-        radial-gradient(ellipse 40% 30% at 70% 60%, rgba(59,171,142,0.015), transparent);
+        radial-gradient(ellipse 50% 40% at 30% 20%, rgba(0,120,212,0.03), transparent),
+        radial-gradient(ellipse 40% 30% at 70% 60%, rgba(127,57,251,0.02), transparent);
     pointer-events: none;
     z-index: 0;
 }
 
 body.dark .header-bar {
-    background: linear-gradient(135deg, #12161e 0%, #171c26 40%, #112b22 100%) !important;
+    background: linear-gradient(135deg, #12161e 0%, #171c26 40%, #141d2e 100%) !important;
     border: 1px solid rgba(255,255,255,0.07) !important;
-    border-bottom: 1px solid rgba(59,171,142,0.12) !important;
-    box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 8px 32px rgba(0,0,0,0.5), 0 0 60px rgba(14,122,92,0.03) !important;
+    border-bottom: 1px solid rgba(0,120,212,0.12) !important;
+    box-shadow: 0 1px 0 rgba(255,255,255,0.04) inset, 0 8px 32px rgba(0,0,0,0.5), 0 0 60px rgba(0,120,212,0.03) !important;
 }
 
 /* ── Hide Gradio chrome that breaks the design ── */
@@ -763,10 +799,10 @@ body.dark .header-bar p {
 
 /* ── User messages — teal accent, AA-safe text ── */
 body.dark .message-row.user-row .message-bubble {
-    background: linear-gradient(135deg, #11835f, #0e6e50) !important;
-    color: #f0faf6 !important;
-    border: 1px solid rgba(110,201,176,0.2) !important;
-    box-shadow: 0 2px 16px rgba(14,122,92,0.2) !important;
+    background: linear-gradient(135deg, #0062b1, #004a8c) !important;
+    color: #e8f4fd !important;
+    border: 1px solid rgba(91,141,239,0.2) !important;
+    box-shadow: 0 2px 16px rgba(0,120,212,0.15) !important;
 }
 
 /* ── Bot messages — L2 surface ── */
@@ -782,18 +818,18 @@ body.dark .message-row.bot-row .message-bubble strong {
 }
 
 body.dark .message-row.bot-row .message-bubble a {
-    color: #5cbfa5 !important;
+    color: #5B8DEF !important;
 }
 
 /* ── Tool accordions — L1 recessed, signature teal bar ── */
 body.dark .message-row .accordion {
     border: 1px solid rgba(255,255,255,0.07) !important;
-    border-left: 3px solid #3bab8e !important;
+    border-left: 3px solid #0078D4 !important;
     background: #151921 !important;
 }
 
 body.dark .message-row .accordion:hover {
-    border-left-color: #5cbfa5 !important;
+    border-left-color: #5B8DEF !important;
     background: #1a1f28 !important;
 }
 
@@ -839,7 +875,7 @@ body.dark button.example .icon,
 body.dark .examples button .icon,
 body.dark button.example svg,
 body.dark .examples button svg {
-    color: #5cbfa5 !important;
+    color: #5B8DEF !important;
     opacity: 0.8;
 }
 
@@ -927,11 +963,19 @@ body.dark footer div {
 # ---------------------------------------------------------------------------
 
 with gr.Blocks(title="Copilot Studio Agent Chat") as demo:
-    gr.HTML("""
+    guide_url = os.getenv("GUIDE_URL", "https://microsoft.github.io/enhanced-task-completion/")
+    gr.HTML(f"""
     <div class="header-bar">
-        <div class="badge">Enhanced Task Completion</div>
-        <h1>Copilot Studio Agent Chat</h1>
-        <p>Agents with Enhanced Task Completion reason dynamically, chain tools across MCP servers, and process files &mdash; all visible inline below.</p>
+        <div class="header-top">
+            <img src="https://raw.githubusercontent.com/microsoft/mcscatblog/main/assets/img/paw.png" alt="CAT" class="header-paw" />
+            <div class="header-identity">
+                <span class="header-team">Copilot Studio CAT</span>
+                <div class="badge">Feature Guide</div>
+            </div>
+            <a href="{guide_url}" target="_blank" class="header-link">View guide &rarr;</a>
+        </div>
+        <h1>Enhanced Task Completion</h1>
+        <p>Explore scenarios, chain tools across MCP servers, and see adaptive orchestration in action.</p>
     </div>
     """)
     gr.ChatInterface(
@@ -950,21 +994,25 @@ with gr.Blocks(title="Copilot Studio Agent Chat") as demo:
 # so we inject a style tag with the exact scoped class after render.
 _dark_fix_js = """
 () => {
-    const fix = () => {
-        const btn = document.querySelector('button.example');
-        if (!btn || !document.body.classList.contains('dark')) return;
-        const sc = Array.from(btn.classList).find(c => c.startsWith('svelte-'));
-        if (!sc || document.getElementById('df')) return;
-        const s = document.createElement('style'); s.id = 'df';
-        s.textContent = `
-            body.dark button.example.${sc} { background:transparent!important; border:1px solid rgba(255,255,255,.06)!important; color:#8b92a0!important; }
-            body.dark button.example.${sc}:hover { background:rgba(255,255,255,.03)!important; border-color:rgba(59,171,142,.2)!important; color:#a1a7b4!important; }
-            body.dark button.example.${sc} * { color:inherit!important; }
-            body.dark .examples.${sc} { background:transparent!important; }
-        `;
-        document.head.appendChild(s);
+    const applyDark = () => {
+        const isDark = document.body.classList.contains('dark');
+        document.querySelectorAll('button.example').forEach(btn => {
+            if (isDark) {
+                btn.style.setProperty('background', '#1c2028', 'important');
+                btn.style.setProperty('border', '1px solid rgba(255,255,255,0.08)', 'important');
+                btn.style.setProperty('color', '#8b92a0', 'important');
+            } else {
+                btn.style.removeProperty('background');
+                btn.style.removeProperty('border');
+                btn.style.removeProperty('color');
+            }
+        });
     };
-    new MutationObserver(fix).observe(document.body, {childList:true, subtree:true});
+    new MutationObserver(applyDark).observe(document.body, {
+        attributes: true, attributeFilter: ['class'],
+        childList: true, subtree: true
+    });
+    applyDark();
 }
 """
 

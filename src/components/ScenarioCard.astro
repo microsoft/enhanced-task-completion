@@ -11,43 +11,76 @@ interface Props {
 const { title, description, capability, href, image, badge } = Astro.props;
 ---
 
-<a href={href} class="card">
-  {image && (
-    <div class="card__image">
-      <img src={image} alt={title} loading="lazy" />
+<a href={href} class="card-wrapper">
+  <div class="card">
+    {image && (
+      <div class="card__image">
+        <img src={image} alt={title} loading="lazy" />
+      </div>
+    )}
+    <div class="card__body">
+      <div class="card__meta">
+        <span class="badge badge--primary">{capability}</span>
+        {badge && <span class="badge badge--accent">{badge}</span>}
+      </div>
+      <h3 class="card__title">{title}</h3>
+      <p class="card__desc">{description}</p>
+      <span class="card__link">
+        Explore scenario
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+      </span>
     </div>
-  )}
-  <div class="card__body">
-    <div class="card__meta">
-      <span class="badge badge--primary">{capability}</span>
-      {badge && <span class="badge badge--accent">{badge}</span>}
-    </div>
-    <h3 class="card__title">{title}</h3>
-    <p class="card__desc">{description}</p>
-    <span class="card__link">
-      Explore scenario
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
-    </span>
   </div>
 </a>
 
 <style>
+  .card-wrapper {
+    position: relative;
+    border-radius: var(--card-frame-radius);
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+
+  /* Gradient ring — hidden by default */
+  .card-wrapper::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: var(--card-frame-thickness);
+    border-radius: inherit;
+    background: var(--gradient-brand);
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    z-index: 1;
+  }
+
+  .card-wrapper:hover::before {
+    opacity: 1;
+  }
+
   .card {
     display: flex;
     flex-direction: column;
     background: var(--c-surface);
     border: 1px solid var(--c-border);
-    border-radius: var(--radius-lg);
+    border-radius: var(--card-frame-radius);
     overflow: hidden;
-    transition: all 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    text-decoration: none;
-    color: inherit;
+    transition: all 0.25s ease;
+    height: 100%;
   }
-  .card:hover {
-    border-color: var(--c-primary);
-    box-shadow: 0 8px 30px rgba(14, 122, 92, 0.08), 0 2px 8px rgba(0,0,0,0.04);
+  .card-wrapper:hover .card {
+    border-color: transparent;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
     transform: translateY(-2px);
   }
+
   .card__image {
     aspect-ratio: 16 / 9;
     overflow: hidden;
@@ -60,7 +93,7 @@ const { title, description, capability, href, image, badge } = Astro.props;
     object-fit: cover;
     transition: transform 0.3s ease;
   }
-  .card:hover .card__image img {
+  .card-wrapper:hover .card__image img {
     transform: scale(1.02);
   }
   .card__body {
@@ -76,7 +109,7 @@ const { title, description, capability, href, image, badge } = Astro.props;
     flex-wrap: wrap;
   }
   .card__title {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     font-weight: 700;
     letter-spacing: -0.01em;
     color: var(--c-text);
@@ -98,7 +131,7 @@ const { title, description, capability, href, image, badge } = Astro.props;
     margin-top: var(--space-sm);
     transition: gap 0.2s ease;
   }
-  .card:hover .card__link {
+  .card-wrapper:hover .card__link {
     gap: 10px;
   }
 </style>
