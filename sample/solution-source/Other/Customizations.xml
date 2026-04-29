@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ImportExportXml xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" OrganizationVersion="9.2.26043.140" OrganizationSchemaType="Standard" CRMServerServiceabilityVersion="9.2.26043.00141">
+  <Entities />
+  <Roles />
+  <Workflows />
+  <FieldSecurityProfiles />
+  <Templates />
+  <EntityMaps />
+  <EntityRelationships />
+  <OrganizationSettings />
+  <optionsets />
+  <CustomControls />
+  <EntityDataProviders />
+  <Connectors />
+  <connectionreferences>
+    <connectionreference connectionreferencelogicalname="cr26e_ETCOrderManagement.shared_new-5forder-20management-20mcp-5f3ed0defdc6ef6f46.791db70bb31b4fe6857c2ee0da8402b9">
+      <connectionreferencedisplayname>cr26e_ETCOrderManagement.shared_new-5forder-20management-20mcp-5f3ed0defdc6ef6f46.791db70bb31b4fe6857c2ee0da8402b9</connectionreferencedisplayname>
+      <connectorid>/providers/Microsoft.PowerApps/apis/shared_new-5forder-20management-20mcp-5f3ed0defdc6ef6f46</connectorid>
+      <customconnectorid>
+        <connectorid>e4e7e713-5c3f-f111-bec6-70a8a59a4421</connectorid>
+      </customconnectorid>
+      <iscustomizable>0</iscustomizable>
+      <promptingbehavior>0</promptingbehavior>
+      <statecode>0</statecode>
+      <statuscode>1</statuscode>
+    </connectionreference>
+    <connectionreference connectionreferencelogicalname="cr26e_ETCWarehouseManagement.shared_new-5fwarehouse-20mcp-5f3ed0defdc6ef6f46.5c86d2a6eb8e4b97b1fce6e4aca425cc">
+      <connectionreferencedisplayname>cr26e_ETCWarehouseManagement.shared_new-5fwarehouse-20mcp-5f3ed0defdc6ef6f46.5c86d2a6eb8e4b97b1fce6e4aca425cc</connectionreferencedisplayname>
+      <connectorid>/providers/Microsoft.PowerApps/apis/shared_new-5fwarehouse-20mcp-5f3ed0defdc6ef6f46</connectorid>
+      <customconnectorid>
+        <connectorid>357a348b-d53f-f111-bec6-70a8a59a4421</connectorid>
+      </customconnectorid>
+      <iscustomizable>0</iscustomizable>
+      <promptingbehavior>0</promptingbehavior>
+      <statecode>0</statecode>
+      <statuscode>1</statuscode>
+    </connectionreference>
+  </connectionreferences>
+  <Languages>
+    <Language>1033</Language>
+  </Languages>
+</ImportExportXml>

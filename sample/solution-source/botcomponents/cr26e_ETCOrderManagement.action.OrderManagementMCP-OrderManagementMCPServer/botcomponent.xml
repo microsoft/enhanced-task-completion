@@ -1,0 +1,10 @@
+<botcomponent schemaname="cr26e_ETCOrderManagement.action.OrderManagementMCP-OrderManagementMCPServer">
+  <componenttype>9</componenttype>
+  <iscustomizable>0</iscustomizable>
+  <name>Order Management MCP - Order Management MCP Server</name>
+  <parentbotid>
+    <schemaname>cr26e_ETCOrderManagement</schemaname>
+  </parentbotid>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+</botcomponent>

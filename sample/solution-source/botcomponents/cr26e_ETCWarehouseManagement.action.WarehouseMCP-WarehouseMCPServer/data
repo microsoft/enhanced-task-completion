@@ -1,0 +1,12 @@
+kind: TaskDialog
+modelDisplayName: Warehouse MCP Server
+modelDescription: "MCP server for warehouse and fulfillment. Tools: check_stock, get_fulfillment_status, find_alternatives, get_restock_date."
+action:
+  kind: InvokeExternalAgentTaskAction
+  connectionReference: cr26e_ETCWarehouseManagement.shared_new-5fwarehouse-20mcp-5f3ed0defdc6ef6f46.5c86d2a6eb8e4b97b1fce6e4aca425cc
+  connectionProperties:
+    mode: Maker
+
+  operationDetails:
+    kind: ModelContextProtocolMetadata
+    operationId: InvokeMCP

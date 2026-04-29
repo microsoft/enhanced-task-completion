@@ -1,0 +1,11 @@
+<botcomponent schemaname="cr26e_ETCOrderManagement.InvokeConnectedAgentTaskAction.ETC-WarehouseManagement">
+  <componenttype>9</componenttype>
+  <description>Helps with warehouse/inventory queries</description>
+  <iscustomizable>0</iscustomizable>
+  <name>ETC - Warehouse Management</name>
+  <parentbotid>
+    <schemaname>cr26e_ETCOrderManagement</schemaname>
+  </parentbotid>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+</botcomponent>

@@ -1,0 +1,8 @@
+kind: TaskDialog
+modelDisplayName: ETC - Warehouse Management
+modelDescription: Helps with warehouse/inventory queries
+action:
+  kind: InvokeConnectedAgentTaskAction
+  botSchemaName: cr26e_ETCWarehouseManagement
+  historyType:
+    kind: ConversationHistory

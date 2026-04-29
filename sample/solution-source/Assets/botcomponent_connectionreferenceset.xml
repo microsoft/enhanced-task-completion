@@ -1,0 +1,8 @@
+<botcomponent_connectionreferenceset>
+  <botcomponent_connectionreference botcomponentid.schemaname="cr26e_ETCOrderManagement.action.OrderManagementMCP-OrderManagementMCPServer" connectionreferenceid.connectionreferencelogicalname="cr26e_ETCOrderManagement.shared_new-5forder-20management-20mcp-5f3ed0defdc6ef6f46.791db70bb31b4fe6857c2ee0da8402b9">
+    <iscustomizable>1</iscustomizable>
+  </botcomponent_connectionreference>
+  <botcomponent_connectionreference botcomponentid.schemaname="cr26e_ETCWarehouseManagement.action.WarehouseMCP-WarehouseMCPServer" connectionreferenceid.connectionreferencelogicalname="cr26e_ETCWarehouseManagement.shared_new-5fwarehouse-20mcp-5f3ed0defdc6ef6f46.5c86d2a6eb8e4b97b1fce6e4aca425cc">
+    <iscustomizable>1</iscustomizable>
+  </botcomponent_connectionreference>
+</botcomponent_connectionreferenceset>

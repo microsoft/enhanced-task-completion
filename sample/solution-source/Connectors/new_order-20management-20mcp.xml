@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Connector xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <connectorid>e4e7e713-5c3f-f111-bec6-70a8a59a4421</connectorid>
+  <description></description>
+  <displayname>Order Management MCP</displayname>
+  <iconbrandcolor>#007ee5</iconbrandcolor>
+  <name>new_order-20management-20mcp</name>
+  <connectortype>1</connectortype>
+  <scriptoperations>[]</scriptoperations>
+  <openapidefinition>/Connector/new_order-20management-20mcp_openapidefinition.json</openapidefinition>
+  <connectionparameters>/Connector/new_order-20management-20mcp_connectionparameters.json</connectionparameters>
+  <policytemplateinstances>/Connector/new_order-20management-20mcp_policytemplateinstances.json</policytemplateinstances>
+  <customcodeblobcontent>/Connector/new_order-20management-20mcp_customcodeblobcontent.csx</customcodeblobcontent>
+</Connector>

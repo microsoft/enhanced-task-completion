@@ -1,0 +1,12 @@
+kind: TaskDialog
+modelDisplayName: Order Management MCP Server
+modelDescription: "MCP server for e-commerce order management. Tools: search_orders, get_order, get_shipment, request_return, get_return_status."
+action:
+  kind: InvokeExternalAgentTaskAction
+  connectionReference: cr26e_ETCOrderManagement.shared_new-5forder-20management-20mcp-5f3ed0defdc6ef6f46.791db70bb31b4fe6857c2ee0da8402b9
+  connectionProperties:
+    mode: Maker
+
+  operationDetails:
+    kind: ModelContextProtocolMetadata
+    operationId: InvokeMCP
