@@ -109,5 +109,5 @@ Based on [Power MCP Template v2.1](https://github.com/troystaylor/SharingIsCarin
 
 ## Prerequisites
 
-- A Power Platform environment with Copilot Studio
+- A Power Platform environment with Copilot Studio on the **Early Release** channel (as of April 2026, Enhanced Task Completion is only available in Early Release environments)
 - Maker or Admin role in the target environment
