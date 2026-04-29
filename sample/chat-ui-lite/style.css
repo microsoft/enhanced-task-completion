@@ -254,7 +254,6 @@ body {
 /* ── Tool calls ── */
 .msg-tool {
   align-self: flex-start;
-  max-width: 82%;
   background: var(--c-surface);
   border: 1px solid var(--c-border-subtle);
   border-left: 3px solid var(--c-primary);
@@ -264,7 +263,10 @@ body {
   color: var(--c-text-secondary);
   animation: msgIn 0.15s ease;
   overflow: hidden;
+  transition: max-width 0.2s ease;
+  max-width: fit-content;
 }
+.msg-tool.expanded { max-width: 92%; }
 .tool-header {
   display: flex;
   align-items: center;
@@ -275,7 +277,7 @@ body {
 .tool-header:hover { background: var(--c-surface-raised); }
 .msg-tool .tool-icon { font-size: 0.82rem; opacity: 0.5; }
 .msg-tool .tool-name { font-weight: 600; }
-.msg-tool .tool-status { font-size: 0.68rem; color: var(--c-text-muted); }
+.msg-tool .tool-status { font-size: 0.68rem; color: var(--c-text-muted); margin-left: auto; }
 .msg-tool.done { border-left-color: #22c55e; }
 .msg-tool.done .tool-icon { color: #22c55e; opacity: 1; }
 .msg-tool.pending .tool-icon { animation: spin 1s linear infinite; }
@@ -284,30 +286,34 @@ body {
 .tool-details {
   display: none;
   border-top: 1px solid var(--c-border-subtle);
-  background: var(--c-surface-raised);
 }
 .msg-tool.expanded .tool-details { display: block; }
 .tool-section:empty { display: none; }
 .tool-section pre {
   margin: 0;
-  padding: 6px 12px 8px;
-  font-size: 0.72rem;
-  line-height: 1.5;
+  padding: 8px 14px 10px;
+  font-size: 0.74rem;
+  line-height: 1.55;
   color: var(--c-text-secondary);
   white-space: pre-wrap;
   word-break: break-word;
-  max-height: 150px;
+  max-height: 200px;
   overflow-y: auto;
+  background: var(--c-bg);
+  border-radius: 4px;
+  margin: 4px 10px 8px;
 }
 .tool-section-label {
-  padding: 6px 12px 0;
+  padding: 8px 14px 0;
   font-size: 0.62rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.06em;
   color: var(--c-text-muted);
 }
+.tool-input { background: rgba(0, 120, 212, 0.03); }
 .tool-input .tool-section-label { color: var(--c-primary); }
+.tool-output { background: rgba(34, 197, 94, 0.03); }
 .tool-output .tool-section-label { color: #22c55e; }
 .tool-output { border-top: 1px dashed var(--c-border-subtle); }
 
