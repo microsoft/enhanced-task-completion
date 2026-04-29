@@ -521,13 +521,29 @@ const base = import.meta.env.BASE_URL;
   @media (max-width: 768px) {
     .hero__inner {
       grid-template-columns: 1fr;
-      gap: var(--space-2xl);
+      gap: var(--space-xl);
     }
     .hero__visual {
-      order: -1;
+      display: none;
     }
-    .hero__card {
-      max-width: 360px;
+    .hero__title {
+      font-size: 2rem;
+    }
+    .hero__subtitle {
+      font-size: 0.95rem;
+    }
+    .hero__actions {
+      flex-direction: column;
+    }
+    .hero__actions .btn {
+      width: 100%;
+      justify-content: center;
+    }
+    .how__grid {
+      grid-template-columns: 1fr;
+    }
+    .scenarios__grid {
+      grid-template-columns: 1fr;
     }
     .cta__layout {
       grid-template-columns: 1fr;

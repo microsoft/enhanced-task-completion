@@ -114,6 +114,13 @@ const base = import.meta.env.BASE_URL;
   }
   .nav__github:hover { color: var(--c-text); }
 
+  @media (max-width: 600px) {
+    .nav__inner { height: 48px; }
+    .nav__brand { font-size: 0.82rem; }
+    .nav__links { gap: var(--space-md); font-size: 0.78rem; }
+    .nav__links a:not(.nav__github):not(.nav__blog) { display: none; }
+  }
+
   .footer {
     margin-top: var(--space-4xl);
     padding: var(--space-xl) 0;
