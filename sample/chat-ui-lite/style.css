@@ -281,22 +281,35 @@ body {
 .msg-tool.pending .tool-icon { animation: spin 1s linear infinite; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
-.tool-result {
+.tool-details {
   display: none;
-  margin: 0;
-  padding: 8px 12px;
-  font-size: 0.7rem;
-  line-height: 1.45;
-  color: var(--c-text-muted);
-  background: var(--c-surface-raised);
   border-top: 1px solid var(--c-border-subtle);
+  background: var(--c-surface-raised);
+}
+.msg-tool.expanded .tool-details { display: block; }
+.tool-section:empty { display: none; }
+.tool-section pre {
+  margin: 0;
+  padding: 6px 12px 8px;
+  font-size: 0.72rem;
+  line-height: 1.5;
+  color: var(--c-text-secondary);
+  white-space: pre-wrap;
+  word-break: break-word;
   max-height: 150px;
   overflow-y: auto;
-  white-space: pre-wrap;
-  word-break: break-all;
 }
-.tool-result:empty { display: none !important; }
-.msg-tool.expanded .tool-result { display: block; }
+.tool-section-label {
+  padding: 6px 12px 0;
+  font-size: 0.62rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--c-text-muted);
+}
+.tool-input .tool-section-label { color: var(--c-primary); }
+.tool-output .tool-section-label { color: #22c55e; }
+.tool-output { border-top: 1px dashed var(--c-border-subtle); }
 
 /* ── Typing ── */
 .msg-typing {

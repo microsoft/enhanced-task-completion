@@ -128,6 +128,7 @@ function parseToolCall(entity) {
         tool_display_name: entity.tool_display_name || entity.toolDisplayName,
         status: entity.status,
         duration_ms: entity.duration_ms || entity.durationMs,
+        filledParameters: entity.filledParameters,
         result: entity.result,
       };
     }
@@ -206,11 +207,37 @@ function addToolCall(name, status) {
     <span class="tool-name">${escapeHtml(name)}</span>
     <span class="tool-status"></span>
   </div>
-  <pre class="tool-result"></pre>`;
+  <div class="tool-details">
+    <div class="tool-section tool-input"></div>
+    <div class="tool-section tool-output"></div>
+  </div>`;
   div.querySelector(".tool-header").onclick = () => div.classList.toggle("expanded");
   messagesEl.appendChild(div);
   scrollToBottom();
   return div;
+}
+
+function formatToolData(data) {
+  if (!data) return "";
+  if (typeof data === "string") {
+    try { data = JSON.parse(data); } catch { return data; }
+  }
+  if (typeof data !== "object") return String(data);
+  // Unwrap MCP content format: { content: [{ type: "text", text: "..." }], isError: ... }
+  if (data.content && Array.isArray(data.content)) {
+    for (const c of data.content) {
+      if (c.type === "text" && c.text) {
+        try {
+          const parsed = JSON.parse(c.text);
+          return JSON.stringify(parsed, null, 2);
+        } catch {
+          return c.text;
+        }
+      }
+    }
+  }
+  // Regular object: pretty-print
+  return JSON.stringify(data, null, 2);
 }
 
 
@@ -382,6 +409,14 @@ async function sendMessage(text, file = null) {
           if (status === "started") {
             const el = addToolCall(toolName, "pending");
             if (tc.tool_call_id) toolElements.set(tc.tool_call_id, el);
+            // Show input parameters if available
+            if (tc.filledParameters && Object.keys(tc.filledParameters).length) {
+              const formatted = formatToolData(tc.filledParameters);
+              if (formatted) {
+                const inputEl = el.querySelector(".tool-input");
+                inputEl.innerHTML = `<div class="tool-section-label">Input</div><pre>${escapeHtml(formatted)}</pre>`;
+              }
+            }
           } else if (status === "completed" || status === "complete") {
             const el = toolElements.get(tc.tool_call_id);
             if (el) {
@@ -389,18 +424,17 @@ async function sendMessage(text, file = null) {
               el.querySelector(".tool-icon").textContent = "\u2713";
               const dur = tc.duration_ms || tc.durationMs;
               el.querySelector(".tool-status").textContent = dur ? `${(dur / 1000).toFixed(1)}s` : "";
-              // Populate result
-              const result = tc.result || tc.result_raw;
+              // Populate output
+              let result = tc.result;
+              if (typeof result === "string") {
+                try { result = JSON.parse(result); } catch {}
+              }
               if (result) {
-                const hidden = new Set(["conversation_id", "id", "botId", "bot_id", "agent_id", "is_error"]);
-                let text;
-                if (typeof result === "object" && result !== null) {
-                  const cleaned = Object.fromEntries(Object.entries(result).filter(([k]) => !hidden.has(k)));
-                  text = Object.keys(cleaned).length ? JSON.stringify(cleaned, null, 2) : "";
-                } else {
-                  text = String(result);
+                const formatted = formatToolData(result);
+                if (formatted) {
+                  const outputEl = el.querySelector(".tool-output");
+                  outputEl.innerHTML = `<div class="tool-section-label">Output</div><pre>${escapeHtml(formatted)}</pre>`;
                 }
-                if (text) el.querySelector(".tool-result").textContent = text;
               }
             }
           }
