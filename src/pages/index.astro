@@ -28,7 +28,7 @@ const base = import.meta.env.BASE_URL;
             moving from a single chatbot to coordinated, multi-agent systems. This is a
             <strong>technical guide from the CAT team</strong> on building enterprise-grade
             scenarios on that new foundation: practical patterns for <strong>connected
-            agents</strong>, <strong>inline MCP servers</strong>, <strong>runtime skills</strong>,
+            agents</strong>, <strong>MCP servers</strong>, <strong>runtime skills</strong>,
             and <strong>generated files</strong>, each one backed by a complete, runnable
             reference you can deploy and inspect.
           </span>
@@ -36,7 +36,7 @@ const base = import.meta.env.BASE_URL;
             Copilot Studio has been <strong>rebuilt for complex, multi-step work</strong>,
             moving from a single chatbot to coordinated, multi-agent systems. BlastBox Omega is a
             complete, runnable reference: a parent agent that delegates to <strong>connected
-            agents</strong>, calls <strong>multiple inline MCP servers</strong>, runs
+            agents</strong>, calls <strong>multiple MCP servers</strong>, runs
             <strong>per-agent skills</strong> that generate and execute Python at runtime, and
             returns real <strong>generated files</strong>. End-to-end reference scenarios
             spanning <strong>agents and workflows</strong> in the new Copilot Studio.
@@ -229,40 +229,40 @@ const base = import.meta.env.BASE_URL;
       <p class="resources__intro">Reference material to help you understand and extend the new Copilot Studio agent experience, a technical deep dive on modern agents and the open-source plugin that ties into it.</p>
 
       <div class="resources__grid">
-        <div class="resource resource--deck">
-          <span class="resource__icon resource__icon--deck">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="12" y1="17" x2="12" y2="21"/><line x1="8" y1="21" x2="16" y2="21"/></svg>
-          </span>
-          <div class="resource__body">
-            <span class="badge badge--primary resource__kind">Deck &middot; PPTX</span>
-            <h3 class="resource__title">Modern Agents technical deep dive</h3>
-            <p class="resource__desc">A slide-by-slide walkthrough of the architecture behind the new Copilot Studio agents, connected agents, MCP, skills, orchestration, and file generation.</p>
-            <div class="resource__actions">
-              <a href="https://aka.ms/CopilotStudioDeepDiveDeck" class="resource__link resource__link--stretch" target="_blank" rel="noopener">
-                Open the deck
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg>
-              </a>
-              <a href="https://github.com/microsoft/new-copilot-studio-tech-guide/issues/new?template=deck-feedback.yml" class="resource__feedback" target="_blank" rel="noopener">
-                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-                Send feedback
-              </a>
-            </div>
+        <div class="resource resource--deck" style="--accent: var(--c-purple);">
+          <div class="resource__head">
+            <span class="resource__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="12" y1="17" x2="12" y2="21"/><line x1="8" y1="21" x2="16" y2="21"/></svg>
+            </span>
+            <span class="resource__kind">Deck &middot; PPTX</span>
+          </div>
+          <h3 class="resource__title">Modern Agents technical deep dive</h3>
+          <p class="resource__desc">A slide-by-slide walkthrough of the architecture behind the new Copilot Studio agents, connected agents, MCP, skills, orchestration, and file generation.</p>
+          <div class="resource__actions">
+            <a href="https://aka.ms/CopilotStudioDeepDiveDeck" class="resource__link resource__link--stretch" target="_blank" rel="noopener">
+              Open the deck
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg>
+            </a>
+            <a href="https://github.com/microsoft/new-copilot-studio-tech-guide/issues/new?template=deck-feedback.yml" class="resource__feedback" target="_blank" rel="noopener">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              Send feedback
+            </a>
           </div>
         </div>
 
-        <a href="https://aka.ms/CopilotStudioPlugin" class="resource" target="_blank" rel="noopener">
-          <span class="resource__icon resource__icon--repo">
-            <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-          </span>
-          <div class="resource__body">
-            <span class="badge badge--primary resource__kind">Repo &middot; GitHub</span>
-            <h3 class="resource__title">Copilot Studio Plugin</h3>
-            <p class="resource__desc">An open-source plugin for AI coding agents that migrates classic Copilot Studio agents to the modern experience, or builds brand-new modern agents from scratch.</p>
-            <span class="resource__link">
-              View on GitHub
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg>
+        <a href="https://aka.ms/CopilotStudioPlugin" class="resource resource--repo" style="--accent: var(--c-primary);" target="_blank" rel="noopener">
+          <div class="resource__head">
+            <span class="resource__icon">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
             </span>
+            <span class="resource__kind">Repo &middot; GitHub</span>
           </div>
+          <h3 class="resource__title">Copilot Studio Plugin</h3>
+          <p class="resource__desc">An open-source plugin for AI coding agents that migrates classic Copilot Studio agents to the modern experience, or builds brand-new modern agents from scratch.</p>
+          <span class="resource__link">
+            View on GitHub
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg>
+          </span>
         </a>
       </div>
     </div>
@@ -430,77 +430,85 @@ const base = import.meta.env.BASE_URL;
   .resources__grid {
     margin-top: var(--space-2xl);
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    grid-template-columns: repeat(2, 1fr);
     gap: var(--space-lg);
+    max-width: 780px;
   }
   .resource {
+    --accent: var(--c-primary);
+    position: relative;
     display: flex;
-    gap: var(--space-lg);
+    flex-direction: column;
+    gap: var(--space-sm);
     padding: var(--space-lg);
     background: var(--c-surface);
     border: 1px solid var(--c-border);
     border-radius: var(--card-frame-radius);
     text-decoration: none;
     color: inherit;
-    position: relative;
+    overflow: hidden;
     transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
   }
   .resource:hover {
-    border-color: color-mix(in srgb, var(--c-primary) 55%, transparent);
-    box-shadow: 0 12px 34px rgba(0, 0, 0, 0.4);
+    border-color: color-mix(in srgb, var(--accent) 55%, transparent);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.16), 0 0 22px color-mix(in srgb, var(--accent) 16%, transparent);
     transform: translateY(-3px);
+  }
+  .resource__head {
+    display: flex;
+    align-items: center;
+    gap: var(--space-sm);
   }
   .resource__icon {
     flex-shrink: 0;
-    width: 52px;
-    height: 52px;
+    width: 40px;
+    height: 40px;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    border-radius: 12px;
-    background: var(--c-bg-deep);
-    border: 1px solid var(--c-border-subtle);
-    color: var(--c-primary);
+    border-radius: 10px;
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    color: var(--accent);
   }
-  .resource__icon--repo { color: var(--c-text); }
-  .resource__body {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-sm);
+  .resource__icon svg { width: 20px; height: 20px; }
+  .resource__kind {
+    font-family: var(--font-mono);
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
   }
-  .resource__kind { align-self: flex-start; }
   .resource__title {
-    font-size: 1.05rem;
+    font-size: 1rem;
     font-weight: 700;
     letter-spacing: -0.01em;
     color: var(--c-text);
+    margin-top: 2px;
   }
   .resource__desc {
-    font-size: 0.88rem;
+    font-size: 0.84rem;
     color: var(--c-text-secondary);
-    line-height: 1.6;
+    line-height: 1.55;
+    flex: 1;
   }
-  .resource__link {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 0.82rem;
-    font-weight: 700;
-    color: var(--c-primary);
-    margin-top: 2px;
-    transition: gap 0.2s ease;
-  }
-  .resource:hover .resource__link { gap: 10px; }
-
-  /* Deck card: whole card opens the deck via a stretched link, with a
-     separate feedback link layered above it. */
   .resource__actions {
     display: flex;
     align-items: center;
     gap: var(--space-md);
     flex-wrap: wrap;
-    margin-top: 2px;
+    margin-top: var(--space-xs);
   }
+  .resource__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--accent);
+    transition: gap 0.2s ease;
+  }
+  .resource:hover .resource__link { gap: 10px; }
   .resource__link--stretch::after {
     content: "";
     position: absolute;
@@ -512,14 +520,18 @@ const base = import.meta.env.BASE_URL;
     z-index: 1;
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    font-size: 0.78rem;
+    gap: 5px;
+    font-size: 0.76rem;
     font-weight: 600;
     color: var(--c-text-muted);
     transition: color 0.15s ease;
   }
-  .resource__feedback:hover { color: var(--c-primary); }
+  .resource__feedback:hover { color: var(--accent); }
   .resource__feedback svg { opacity: 0.7; }
+
+  @media (max-width: 640px) {
+    .resources__grid { grid-template-columns: 1fr; }
+  }
 
   /* ── CTA ── */
   .cta { padding: var(--space-2xl) 0; scroll-margin-top: 70px; }
