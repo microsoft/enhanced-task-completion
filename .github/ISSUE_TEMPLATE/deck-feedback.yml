@@ -1,6 +1,6 @@
 name: Deck issue or feedback
 description: Report an issue or share feedback about the Modern Agents technical deep-dive deck
-title: "[Deck] "
+title: "[Copilot Studio Deepdive Deck] "
 labels: ["feedback"]
 body:
   - type: markdown

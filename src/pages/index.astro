@@ -103,7 +103,7 @@ const base = import.meta.env.BASE_URL;
             <span class="ticon-cat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>
             <span class="ticon-bb" style="font-size:1.4rem;">&#128013;</span>
           </div>
-          <h3>Code Interpreter</h3>
+          <h3>Agent Sandbox</h3>
           <p>Agents <em>generate and run code at runtime</em> to compute, transform, and analyze, going beyond text to real calculation.</p>
         </div>
         <div class="pillar">
@@ -229,7 +229,7 @@ const base = import.meta.env.BASE_URL;
       <p class="resources__intro">Reference material to help you understand and extend the new Copilot Studio agent experience, a technical deep dive on modern agents and the open-source plugin that ties into it.</p>
 
       <div class="resources__grid">
-        <a href="https://aka.ms/CopilotStudioDeepDiveDeck" class="resource" target="_blank" rel="noopener">
+        <div class="resource resource--deck">
           <span class="resource__icon resource__icon--deck">
             <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="12" y1="17" x2="12" y2="21"/><line x1="8" y1="21" x2="16" y2="21"/></svg>
           </span>
@@ -237,12 +237,18 @@ const base = import.meta.env.BASE_URL;
             <span class="badge badge--primary resource__kind">Deck &middot; PPTX</span>
             <h3 class="resource__title">Modern Agents technical deep dive</h3>
             <p class="resource__desc">A slide-by-slide walkthrough of the architecture behind the new Copilot Studio agents, connected agents, MCP, skills, orchestration, and file generation.</p>
-            <span class="resource__link">
-              Open the deck
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg>
-            </span>
+            <div class="resource__actions">
+              <a href="https://aka.ms/CopilotStudioDeepDiveDeck" class="resource__link resource__link--stretch" target="_blank" rel="noopener">
+                Open the deck
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg>
+              </a>
+              <a href="https://github.com/microsoft/new-copilot-studio-tech-guide/issues/new?template=deck-feedback.yml" class="resource__feedback" target="_blank" rel="noopener">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                Send feedback
+              </a>
+            </div>
           </div>
-        </a>
+        </div>
 
         <a href="https://aka.ms/CopilotStudioPlugin" class="resource" target="_blank" rel="noopener">
           <span class="resource__icon resource__icon--repo">
@@ -436,6 +442,7 @@ const base = import.meta.env.BASE_URL;
     border-radius: var(--card-frame-radius);
     text-decoration: none;
     color: inherit;
+    position: relative;
     transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
   }
   .resource:hover {
@@ -484,6 +491,35 @@ const base = import.meta.env.BASE_URL;
     transition: gap 0.2s ease;
   }
   .resource:hover .resource__link { gap: 10px; }
+
+  /* Deck card: whole card opens the deck via a stretched link, with a
+     separate feedback link layered above it. */
+  .resource__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-md);
+    flex-wrap: wrap;
+    margin-top: 2px;
+  }
+  .resource__link--stretch::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+  .resource__feedback {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--c-text-muted);
+    transition: color 0.15s ease;
+  }
+  .resource__feedback:hover { color: var(--c-primary); }
+  .resource__feedback svg { opacity: 0.7; }
 
   /* ── CTA ── */
   .cta { padding: var(--space-2xl) 0; scroll-margin-top: 70px; }
