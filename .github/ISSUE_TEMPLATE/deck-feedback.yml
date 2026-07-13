@@ -1,0 +1,36 @@
+name: Deck issue or feedback
+description: Report an issue or share feedback about the Modern Agents technical deep-dive deck
+title: "[Deck] "
+labels: ["feedback"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for the **Modern Agents technical deep-dive deck** ([aka.ms/CopilotStudioDeepDiveDeck](https://aka.ms/CopilotStudioDeepDiveDeck)).
+        For the walkthrough mini-site or the sample solution, use the **Site or sample issue / feedback** form instead.
+  - type: dropdown
+    id: type
+    attributes:
+      label: Type
+      description: What kind of report is this?
+      options:
+        - Error or inaccuracy
+        - Suggestion or improvement
+        - Broken or outdated content
+        - Question
+    validations:
+      required: true
+  - type: input
+    id: slide
+    attributes:
+      label: Slide or section
+      description: Which slide number or section does this relate to (if applicable)?
+      placeholder: e.g. Slide 12, "Connected agents"
+  - type: textarea
+    id: details
+    attributes:
+      label: Details
+      description: Describe the issue or feedback. For errors, tell us what's wrong and what it should say.
+      placeholder: Your feedback here...
+    validations:
+      required: true

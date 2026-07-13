@@ -1,15 +1,31 @@
-name: Feedback
-description: Share feedback about the ETC sample or guide
-title: "[Feedback] "
+name: Site or sample issue or feedback
+description: Report a bug or share feedback about the mini-site or the sample solution
+title: "[Site/Sample] "
 labels: ["feedback"]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for the **walkthrough mini-site** or the **sample solution** (import, agents, MCP tools).
+        For the Modern Agents technical deep-dive deck, use the **Deck issue or feedback** form instead.
+  - type: dropdown
+    id: type
+    attributes:
+      label: Type
+      description: What kind of report is this?
+      options:
+        - Bug or something is broken
+        - Feedback or suggestion
+        - Question
+    validations:
+      required: true
   - type: dropdown
     id: area
     attributes:
       label: Area
-      description: What does your feedback relate to?
+      description: What does this relate to?
       options:
-        - Scenario walkthrough (minisite)
+        - Scenario walkthrough (mini-site)
         - Chat UI
         - Solution import / deployment
         - Connector / MCP tools
@@ -18,10 +34,16 @@ body:
     validations:
       required: true
   - type: textarea
-    id: feedback
+    id: details
     attributes:
-      label: Feedback
-      description: Tell us what you think, what worked, what didn't, or what you'd like to see improved.
+      label: Details
+      description: Describe the issue or feedback. For bugs, include steps to reproduce, what you expected, and what actually happened.
       placeholder: Your feedback here...
     validations:
       required: true
+  - type: input
+    id: url
+    attributes:
+      label: Page URL (optional)
+      description: If this relates to a specific page on the mini-site, paste the URL.
+      placeholder: https://microsoft.github.io/new-copilot-studio-tech-guide/...
