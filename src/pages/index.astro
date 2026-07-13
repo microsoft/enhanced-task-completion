@@ -193,7 +193,7 @@ const base = import.meta.env.BASE_URL;
   </section>
 
   <!-- Get started -->
-  <section class="cta">
+  <section class="cta" id="get-started">
     <div class="container">
       <div class="cta__layout">
         <div class="cta__text">
@@ -217,6 +217,47 @@ const base = import.meta.env.BASE_URL;
           <div class="cta__step"><span class="cta__num">3</span><div><strong>Create MCP connections</strong><p>Click Create for each of the four connectors</p></div></div>
           <div class="cta__step"><span class="cta__num">4</span><div><strong>Publish &amp; play</strong><p>Publish all four agents, then run the two scenarios</p></div></div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Resources -->
+  <section class="resources" id="resources">
+    <div class="container">
+      <p class="section-label">Go deeper</p>
+      <h2>Resources</h2>
+      <p class="resources__intro">Reference material to help you understand and extend the new Copilot Studio agent experience, a technical deep dive on modern agents and the open-source plugin that ties into it.</p>
+
+      <div class="resources__grid">
+        <a href={`${base}files/modern-agents-deep-dive.pptx`} class="resource" download>
+          <span class="resource__icon resource__icon--deck">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="12" y1="17" x2="12" y2="21"/><line x1="8" y1="21" x2="16" y2="21"/></svg>
+          </span>
+          <div class="resource__body">
+            <span class="badge badge--primary resource__kind">Deck &middot; PPTX</span>
+            <h3 class="resource__title">Modern Agents technical deep dive</h3>
+            <p class="resource__desc">A slide-by-slide walkthrough of the architecture behind the new Copilot Studio agents, connected agents, MCP, skills, orchestration, and file generation.</p>
+            <span class="resource__link">
+              Download the deck
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            </span>
+          </div>
+        </a>
+
+        <a href="https://github.com/microsoft/copilot-studio-plugin" class="resource" target="_blank" rel="noopener">
+          <span class="resource__icon resource__icon--repo">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
+          </span>
+          <div class="resource__body">
+            <span class="badge badge--primary resource__kind">Repo &middot; GitHub</span>
+            <h3 class="resource__title">Copilot Studio Plugin</h3>
+            <p class="resource__desc">An open-source plugin for AI coding agents that migrates classic Copilot Studio agents to the modern experience, or builds brand-new modern agents from scratch.</p>
+            <span class="resource__link">
+              View on GitHub
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg>
+            </span>
+          </div>
+        </a>
       </div>
     </div>
   </section>
@@ -377,8 +418,75 @@ const base = import.meta.env.BASE_URL;
     gap: var(--space-lg);
   }
 
+  /* ── Resources ── */
+  .resources { padding: var(--space-2xl) 0; scroll-margin-top: 70px; }
+  .resources__intro { color: var(--c-text-secondary); margin-top: var(--space-sm); max-width: 44rem; }
+  .resources__grid {
+    margin-top: var(--space-2xl);
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: var(--space-lg);
+  }
+  .resource {
+    display: flex;
+    gap: var(--space-lg);
+    padding: var(--space-lg);
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--card-frame-radius);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+  }
+  .resource:hover {
+    border-color: color-mix(in srgb, var(--c-primary) 55%, transparent);
+    box-shadow: 0 12px 34px rgba(0, 0, 0, 0.4);
+    transform: translateY(-3px);
+  }
+  .resource__icon {
+    flex-shrink: 0;
+    width: 52px;
+    height: 52px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: var(--c-bg-deep);
+    border: 1px solid var(--c-border-subtle);
+    color: var(--c-primary);
+  }
+  .resource__icon--repo { color: var(--c-text); }
+  .resource__body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+  .resource__kind { align-self: flex-start; }
+  .resource__title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    color: var(--c-text);
+  }
+  .resource__desc {
+    font-size: 0.88rem;
+    color: var(--c-text-secondary);
+    line-height: 1.6;
+  }
+  .resource__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.82rem;
+    font-weight: 700;
+    color: var(--c-primary);
+    margin-top: 2px;
+    transition: gap 0.2s ease;
+  }
+  .resource:hover .resource__link { gap: 10px; }
+
   /* ── CTA ── */
-  .cta { padding: var(--space-2xl) 0; }
+  .cta { padding: var(--space-2xl) 0; scroll-margin-top: 70px; }
   .cta__layout {
     display: grid;
     grid-template-columns: 1fr 1fr;

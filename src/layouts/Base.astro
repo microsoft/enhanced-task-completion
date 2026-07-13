@@ -57,8 +57,8 @@ const enableClarity = import.meta.env.PROD;
         </a>
         <div class="nav__links">
           <a href={`${base}#scenarios`}>Scenarios</a>
-          <a href={`${repo}/tree/main/sample/solution`}>Get the sample</a>
-          <a href="https://microsoft.github.io/mcscatblog/" class="nav__blog">Blog</a>
+          <a href={`${base}#get-started`}>Get started</a>
+          <a href={`${base}#resources`}>Resources</a>
           <button id="skin-toggle" class="skin-toggle" type="button" aria-pressed="false" aria-label="Toggle immersive BlastBox skin">
             <span class="skin-toggle__dot"></span>
             <span class="skin-toggle__text">Theme</span>
@@ -187,10 +187,6 @@ const enableClarity = import.meta.env.PROD;
     color: var(--c-text-secondary);
   }
   .nav__links a:hover { color: var(--c-primary); }
-  .nav__blog {
-    color: var(--c-purple) !important;
-  }
-  .nav__blog:hover { color: var(--c-pink) !important; }
   .nav__github {
     display: flex;
     align-items: center;
@@ -232,7 +228,7 @@ const enableClarity = import.meta.env.PROD;
     .nav__inner { height: 52px; }
     .nav__brand { font-size: 0.9rem; }
     .nav__links { gap: var(--space-md); font-size: 0.8rem; }
-    .nav__links a:not(.nav__github):not(.nav__blog) { display: none; }
+    .nav__links a:not(.nav__github) { display: none; }
     .skin-toggle__text { display: none; }
     .skin-toggle { padding: 6px; }
   }
