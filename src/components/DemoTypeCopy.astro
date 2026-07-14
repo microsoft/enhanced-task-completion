@@ -34,9 +34,9 @@
         return;
       }
 
-      const demoTypeScript = prompts
+      const demoTypeScript = `[start]${prompts
         .map((prompt) => `${prompt}[enter][end]`)
-        .join('');
+        .join('')}`;
 
       window.clearTimeout(resetTimer);
       button.classList.remove('copied', 'copy-failed');
