@@ -1,0 +1,59 @@
+<button
+  class="demotype-copy"
+  type="button"
+  data-demotype-copy
+  title="Copy all scenario prompts as a ZoomIt DemoType script"
+>
+  <span class="demotype-copy__icon" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+      <rect x="9" y="9" width="12" height="12" rx="2"></rect>
+      <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+    </svg>
+  </span>
+  <span class="demotype-copy__text">
+    <span class="demotype-copy__label" data-demotype-label aria-live="polite">Copy DemoType</span>
+    <span class="demotype-copy__hint">All prompts &middot; ZoomIt</span>
+  </span>
+</button>
+
+<script>
+  const demoTypeButtons = document.querySelectorAll<HTMLButtonElement>('[data-demotype-copy]');
+
+  demoTypeButtons.forEach((button) => {
+    const label = button.querySelector<HTMLElement>('[data-demotype-label]');
+    let resetTimer: number | undefined;
+
+    button.addEventListener('click', async () => {
+      const prompts = Array.from(document.querySelectorAll<HTMLElement>('.try-prompt__text'))
+        .map((prompt) => prompt.textContent?.trim())
+        .filter((text): text is string => Boolean(text));
+
+      if (prompts.length === 0) {
+        if (label) label.textContent = 'No prompts found';
+        button.classList.add('copy-failed');
+        return;
+      }
+
+      const demoTypeScript = `[start]${prompts
+        .map((prompt) => `${prompt}[enter][end]`)
+        .join('')}`;
+
+      window.clearTimeout(resetTimer);
+      button.classList.remove('copied', 'copy-failed');
+
+      try {
+        await navigator.clipboard.writeText(demoTypeScript);
+        if (label) label.textContent = 'DemoType copied';
+        button.classList.add('copied');
+      } catch {
+        if (label) label.textContent = 'Copy failed';
+        button.classList.add('copy-failed');
+      }
+
+      resetTimer = window.setTimeout(() => {
+        if (label) label.textContent = 'Copy DemoType';
+        button.classList.remove('copied', 'copy-failed');
+      }, 2000);
+    });
+  });
+</script>
