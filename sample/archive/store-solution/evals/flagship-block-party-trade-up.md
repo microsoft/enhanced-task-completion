@@ -233,8 +233,8 @@
   are reproduced by the bundled scripts `blastpass_refund.py` and
   `points_reconciliation.py`.
 - This is the **associate-facing** agent (separate from the self-serve card-reissue
-  scenario on the Returns & Service Assistant). It reuses the backed-up associate skills/connected agents in
-  `agents-cli/_associate-skill-library/` plus the new `get_console_exclusives` tool.
+  scenario on the Returns & Service Assistant). It reuses the associate skills/connected agents
+  packaged in the solution source (`sample/solution/src/`) plus the new `get_console_exclusives` tool.
 - Build order: (1) add `get_console_exclusives` to the Warehouse MCP, (2) attach the three
   Python skills to the parent, (3) wire the two connected agents with their MCPs, (4) run
   the 4-turn transcript in Preview and capture actuals.

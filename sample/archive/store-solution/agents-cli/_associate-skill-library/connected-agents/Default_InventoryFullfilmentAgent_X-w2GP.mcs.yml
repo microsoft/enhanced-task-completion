@@ -1,7 +1,0 @@
-mcs.metadata:
-  componentName: Inventory & Fullfilment Agent
-  description: Inventory & Fulfillment Agent
-kind: ConnectedAgentTool
-botSchemaName: Default_InventoryFullfilmentAgent_X-w2GP
-historyType:
-  kind: ConversationHistory
