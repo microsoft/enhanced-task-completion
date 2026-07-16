@@ -24,9 +24,6 @@ pnpm-debug.log*
 .idea/
 sample/chat-ui/
 
-# Copilot Studio agent clone scratch (pac CLI working copies)
-sample/store-solution/agents-cli/_*/
-
 # Playwright test-agent session artifacts
 .playwright/
 .playwright-cli/

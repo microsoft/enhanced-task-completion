@@ -1,9 +1,0 @@
-mcs.metadata:
-  componentName: Get manager approval for clearance
-kind: WorkflowTool
-workflowId: a6450d77-e4e7-f7f4-1b6c-60239a08a9df
-toolInputs:
-  - name: text
-
-toolOutputs:
-  - name: text
