@@ -1,5 +1,0 @@
-mcs.metadata:
-  componentName: distance-calculator
-  description: Calculate the great-circle distance between two locations. Use when the user wants to know how far apart two cities, towns, or places are. The skill asks for two locations, looks up their geographic coordinates via web search, then computes the distance with a Python script.
-kind: InlineAgentSkill
-content: <!-- bic:bundle=crskill_distance_calculator_zip_eb781c6cb224 -->

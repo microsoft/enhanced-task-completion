@@ -1,7 +1,0 @@
-mcs.metadata:
-  componentName: Membership MCP — Membership MCP Server
-  description: "MCP server for BlastPass memberships. Tools: get_membership, cancel_membership."
-kind: McpTool
-connectorId: /providers/Microsoft.PowerApps/apis/shared_membership-20mcp-5fee08b8354fad177a-5f8dc9e3504a9e5333
-connectionReference: Default_draft_IsBewO.cr.shared_membership-20.9567a2288d83498eb9f0305b20030ce3
-operationId: InvokeMCP

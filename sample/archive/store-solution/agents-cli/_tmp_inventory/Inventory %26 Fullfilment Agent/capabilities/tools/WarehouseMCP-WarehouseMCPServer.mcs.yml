@@ -1,7 +1,0 @@
-mcs.metadata:
-  componentName: Warehouse MCP — Warehouse MCP Server
-  description: "MCP server for warehouse and fulfillment. Tools: check_stock, get_fulfillment_status, find_alternatives, get_restock_date."
-kind: McpTool
-connectorId: /providers/Microsoft.PowerApps/apis/shared_new-5fwarehouse-20mcp-5fee08b8354fad177a
-connectionReference: Default_InventoryFullfilmentAgent_X-w2GP.cr.shared_new-5fwarehou.89650fa4b3604076a2e730bec67b7f07
-operationId: InvokeMCP
