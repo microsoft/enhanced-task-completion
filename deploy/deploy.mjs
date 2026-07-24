@@ -113,7 +113,17 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 // ---------- shell ----------
 function quoteArg(a) {
   a = String(a);
-  return isWin ? '"' + a.replace(/"/g, '""') + '"' : "'" + a.replace(/'/g, `'\\''`) + "'";
+  if (isWin) {
+    // Only quote when the token actually needs it. pac v2.x treats surrounding
+    // quotes as part of the token and rejects quote-wrapped subcommands (printing
+    // its help banner and exiting 0), so blanket-quoting every arg breaks e.g.
+    // `pac auth list`. Pass plain tokens (subcommands, flags, GUIDs, URLs) through
+    // unquoted; wrap only args containing whitespace or cmd.exe metacharacters.
+    if (a === '') return '""';
+    if (!/[\s"&|<>^()]/.test(a)) return a;
+    return '"' + a.replace(/"/g, '""') + '"';
+  }
+  return "'" + a.replace(/'/g, `'\\''`) + "'";
 }
 // Run a command (cross-OS via shell). Returns { code, stdout, stderr, out, timedOut }.
 // opts.timeoutMs: kill the child after this many ms (pac can hang for 30+ min on
