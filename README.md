@@ -1,6 +1,6 @@
 # Copilot Studio Technical Guide
 
-A showcase site and deployable sample for the new Agents and Workflows experience in Microsoft Copilot Studio.
+A showcase site and deployable sample for the Agents and Workflows experience in Microsoft Copilot Studio.
 
 **Live site**: https://microsoft.github.io/new-copilot-studio-tech-guide/
 

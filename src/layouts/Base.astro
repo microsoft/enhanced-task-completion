@@ -6,7 +6,7 @@ interface Props {
   description?: string;
 }
 
-const { title, description = 'A technical guide to the new AI workloads in Copilot Studio Agents and Workflows' } = Astro.props;
+const { title, description = 'A technical guide to AI workloads in Copilot Studio Agents and Workflows' } = Astro.props;
 const base = import.meta.env.BASE_URL;
 const repo = 'https://github.com/microsoft/new-copilot-studio-tech-guide';
 
@@ -126,7 +126,7 @@ const enableClarity = import.meta.env.PROD;
     <footer class="footer">
       <div class="container">
         <div class="footer__inner">
-          <p>A mock demo store for the Copilot Studio <strong>Modern Agent Experience</strong>. All products, members, and policies are fictional. Built by the <a href="https://microsoft.github.io/mcscatblog/">Copilot Studio CAT</a> team &middot; MIT licensed. <span class="footer__sep">&middot;</span> <a href={`${repo}/issues/new?template=feedback.yml`} class="footer__feedback"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg> Send feedback</a></p>
+          <p>A mock demo store for Copilot Studio <strong>agents</strong>. All products, members, and policies are fictional. Built by the <a href="https://microsoft.github.io/mcscatblog/">Copilot Studio CAT</a> team &middot; MIT licensed. <span class="footer__sep">&middot;</span> <a href={`${repo}/issues/new?template=feedback.yml`} class="footer__feedback"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg> Send feedback</a></p>
         </div>
       </div>
     </footer>

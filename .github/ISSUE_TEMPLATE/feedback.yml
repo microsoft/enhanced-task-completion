@@ -7,7 +7,7 @@ body:
     attributes:
       value: |
         Use this form for the **walkthrough mini-site** or the **sample solution** (import, agents, MCP tools).
-        For the Modern Agents technical deep-dive deck, use the **Deck issue or feedback** form instead.
+        For the Copilot Studio technical deep-dive deck, use the **Deck issue or feedback** form instead.
   - type: dropdown
     id: type
     attributes:
