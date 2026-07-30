@@ -1,12 +1,12 @@
 name: Deck issue or feedback
-description: Report an issue or share feedback about the Modern Agents technical deep-dive deck
+description: Report an issue or share feedback about the Copilot Studio technical deep-dive deck
 title: "[Copilot Studio Deepdive Deck] "
 labels: ["feedback"]
 body:
   - type: markdown
     attributes:
       value: |
-        Use this form for the **Modern Agents technical deep-dive deck** ([aka.ms/CopilotStudioDeepDiveDeck](https://aka.ms/CopilotStudioDeepDiveDeck)).
+        Use this form for the **Copilot Studio technical deep-dive deck** ([aka.ms/CopilotStudioDeepDiveDeck](https://aka.ms/CopilotStudioDeepDiveDeck)).
         For the walkthrough mini-site or the sample solution, use the **Site or sample issue / feedback** form instead.
   - type: dropdown
     id: type
