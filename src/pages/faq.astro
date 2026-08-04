@@ -1,0 +1,119 @@
+---
+import Base from '../layouts/Base.astro';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<Base
+  title="Agents & Workflows FAQ | Copilot Studio technical guide"
+  description="Straight answers on upgrading agents, building on the GitHub Copilot harness, and what happens to topics, prompts, adaptive cards, and child agents in Copilot Studio."
+>
+  <article class="faq-page">
+    <div class="container">
+      <a href={base} class="back">&larr; Back to the guide</a>
+
+      <header class="faq-page__header">
+        <p class="section-label">FAQ</p>
+        <h1>Agents &amp; Workflows</h1>
+        <p class="faq-page__lead">
+          Common questions about moving to the new agent and workflow model in Copilot
+          Studio &mdash; when to upgrade, what to build on the GitHub Copilot harness, and
+          where topics, prompts, adaptive cards, and child agents land.
+        </p>
+      </header>
+
+      <div class="faq__list">
+        <details class="faq__item" open>
+          <summary class="faq__q">Do I need to upgrade each and every agent?<span class="faq__chev" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span></summary>
+          <div class="faq__a"><p>If it does the job, don&apos;t rush into an upgrade. Standard agents already running in production can stay as-is; upgrade when there&apos;s a clear reason to.</p></div>
+        </details>
+        <details class="faq__item">
+          <summary class="faq__q">Do I build every new agent on the GHCP harness?<span class="faq__chev" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span></summary>
+          <div class="faq__a"><p>If you want to automate with AI, you probably want a workflow with AI nodes. But if it&apos;s conversational and doesn&apos;t need to handle complex tasks, you can also build declarative agents in Agent Builder or Copilot Studio (the latter is upcoming).</p></div>
+        </details>
+        <details class="faq__item">
+          <summary class="faq__q">What happens to topics? Are they coming back?<span class="faq__chev" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span></summary>
+          <div class="faq__a"><p>Not likely. The mental model: if topics are used to drive the conversational flows, then instructions and/or skills; if they are used to transform data, then code execution in the sandbox or workflows.</p></div>
+        </details>
+        <details class="faq__item">
+          <summary class="faq__q">What happens to prompts?<span class="faq__chev" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span></summary>
+          <div class="faq__a"><p>Prompts are no longer the unit of work. In workflows, prompts become inline agents. In agents, the functionality of the prompt may be turned into a skill in most cases. Rethink what the workload needs and map it to the relevant component.</p></div>
+        </details>
+        <details class="faq__item">
+          <summary class="faq__q">What happens to adaptive cards?<span class="faq__chev" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span></summary>
+          <div class="faq__a"><p>Rich UI component options in agents are still being actively worked on.</p></div>
+        </details>
+        <details class="faq__item">
+          <summary class="faq__q">What happens to child agents?<span class="faq__chev" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></span></summary>
+          <div class="faq__a"><p>We have a cleaner model now with connected agents: less overlap, and most of the role that child agents played can be covered by skills.</p></div>
+        </details>
+      </div>
+
+      <aside class="faq-page__next">
+        <div>
+          <h2>See it in practice</h2>
+          <p>The fastest way to answer these for yourself is to deploy the sample and poke at it.</p>
+        </div>
+        <a href={`${base}#get-started`} class="btn btn--primary">Deploy the sample</a>
+      </aside>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .faq-page { padding: var(--space-2xl) 0 var(--space-3xl); }
+  .back {
+    display: inline-flex; align-items: center; gap: 4px;
+    font-size: 0.85rem; font-weight: 600; color: var(--c-text-muted);
+    margin-bottom: var(--space-xl);
+  }
+  .back:hover { color: var(--c-primary); }
+  .faq-page__header { max-width: 760px; }
+  .faq-page__header h1 {
+    margin-top: var(--space-sm);
+    font-family: var(--font-display); letter-spacing: 0.01em;
+    font-size: clamp(1.9rem, 4vw, 2.6rem);
+  }
+  .faq-page__lead {
+    margin-top: var(--space-md);
+    color: var(--c-text-secondary); font-size: 1.05rem; line-height: 1.7;
+  }
+
+  .faq__list {
+    margin-top: var(--space-2xl);
+    display: flex; flex-direction: column; gap: var(--space-sm);
+    max-width: 820px;
+  }
+  .faq__item {
+    background: var(--c-surface);
+    border: 1px solid var(--c-border-subtle);
+    border-radius: var(--radius-md);
+    transition: border-color 0.2s ease;
+  }
+  .faq__item:hover, .faq__item[open] { border-color: var(--c-border); }
+  .faq__q {
+    display: flex; align-items: center; justify-content: space-between; gap: var(--space-md);
+    padding: var(--space-md) var(--space-lg);
+    font-size: 0.98rem; font-weight: 600; color: var(--c-text);
+    cursor: pointer; list-style: none;
+  }
+  .faq__q::-webkit-details-marker { display: none; }
+  .faq__q:hover { color: var(--c-primary); }
+  .faq__chev { flex-shrink: 0; color: var(--c-text-muted); display: inline-flex; transition: transform 0.2s ease, color 0.2s ease; }
+  .faq__item[open] .faq__chev { transform: rotate(180deg); color: var(--c-primary); }
+  .faq__a { padding: 0 var(--space-lg) var(--space-lg); }
+  .faq__a p { font-size: 0.9rem; color: var(--c-text-secondary); line-height: 1.7; max-width: 68ch; }
+
+  .faq-page__next {
+    margin-top: var(--space-3xl);
+    max-width: 820px;
+    display: flex; align-items: center; justify-content: space-between; gap: var(--space-xl);
+    flex-wrap: wrap;
+    padding: var(--space-xl);
+    background: var(--gradient-brand-soft), var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-lg);
+  }
+  .faq-page__next h2 { font-size: 1.15rem; }
+  .faq-page__next p { margin-top: 4px; font-size: 0.9rem; color: var(--c-text-secondary); }
+</style>

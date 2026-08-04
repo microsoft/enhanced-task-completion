@@ -10,6 +10,31 @@ Run it from a fresh clone — everything it needs (both solution zips and all
 connector code) is in the repo. It does **not** create or delete environments; you
 point it at an env you already have.
 
+## Quickest path — one command, no clone
+
+Deploy the sample without cloning anything. This downloads the deploy assets (both
+solution zips and all connector code) and starts the same guided deploy:
+
+**macOS / Linux**
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/microsoft/new-copilot-studio-tech-guide/main/deploy/install.sh | bash
+```
+
+**Windows (PowerShell)**
+
+```powershell
+powershell -c "irm https://raw.githubusercontent.com/microsoft/new-copilot-studio-tech-guide/main/deploy/install.ps1 | iex"
+```
+
+Set the `BLASTBOX_REF` env var to deploy from a branch or tag other than `main`. You
+still need the [requirements](#requirements) below — Node 18+, the pac CLI signed in,
+and the az CLI.
+
+### Prefer to clone?
+
+Everything the script needs is committed in the repo, so a clone works too:
+
 ```bash
 node deploy/deploy.mjs            # guided: pick profile, pick env, deploy
 node deploy/deploy.mjs --help     # all options
@@ -27,7 +52,9 @@ arrays (no shell string interpolation), resolves paths with `node:path`, and rea
    pac auth create            # then verify with: pac auth list
    ```
 
-2. **Deploy** (guided — it lists your profiles and envs):
+2. **Deploy** (guided — it lists your profiles and envs). Run the no-clone one-liner
+   from the [Quickest path](#quickest-path--one-command-no-clone) above, or from a
+   clone:
 
    ```bash
    node deploy/deploy.mjs
