@@ -25,13 +25,13 @@ CLI** installed):
 **macOS / Linux**
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/microsoft/new-copilot-studio-tech-guide/main/deploy/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/microsoft/new-copilot-studio-tech-guide/sample-first-installer/deploy/install.sh | BLASTBOX_REF=sample-first-installer bash
 ```
 
 **Windows (PowerShell)**
 
 ```powershell
-powershell -c "irm https://raw.githubusercontent.com/microsoft/new-copilot-studio-tech-guide/main/deploy/install.ps1 | iex"
+powershell -c "$env:BLASTBOX_REF='sample-first-installer'; irm https://raw.githubusercontent.com/microsoft/new-copilot-studio-tech-guide/sample-first-installer/deploy/install.ps1 | iex"
 ```
 
 It imports both solutions, deploys the connector code, creates the connections, and
