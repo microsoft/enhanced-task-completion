@@ -134,9 +134,9 @@ const base = import.meta.env.BASE_URL;
             </div>
             <div class="term__body">
               <p class="term__comment"># macOS / Linux</p>
-              <div class="try-prompt term__cmd"><code class="try-prompt__text">curl -fsSL https://raw.githubusercontent.com/microsoft/new-copilot-studio-tech-guide/sample-first-installer/deploy/install.sh | BLASTBOX_REF=sample-first-installer bash</code></div>
+              <div class="try-prompt term__cmd"><code class="try-prompt__text">curl -fsSL https://raw.githubusercontent.com/microsoft/new-copilot-studio-tech-guide/main/deploy/install.sh | bash</code></div>
               <p class="term__comment"># Windows &middot; PowerShell</p>
-              <div class="try-prompt term__cmd"><code class="try-prompt__text">powershell -c "$env:BLASTBOX_REF='sample-first-installer'; irm https://raw.githubusercontent.com/microsoft/new-copilot-studio-tech-guide/sample-first-installer/deploy/install.ps1 | iex"</code></div>
+              <div class="try-prompt term__cmd"><code class="try-prompt__text">powershell -c "irm https://raw.githubusercontent.com/microsoft/new-copilot-studio-tech-guide/main/deploy/install.ps1 | iex"</code></div>
             </div>
           </div>
         </div>
