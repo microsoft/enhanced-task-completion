@@ -17,8 +17,8 @@
 //
 // Requirements: Node 18+, pac CLI (authenticated). The script picks the az tenant
 // from the chosen pac profile and runs `az login` for you if az isn't already signed
-// in to it. On this machine pac needs DOTNET_ROOT — set it in the environment or pass
-// --dotnet-root.
+// in to it. If pac needs DOTNET_ROOT, the script auto-detects your .NET install (so
+// you don't have to know the path); override it with --dotnet-root if needed.
 //
 // Usage:
 //   node deploy/deploy.mjs                       # fully interactive
@@ -29,7 +29,7 @@
 
 import { spawnSync, spawn } from 'node:child_process';
 import { createInterface } from 'node:readline/promises';
-import { readFileSync, existsSync } from 'node:fs';
+import { readFileSync, existsSync, realpathSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
 import { randomUUID } from 'node:crypto';
@@ -73,7 +73,7 @@ OPTIONS
   --env-id <guid>          Target environment id (skips the env picker).
   --env-url <url>          Target org url, e.g. https://org123.crm.dynamics.com/.
   --profile <index>        pac auth list index to use (skips the profile picker).
-  --dotnet-root <path>     DOTNET_ROOT for pac (default: $DOTNET_ROOT or ~/.dotnet).
+  --dotnet-root <path>     .NET install dir for pac (auto-detected; overrides it).
   --start-at <step>        Resume from a step: ${['import', 'connectors', 'connections', 'publish', 'manual'].join(' | ')}.
   --yes                    Don't pause for confirmations (non-interactive / CI).
   -h, --help               Show this help and exit.
@@ -98,9 +98,19 @@ if (hasFlag('help') || argv.includes('-h')) { printUsage(); process.exit(0); }
 
 // ---------- env for child processes ----------
 const childEnv = { ...process.env };
+// A usable DOTNET_ROOT points at a real .NET install: the host binary plus a
+// shared/ runtime. A bare ~/.dotnet that only holds a tools/ folder (created for
+// global tools like pac) is NOT a runtime root — pointing DOTNET_ROOT at it makes
+// the pac apphost hunt for a runtime that isn't there and report "pac not runnable".
+// This bites Windows especially, where tools live in ~/.dotnet\tools but the runtime
+// is in C:\Program Files\dotnet. So only adopt a dir that actually looks like a root.
+const DOTNET_HOST = isWin ? 'dotnet.exe' : 'dotnet';
+function looksLikeDotnetRoot(dir) {
+  return !!dir && existsSync(join(dir, DOTNET_HOST)) && existsSync(join(dir, 'shared'));
+}
 const defaultDotnet = join(homedir(), '.dotnet');
 if (OPT.dotnetRoot) childEnv.DOTNET_ROOT = OPT.dotnetRoot;
-else if (!childEnv.DOTNET_ROOT && existsSync(defaultDotnet)) childEnv.DOTNET_ROOT = defaultDotnet;
+else if (!childEnv.DOTNET_ROOT && looksLikeDotnetRoot(defaultDotnet)) childEnv.DOTNET_ROOT = defaultDotnet;
 
 // ---------- logging ----------
 const paint = (code, s) => `\x1b[${code}m${s}\x1b[0m`;
@@ -645,14 +655,55 @@ when re-adding. After re-attaching, the tools load and both scenarios work.
 // Main
 // ============================================================================
 const STEPS = ['import', 'connectors', 'connections', 'publish', 'manual'];
+
+// Follow the `dotnet` binary on PATH to its install root (parent of the host,
+// symlinks resolved). Returns the root only if it really holds the runtime.
+function detectDotnetRoot() {
+  const which = isWin ? sh('where', ['dotnet']) : sh('command', ['-v', 'dotnet']);
+  let p = (which.stdout || '').split(/\r?\n/).map((s) => s.trim()).find(Boolean);
+  if (!p) return null;
+  try { p = realpathSync(p); } catch { /* use the PATH entry as-is */ }
+  const root = dirname(p);
+  return looksLikeDotnetRoot(root) ? root : null;
+}
+
+// Make `pac` runnable, healing the usual DOTNET_ROOT problems without asking the
+// user to know their .NET path. Returns true if pac responds, false otherwise.
+function ensurePacRunnable() {
+  const pacWorks = () => sh('pac', ['auth', 'list']).code === 0;
+  if (pacWorks()) return true;
+  // A stale/incomplete DOTNET_ROOT (e.g. ~/.dotnet with only tools/) breaks the
+  // pac apphost. Drop it and let pac find the system runtime the way it does in a
+  // normal shell — this is the Windows "works in my terminal but not here" case.
+  if (childEnv.DOTNET_ROOT && !looksLikeDotnetRoot(childEnv.DOTNET_ROOT)) {
+    const bad = childEnv.DOTNET_ROOT;
+    delete childEnv.DOTNET_ROOT;
+    if (pacWorks()) { warn(`Ignored DOTNET_ROOT=${bad} (not a .NET runtime root); using the system .NET.`); return true; }
+    childEnv.DOTNET_ROOT = bad;
+  }
+  // pac genuinely needs DOTNET_ROOT and it isn't set right — auto-detect it.
+  const detected = detectDotnetRoot();
+  if (detected && detected !== childEnv.DOTNET_ROOT) {
+    const prev = childEnv.DOTNET_ROOT;
+    childEnv.DOTNET_ROOT = detected;
+    if (pacWorks()) { ok(`Auto-detected DOTNET_ROOT=${detected}.`); return true; }
+    if (prev === undefined) delete childEnv.DOTNET_ROOT; else childEnv.DOTNET_ROOT = prev;
+  }
+  return false;
+}
+
 async function main() {
   if (!STEPS.includes(OPT.startAt)) die(`--start-at must be one of: ${STEPS.join(', ')}`);
   log('BlastBox Omega deploy (cross-OS). This deploys into an EXISTING environment.');
 
   // preflight: pac runnable (az is handled after profile select, see ensureAz)
-  if (sh('pac', ['auth', 'list']).code !== 0) {
-    die('pac CLI is not runnable. Install it (https://aka.ms/PowerPlatformCLI), run ' +
-        '`pac auth create` to sign in, and set DOTNET_ROOT (or pass --dotnet-root). ' +
+  if (!ensurePacRunnable()) {
+    die('pac CLI is not runnable. Make sure the Power Platform CLI is installed ' +
+        '(https://aka.ms/PowerPlatformCLI) and signed in (`pac auth create`). If pac ' +
+        'works in your own terminal but not here, its .NET runtime just needs to be ' +
+        'passed through: re-run with --dotnet-root <your .NET install dir> — the folder ' +
+        `containing "${DOTNET_HOST}" and a "shared" folder` +
+        `${isWin ? ' (usually C:\\\\Program Files\\\\dotnet)' : ''}. ` +
         'Run `node deploy/deploy.mjs --help` for details.');
   }
 
