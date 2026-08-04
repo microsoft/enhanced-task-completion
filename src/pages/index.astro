@@ -511,10 +511,14 @@ const base = import.meta.env.BASE_URL;
   .term__cmd { padding: 0; }
   .term__cmd .try-prompt__text {
     display: block;
-    font-family: var(--font-mono); font-size: 0.8rem; line-height: 1.65;
+    font-family: var(--font-mono); font-size: 0.8rem; line-height: 1.7;
     color: #e8eaed;
+    background: transparent;
+    border: none;
+    border-radius: 0;
     white-space: pre-wrap; overflow-wrap: anywhere;
-    padding-left: 1.35em; text-indent: -1.35em; padding-right: 92px;
+    padding: 2px 92px 2px 1.35em;
+    text-indent: -1.35em;
   }
   .term__cmd .try-prompt__text::before { content: "$ "; color: #28c840; font-weight: 700; }
 
