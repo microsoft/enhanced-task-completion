@@ -47,10 +47,13 @@ tar -xzf "$TMP/src.tgz" -C "$TMP" --strip-components=1 \
 
 # --- run ---------------------------------------------------------------------
 # deploy.mjs is interactive. When this script is piped to bash (curl | bash),
-# stdin is the script itself, so restore the terminal on /dev/tty for the prompts.
+# stdin is the script itself, so restore the terminal on /dev/tty for the
+# prompts — but only when /dev/tty is actually readable. In CI/headless shells
+# it may exist yet be unusable ("Device not configured"), and with --yes the
+# prompts never fire anyway, so fall back to the inherited stdin.
 cd "$TMP"
 say "Starting the guided deploy..."
-if [ -e /dev/tty ]; then
+if [ -e /dev/tty ] && (: < /dev/tty) 2>/dev/null; then
   node deploy/deploy.mjs "$@" < /dev/tty
 else
   node deploy/deploy.mjs "$@"
