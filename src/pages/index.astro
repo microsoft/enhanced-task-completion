@@ -19,20 +19,19 @@ const base = import.meta.env.BASE_URL;
           <span class="t-bb">BlastBox <span class="hero__title-omega">Omega</span></span>
         </h1>
         <p class="hero__tagline">
-          <span class="t-cat">A hands-on guide to Agents and Workflows in Copilot Studio.</span>
+          <span class="t-cat">Ready-to-run samples for Agents and Workflows in Copilot Studio.</span>
           <span class="t-bb">The retro-future game store, run by agents.</span>
         </p>
         <p class="hero__subtitle">
           <span class="t-cat">
-            Copilot Studio has been <strong>rebuilt for complex, multi-step work</strong>,
-            moving from a single chatbot to coordinated, multi-agent systems on the
-            <strong>GitHub Copilot harness</strong> &mdash; its agentic build, where the
-            agent reasons, acts, and adapts in a continuous loop. This is a
-            <strong>technical guide from the CAT team</strong> on building enterprise-grade
-            scenarios on that foundation: practical patterns for <strong>connected
-            agents</strong>, <strong>MCP servers</strong>, <strong>runtime skills</strong>,
-            and <strong>generated files</strong>, each one backed by a complete, runnable
-            reference you can deploy and inspect.
+            Copilot Studio has been <strong>rebuilt for complex, multi-step work</strong> &mdash;
+            coordinated, multi-agent systems on the <strong>GitHub Copilot harness</strong>,
+            where the agent reasons, acts, and adapts in a loop. The fastest way to understand
+            it is to run it. This guide from the CAT team is built around <strong>complete,
+            ready-to-run samples</strong>: deploy one into a Power Platform environment you
+            already have and watch <strong>connected agents</strong>, <strong>MCP servers</strong>,
+            <strong>runtime skills</strong>, and <strong>generated files</strong> work together
+            end to end.
           </span>
           <span class="t-bb">
             Copilot Studio has been <strong>rebuilt for complex, multi-step work</strong>,
@@ -48,7 +47,7 @@ const base = import.meta.env.BASE_URL;
         </p>
         <div class="hero__actions">
           <a href="#scenarios" class="btn btn--primary">Explore scenarios</a>
-          <a href="https://github.com/microsoft/new-copilot-studio-tech-guide/tree/main/sample/solution" class="btn btn--secondary">
+          <a href="#get-started" class="btn btn--secondary">
             Get the sample
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
           </a>
@@ -73,82 +72,6 @@ const base = import.meta.env.BASE_URL;
             <div class="msg msg--bot">Warranty swap to MEGA &middot; refund $76.66 applied &middot; <strong>net due $23.34</strong>.</div>
             <div class="file"><span class="file__icon"><span class="ticon-cat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></span><span class="ticon-bb">&#128196;</span></span> blastbox_slip.pdf <span class="file__meta">generated</span></div>
           </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Pillars -->
-  <section class="pillars">
-    <div class="container">
-      <p class="section-label">What it shows</p>
-      <h2>The building blocks of the agent experience</h2>
-      <p class="pillars__intro">Every scenario is built from the same core capabilities of the Copilot Studio agent experience. The more advanced scenarios simply bring more of them together at once.</p>
-
-      <div class="pillars__grid">
-        <div class="pillar">
-          <div class="pillar__icon" style="--g: var(--c-primary);">
-            <span class="ticon-cat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg></span>
-            <span class="ticon-bb" style="font-size:1.4rem;">&#129309;</span>
-          </div>
-          <h3>Connected agents</h3>
-          <p>A parent agent delegates to specialist child agents and weaves their answers back into a single conversation.</p>
-        </div>
-        <div class="pillar">
-          <div class="pillar__icon" style="--g: var(--c-purple);">
-            <span class="ticon-cat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><polyline points="3 6 4 7 6 5"/><polyline points="3 12 4 13 6 11"/><polyline points="3 18 4 19 6 17"/></svg></span>
-            <span class="ticon-bb" style="font-size:1.4rem;">&#128221;</span>
-          </div>
-          <h3>AI Skills</h3>
-          <p>Reusable procedures the agent follows to get a task done, and they can reference assets like scripts and templates along the way.</p>
-        </div>
-        <div class="pillar">
-          <div class="pillar__icon" style="--g: var(--c-red);">
-            <span class="ticon-cat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></span>
-            <span class="ticon-bb" style="font-size:1.4rem;">&#128013;</span>
-          </div>
-          <h3>Agent Sandbox</h3>
-          <p>Agents <em>generate and run code at runtime</em> to compute, transform, and analyze, going beyond text to real calculation.</p>
-        </div>
-        <div class="pillar">
-          <div class="pillar__icon" style="--g: var(--c-orange);">
-            <span class="ticon-cat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg></span>
-            <span class="ticon-bb" style="font-size:1.4rem;">&#128196;</span>
-          </div>
-          <h3>File Generation</h3>
-          <p>Agents produce real deliverables, PDFs, images, and documents, that users can download and hand off.</p>
-        </div>
-        <div class="pillar">
-          <div class="pillar__icon" style="--g: var(--c-green);">
-            <span class="ticon-cat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg></span>
-            <span class="ticon-bb" style="font-size:1.4rem;">&#128260;</span>
-          </div>
-          <h3>Adaptive Orchestration</h3>
-          <p>The agent plans dynamically across turns, asks for clarification when a step is ambiguous, and revises its plan when the request changes.</p>
-        </div>
-        <div class="pillar">
-          <div class="pillar__icon" style="--g: var(--c-pink);">
-            <span class="ticon-cat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 5v6c0 1.66-4 3-9 3s-9-1.34-9-3V5"/><path d="M21 11v6c0 1.66-4 3-9 3s-9-1.34-9-3v-6"/></svg></span>
-            <span class="ticon-bb" style="font-size:1.4rem;">&#129504;</span>
-          </div>
-          <h3>Memory</h3>
-          <p>Context and earlier results persist across the conversation, so the agent builds on what is already known instead of starting over.</p>
-        </div>
-        <div class="pillar">
-          <div class="pillar__icon" style="--g: var(--c-teal);">
-            <span class="ticon-cat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></span>
-            <span class="ticon-bb" style="font-size:1.4rem;">&#128218;</span>
-          </div>
-          <h3>Knowledge</h3>
-          <p>Grounded answers from connected sources, documents, sites, and structured data.</p>
-        </div>
-        <div class="pillar">
-          <div class="pillar__icon" style="--g: var(--c-indigo);">
-            <span class="ticon-cat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="8" rx="2"/><rect x="2" y="14" width="20" height="8" rx="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg></span>
-            <span class="ticon-bb" style="font-size:1.4rem;">&#128736;&#65039;</span>
-          </div>
-          <h3>Tools/MCP Servers</h3>
-          <p>Agents call external systems and APIs as tools through MCP servers and connectors, extending what they can do beyond built-in capabilities.</p>
         </div>
       </div>
     </div>
@@ -193,34 +116,40 @@ const base = import.meta.env.BASE_URL;
           pillars={["3 connected agents", "live charts", "policy-bound recs", "manager PDF"]}
           upcoming={true}
         />
+      </div>
     </div>
   </section>
 
   <!-- Get started -->
   <section class="cta" id="get-started">
     <div class="container">
-      <div class="cta__layout">
-        <div class="cta__text">
-          <p class="section-label">Get started</p>
-          <h2>Stand up the store</h2>
-          <p class="cta__desc">Import the solution, create the MCP connections, add the policy documents, publish the agents, then run the scripted prompts. Everything runs inside Power Platform. No servers, no code to host.</p>
-          <div class="cta__actions">
-            <a href="https://github.com/microsoft/new-copilot-studio-tech-guide/tree/main/sample/solution" class="btn btn--primary">
-              Get the sample
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
-            </a>
-            <a href="https://github.com/microsoft/new-copilot-studio-tech-guide" class="btn btn--secondary">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/></svg>
-              GitHub repo
-            </a>
+      <div class="cta__card">
+        <div class="cta__top">
+          <div class="cta__intro">
+            <p class="section-label">Get started</p>
+            <h2>Stand up the store</h2>
+            <p class="cta__desc">One command downloads the sample and deploys all four agents and their MCP connectors into a Power Platform environment you already have &mdash; no clone, no servers, nothing to host. A few minutes later you have a running store to explore.</p>
+            <p class="cta__note">Needs the <a href="https://learn.microsoft.com/power-platform/developer/cli/introduction" target="_blank" rel="noopener">pac CLI</a> (signed in) and <a href="https://learn.microsoft.com/cli/azure/install-azure-cli" target="_blank" rel="noopener">az CLI</a>. Prefer to clone? Grab the <a href="https://github.com/microsoft/new-copilot-studio-tech-guide/tree/main/sample/solution">sample</a> and run <code>node deploy/deploy.mjs</code>.</p>
+          </div>
+          <div class="term" role="group" aria-label="Deploy commands">
+            <div class="term__bar" aria-hidden="true">
+              <span class="term__dot"></span><span class="term__dot"></span><span class="term__dot"></span>
+              <span class="term__title">deploy the sample</span>
+            </div>
+            <div class="term__body">
+              <p class="term__comment"># macOS / Linux</p>
+              <div class="try-prompt term__cmd"><code class="try-prompt__text">curl -fsSL https://raw.githubusercontent.com/microsoft/new-copilot-studio-tech-guide/main/deploy/install.sh | bash</code></div>
+              <p class="term__comment"># Windows &middot; PowerShell</p>
+              <div class="try-prompt term__cmd"><code class="try-prompt__text">irm https://raw.githubusercontent.com/microsoft/new-copilot-studio-tech-guide/main/deploy/install.ps1 | iex</code></div>
+            </div>
           </div>
         </div>
-        <div class="cta__steps">
-          <div class="cta__step"><span class="cta__num">1</span><div><strong>Import the solution</strong><p>Upload the managed zip in Power Apps</p></div></div>
-          <div class="cta__step"><span class="cta__num">2</span><div><strong>Publish all customizations</strong><p>Deploys the inline connector code to APIM</p></div></div>
-          <div class="cta__step"><span class="cta__num">3</span><div><strong>Create MCP connections</strong><p>Click Create for each of the four connectors</p></div></div>
-          <div class="cta__step"><span class="cta__num">4</span><div><strong>Publish &amp; play</strong><p>Publish all four agents, then run the two scenarios</p></div></div>
-        </div>
+        <ol class="cta__steps">
+          <li class="cta__step"><span class="cta__num">1</span><div class="cta__step-body"><strong>Run the one-liner</strong><p>Pick your pac profile and target environment when it asks.</p></div></li>
+          <li class="cta__step"><span class="cta__num">2</span><div class="cta__step-body"><strong>It deploys</strong><p>Imports both solutions, deploys the MCP connectors, creates connections, publishes the agents.</p></div></li>
+          <li class="cta__step"><span class="cta__num">3</span><div class="cta__step-body"><strong>Re-attach MCP tools</strong><p>One ~2-minute manual UI step it prints at the end.</p></div></li>
+          <li class="cta__step"><span class="cta__num">4</span><div class="cta__step-body"><strong>Play the scenarios</strong><p>Open each agent&apos;s Preview and run the walkthroughs above.</p></div></li>
+        </ol>
       </div>
     </div>
   </section>
@@ -230,7 +159,7 @@ const base = import.meta.env.BASE_URL;
     <div class="container">
       <p class="section-label">Go deeper</p>
       <h2>Resources</h2>
-      <p class="resources__intro">Reference material to help you understand and extend agents in Copilot Studio, a technical deep dive on agents and the open-source plugin that ties into it.</p>
+      <p class="resources__intro">Reference material to go further: a technical deep-dive deck, the open-source plugin that upgrades and builds agents, and straight answers to the common questions.</p>
 
       <div class="resources__grid">
         <div class="resource resource--deck" style="--accent: var(--c-purple);">
@@ -268,9 +197,25 @@ const base = import.meta.env.BASE_URL;
             <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7"/><polyline points="7 7 17 7 17 17"/></svg>
           </span>
         </a>
+
+        <a href={`${base}faq`} class="resource resource--faq" style="--accent: var(--c-orange);">
+          <div class="resource__head">
+            <span class="resource__icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </span>
+            <span class="resource__kind">FAQ &middot; 6 answers</span>
+          </div>
+          <h3 class="resource__title">Agents &amp; Workflows FAQ</h3>
+          <p class="resource__desc">Straight answers on upgrading agents, building on the GHCP harness, and what happens to topics, prompts, adaptive cards, and child agents.</p>
+          <span class="resource__link">
+            Read the FAQ
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+          </span>
+        </a>
       </div>
     </div>
   </section>
+
 </Base>
 
 <style>
@@ -387,37 +332,6 @@ const base = import.meta.env.BASE_URL;
   .file__icon { background: var(--tint-orange); color: var(--c-orange); display: inline-flex; padding: 3px; }
   .file__icon svg { width: 13px; height: 13px; }
 
-  /* ── Pillars ── */
-  .pillars { padding: var(--space-2xl) 0; }
-  .pillars__intro { color: var(--c-text-secondary); margin-top: var(--space-sm); max-width: 44rem; }
-  .pillars__grid {
-    margin-top: var(--space-2xl);
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
-    gap: var(--space-lg);
-  }
-  .pillar {
-    padding: var(--space-lg);
-    background: var(--c-surface);
-    border: 1px solid var(--c-border-subtle);
-    border-radius: var(--radius-md);
-    transition: border-color 0.2s, transform 0.2s;
-  }
-  .pillar:hover { border-color: var(--c-border); transform: translateY(-2px); }
-  .pillar__icon {
-    width: 44px; height: 44px;
-    display: flex; align-items: center; justify-content: center;
-    color: var(--g);
-    border-radius: 10px;
-    background: color-mix(in srgb, var(--g) 12%, transparent);
-    border: 1px solid color-mix(in srgb, var(--g) 35%, transparent);
-    margin-bottom: var(--space-md);
-  }
-  .pillar__icon svg { width: 22px; height: 22px; }
-  .pillar h3 { font-size: 1rem; margin-bottom: var(--space-xs); }
-  .pillar p { font-size: 0.86rem; color: var(--c-text-secondary); line-height: 1.6; }
-  .pillar em { color: var(--c-text); font-style: normal; font-weight: 600; }
-
   /* ── Scenarios ── */
   .scenarios { padding: var(--space-2xl) 0; scroll-margin-top: 70px; }
   .scenarios__intro { color: var(--c-text-secondary); margin-top: var(--space-sm); max-width: 44rem; }
@@ -434,9 +348,9 @@ const base = import.meta.env.BASE_URL;
   .resources__grid {
     margin-top: var(--space-2xl);
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: var(--space-lg);
-    max-width: 780px;
+    max-width: 1000px;
   }
   .resource {
     --accent: var(--c-primary);
@@ -533,41 +447,107 @@ const base = import.meta.env.BASE_URL;
   .resource__feedback:hover { color: var(--accent); }
   .resource__feedback svg { opacity: 0.7; }
 
+  @media (max-width: 900px) {
+    .resources__grid { grid-template-columns: repeat(2, 1fr); max-width: 680px; }
+  }
   @media (max-width: 640px) {
     .resources__grid { grid-template-columns: 1fr; }
   }
 
   /* ── CTA ── */
+  /* ── Get started ── */
   .cta { padding: var(--space-2xl) 0; scroll-margin-top: 70px; }
-  .cta__layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-3xl);
-    align-items: center;
+  .cta__card {
     padding: var(--space-2xl);
     background: var(--gradient-brand-soft), var(--c-surface);
     border: 1px solid var(--c-border);
     border-radius: var(--radius-xl);
   }
+  .cta__top {
+    display: grid;
+    grid-template-columns: 1fr 1.15fr;
+    gap: var(--space-2xl);
+    align-items: start;
+  }
   .cta__desc { margin-top: var(--space-sm); color: var(--c-text-secondary); line-height: 1.7; }
-  .cta__actions { display: flex; gap: var(--space-md); margin-top: var(--space-lg); flex-wrap: wrap; }
-  .cta__steps { display: flex; flex-direction: column; gap: var(--space-md); }
+  .cta__note { margin-top: var(--space-lg); font-size: 0.8rem; color: var(--c-text-muted); line-height: 1.65; }
+  .cta__note a { color: var(--c-primary); font-weight: 600; }
+  .cta__note code {
+    font-family: var(--font-mono); font-size: 0.76rem;
+    background: var(--c-surface-raised); border: 1px solid var(--c-border-subtle);
+    padding: 1px 5px; border-radius: 4px;
+  }
+
+  /* Terminal window carrying the deploy one-liners */
+  .term {
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-lg);
+    background: var(--c-dark);
+    overflow: hidden;
+    box-shadow: 0 20px 44px -28px rgba(0, 0, 0, 0.55);
+  }
+  .term__bar {
+    display: flex; align-items: center; gap: 7px;
+    padding: 10px 14px;
+    background: color-mix(in srgb, var(--c-dark) 80%, #ffffff);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+  .term__dot { width: 11px; height: 11px; border-radius: 50%; }
+  .term__dot:nth-child(1) { background: #ff5f57; }
+  .term__dot:nth-child(2) { background: #febc2e; }
+  .term__dot:nth-child(3) { background: #28c840; }
+  .term__title {
+    margin-left: 6px;
+    font-family: var(--font-mono); font-size: 0.72rem; font-weight: 600;
+    letter-spacing: 0.02em; color: rgba(255, 255, 255, 0.5);
+  }
+  .term__body { padding: var(--space-lg); }
+  .term__comment {
+    margin: var(--space-lg) 0 8px;
+    font-family: var(--font-mono); font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.42);
+  }
+  .term__body > .term__comment:first-child { margin-top: 0; }
+  .term__cmd { padding: 0; }
+  .term__cmd .try-prompt__text {
+    display: block;
+    font-family: var(--font-mono); font-size: 0.8rem; line-height: 1.65;
+    color: #e8eaed;
+    white-space: pre-wrap; overflow-wrap: anywhere;
+    padding-left: 1.35em; text-indent: -1.35em; padding-right: 92px;
+  }
+  .term__cmd .try-prompt__text::before { content: "$ "; color: #28c840; font-weight: 700; }
+
+  /* Post-install sequence */
+  .cta__steps {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-lg);
+    margin-top: var(--space-2xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--c-border);
+  }
   .cta__step { display: flex; align-items: flex-start; gap: var(--space-md); }
   .cta__num {
     flex-shrink: 0;
     width: 30px; height: 30px;
     display: flex; align-items: center; justify-content: center;
     font-family: var(--font-display); font-weight: 800; font-size: 0.82rem;
-    color: var(--c-bg-deep);
+    color: var(--c-on-primary);
     background: var(--c-primary);
     border-radius: 8px;
   }
-  .cta__step strong { font-size: 0.92rem; }
-  .cta__step p { font-size: 0.82rem; color: var(--c-text-muted); }
+  .cta__step-body strong { font-size: 0.9rem; display: block; }
+  .cta__step-body p { margin-top: 3px; font-size: 0.82rem; color: var(--c-text-muted); line-height: 1.5; }
 
   @media (max-width: 860px) {
     .hero__inner { grid-template-columns: 1fr; gap: var(--space-2xl); }
     .hero__visual { order: -1; }
-    .cta__layout { grid-template-columns: 1fr; gap: var(--space-xl); }
+    .cta__top { grid-template-columns: 1fr; gap: var(--space-xl); }
+    .cta__steps { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 560px) {
+    .cta__steps { grid-template-columns: 1fr; }
   }
 </style>

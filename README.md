@@ -18,17 +18,33 @@ Four agents (flagship Store Associate Assistant, self-serve Returns & Service As
 and two connected agents) and four inline MCP connectors (Membership, Order Management,
 Policy RAG, Warehouse). Everything runs inside the Power Platform: no external servers.
 
-Stand it up with one cross-platform script (needs **Node 18+**, **pac CLI**, and **az
+Stand it up with one command — no clone required. It downloads the deploy assets and
+runs the guided deploy (needs **Node 18+**, the **pac CLI** signed in, and the **az
 CLI** installed):
+
+**macOS / Linux**
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/microsoft/new-copilot-studio-tech-guide/main/deploy/install.sh | bash
+```
+
+**Windows (PowerShell)**
+
+```powershell
+irm https://raw.githubusercontent.com/microsoft/new-copilot-studio-tech-guide/main/deploy/install.ps1 | iex
+```
+
+It imports both solutions, deploys the connector code, creates the connections, and
+publishes the agents, then prints one ~2-minute manual UI step. Set `BLASTBOX_REF` to
+deploy from a branch or tag other than `main`.
+
+Prefer to clone? Everything the script needs is committed in the repo:
 
 ```bash
 pac auth create                   # once: sign pac in to the target tenant
 node deploy/deploy.mjs            # guided: pick profile, pick env, deploy
 node deploy/deploy.mjs --help     # all options
 ```
-
-It imports both solutions, deploys the connector code, creates the connections, and
-publishes the agents, then prints one ~2-minute manual UI step.
 
 ```
 deploy/             Scripted, repeatable deploy (deploy.mjs + README)
