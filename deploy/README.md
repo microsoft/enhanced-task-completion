@@ -24,7 +24,7 @@ curl -fsSL https://raw.githubusercontent.com/microsoft/new-copilot-studio-tech-g
 **Windows (PowerShell)**
 
 ```powershell
-irm https://raw.githubusercontent.com/microsoft/new-copilot-studio-tech-guide/main/deploy/install.ps1 | iex
+powershell -c "irm https://raw.githubusercontent.com/microsoft/new-copilot-studio-tech-guide/main/deploy/install.ps1 | iex"
 ```
 
 Set the `BLASTBOX_REF` env var to deploy from a branch or tag other than `main`. You

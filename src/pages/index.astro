@@ -10,10 +10,6 @@ const base = import.meta.env.BASE_URL;
   <section class="hero">
     <div class="container hero__inner">
       <div class="hero__content">
-        <div class="hero__eyebrow">
-          <span class="hero__eyebrow-dot">&#9670;</span>
-          Copilot Studio
-        </div>
         <h1 class="hero__title">
           <span class="t-cat">Experience <span class="hero__title-accent">Copilot Studio</span></span>
           <span class="t-bb">BlastBox <span class="hero__title-omega">Omega</span></span>
@@ -140,7 +136,7 @@ const base = import.meta.env.BASE_URL;
               <p class="term__comment"># macOS / Linux</p>
               <div class="try-prompt term__cmd"><code class="try-prompt__text">curl -fsSL https://raw.githubusercontent.com/microsoft/new-copilot-studio-tech-guide/main/deploy/install.sh | bash</code></div>
               <p class="term__comment"># Windows &middot; PowerShell</p>
-              <div class="try-prompt term__cmd"><code class="try-prompt__text">irm https://raw.githubusercontent.com/microsoft/new-copilot-studio-tech-guide/main/deploy/install.ps1 | iex</code></div>
+              <div class="try-prompt term__cmd"><code class="try-prompt__text">powershell -c "irm https://raw.githubusercontent.com/microsoft/new-copilot-studio-tech-guide/main/deploy/install.ps1 | iex"</code></div>
             </div>
           </div>
         </div>
@@ -227,22 +223,6 @@ const base = import.meta.env.BASE_URL;
     gap: var(--space-3xl);
     align-items: center;
   }
-  .hero__eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-family: var(--font-mono);
-    font-size: 0.72rem;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    color: var(--c-text-secondary);
-    border: 1px solid var(--c-border);
-    background: var(--c-surface);
-    padding: 5px 12px;
-    border-radius: 20px;
-  }
-  .hero__eyebrow-dot { color: var(--c-primary); text-shadow: var(--glow-accent); }
   .hero__title {
     font-family: var(--font-display);
     font-size: clamp(2.6rem, 6.5vw, 4.4rem);
