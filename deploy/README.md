@@ -90,9 +90,11 @@ arrays (no shell string interpolation), resolves paths with `node:path`, and rea
   `DOTNET_ROOT` pointing at a .NET runtime; the script defaults to `$DOTNET_ROOT`
   or `~/.dotnet`, or pass `--dotnet-root <path>`.
 - **az CLI** installed. You do **not** need to log in first: the script reads the
-  tenant from the pac profile you pick and runs `az login --tenant <that tenant>`
-  for you if az isn't already signed in to it. az is used for the REST calls pac
-  cannot make (BAP no-auth connection creation, and the Dataverse import /
+  tenant from the selected Dataverse environment (falling back to the pac profile)
+  and runs `az login --tenant <that tenant>` for you if az isn't already signed in
+  to it. Before making any changes, the script calls Dataverse `WhoAmI` with the
+  Azure token and stops if that exact access check fails. az is used for the REST
+  calls pac cannot make (BAP no-auth connection creation, and the Dataverse import /
   connector / publish verification calls).
 
 ## Options
@@ -101,13 +103,15 @@ arrays (no shell string interpolation), resolves paths with `node:path`, and rea
 | --- | --- |
 | `--env-id <guid>` / `--env-url <url>` | Target env. Omit and the script offers the profile's connected env as the default, or lets you filter the (often huge) env list by a name/url substring. |
 | `--profile <n>` | pac auth list index to use. Omit to choose interactively. |
-| `--start-at <step>` | Resume at `import`, `connectors`, `connections`, `publish` or `manual`. |
+| `--start-at <step>` | Resume at `import`, `connectors`, `connections`, `publish` or `manual`. Before resuming an operational step, missing prerequisite solutions are imported automatically. |
 | `--yes` | Do not pause for confirmations (non-interactive / CI). |
 | `--dotnet-root <path>` | Set `DOTNET_ROOT` for the pac child processes. |
 | `-h`, `--help` | Print usage and exit. |
 
 Every step is idempotent and re-runnable, so if a run dies partway you can re-run
-the whole thing or jump back in with `--start-at`.
+the whole thing or jump back in with `--start-at`. A resumed run checks that both
+solution prerequisites exist and imports only those that are missing, preventing a
+partial first import from surfacing later as a misleading connector or bot error.
 
 Unattended into a known env (non-interactive / CI):
 
@@ -140,7 +144,9 @@ Run steps:
    each import is allowed to fully **settle** (polling `importjobs` for
    `completedon`) before the next one starts — otherwise the second import is
    rejected with "a previous Import is still running". Retries with backoff handle
-   the EU function-app capacity error.
+   the EU function-app capacity error. If pac reports success but server-side
+   verification disagrees, the deploy stops rather than importing the same solution
+   repeatedly.
 2. **Connectors:** deploy each MCP connector's inline `.csx` from the bundled files
    in `sample/solution/connectors/<slug>/` (import registers the connectors but does
    **not** compile their code). Each is `pac connector update`-d and verified by
