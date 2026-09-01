@@ -237,6 +237,13 @@ async function dv(method, orgUrl, path, body) {
   });
   const text = await res.text();
   let json = null; try { json = text ? JSON.parse(text) : null; } catch { /* non-json */ }
+  if (!res.ok) {
+    const authHint = res.status === 401 || res.status === 403
+      ? '\nThe Azure CLI session is not authorized for this environment. ' +
+        'Run `az login --tenant <environment-tenant> --allow-no-subscriptions` and retry.'
+      : '';
+    throw new Error(`Dataverse ${method} ${path} failed (HTTP ${res.status}).${authHint}\n${text.slice(0, 500)}`);
+  }
   return { status: res.status, json, text };
 }
 
@@ -330,23 +337,41 @@ function getActiveEnv() {
   } catch { /* ignore */ }
   return null;
 }
-function azDomains() {
-  const r = sh('az', ['account', 'show', '--query', '{d:tenantDefaultDomain,u:user.name}', '-o', 'json']);
+function azTenantIdentifiers() {
+  const r = sh('az', ['account', 'show', '--query', '{id:tenantId,d:tenantDefaultDomain,u:user.name}', '-o', 'json']);
   if (r.code !== 0) return [];
   try {
     const j = JSON.parse(r.stdout) || {};
-    return [j.d, (j.u || '').split('@')[1]].filter(Boolean).map((s) => s.toLowerCase());
+    return [j.id, j.d, (j.u || '').split('@')[1]].filter(Boolean).map((s) => s.toLowerCase());
   } catch { return []; }
 }
-async function ensureAz() {
-  const tenant = pacTenantDomain();
-  const cur = azDomains();
+
+// Dataverse's unauthenticated challenge identifies the tenant that owns the
+// selected environment. This is more reliable than the user's email domain for
+// guest accounts and UNIVERSAL pac profiles that are not bound to one org.
+async function dataverseTenant(orgUrl) {
+  try {
+    const url = orgUrl.replace(/\/$/, '') + '/api/data/v9.2/WhoAmI';
+    const res = await fetch(url, { headers: { Accept: 'application/json' } });
+    const challenge = res.headers.get('www-authenticate') || '';
+    const login = challenge.match(/(?:login\.microsoftonline\.com|login\.windows\.net)\/([^/"\s,]+)/i);
+    const realm = challenge.match(/\brealm="?([^",\s]+)"?/i);
+    return ((login && login[1]) || (realm && realm[1]) || '').toLowerCase() || null;
+  } catch {
+    return null;
+  }
+}
+
+async function ensureAz(profile, env) {
+  const profileDomain = ((profile.email || '').split('@')[1] || '').toLowerCase() || null;
+  const tenant = await dataverseTenant(env.url) || pacTenantDomain() || profileDomain;
+  const cur = azTenantIdentifiers();
   if (tenant && cur.includes(tenant)) {
     ok(`az already signed in to the env tenant (${tenant}).`);
     return;
   }
   if (!tenant && cur.length) {
-    warn(`could not resolve the env tenant from pac; using the current az session (${cur[0]}). If REST calls 401, run: az login --tenant <tenant>`);
+    warn(`could not resolve the selected environment's tenant; validating the current az session (${cur[0]}) before deployment.`);
     return;
   }
   if (tenant && cur.length) warn(`az is signed in to a different tenant (${cur[0]}); the env needs ${tenant}. Signing you in to the right one...`);
@@ -356,8 +381,16 @@ async function ensureAz() {
   args.push('--allow-no-subscriptions');
   if (shInteractive('az', args).code !== 0) die('az login failed. Log in manually then re-run: az login --tenant <tenant>');
   tokenCache.clear();
-  const after = azDomains();
+  const after = azTenantIdentifiers();
   ok(`az signed in${after.length ? ` (${after[0]})` : ''}.`);
+}
+
+async function verifyDataverseAccess(env) {
+  const r = await dv('GET', env.url, 'WhoAmI');
+  if (!r.json || !r.json.UserId) {
+    throw new Error(`Dataverse access check for ${env.url} returned no user identity. Refusing to deploy.`);
+  }
+  ok('Azure CLI access to the target environment verified.');
 }
 
 async function selectEnv() {
@@ -412,6 +445,15 @@ async function solutionPresent(orgUrl, uniqueName) {
   return !!(r.json && r.json.value && r.json.value.length);
 }
 
+async function waitForSolution(orgUrl, uniqueName, timeoutSeconds = 120) {
+  const deadline = Date.now() + timeoutSeconds * 1000;
+  while (Date.now() < deadline) {
+    if (await solutionPresent(orgUrl, uniqueName)) return true;
+    await sleep(10_000);
+  }
+  return false;
+}
+
 // Poll importjobs until the most recent import for this solution has finished
 // (completedon set). This closes the timing gap where a second pac import is
 // rejected with "Cannot start another [Import] because there is a previous
@@ -448,8 +490,13 @@ async function importOne(env, sol) {
     // Treat pac's stdout claim of success as a hint only; never trust it without
     // verifying the solution actually landed server-side.
     if (!failed && /\bimported\b|completed successfully|succeeded/i.test(r.out)) {
-      if (await solutionPresent(env.url, sol.name)) { ok(`${sol.name} imported + published (verified server-side).`); break; }
-      warn('pac reported success but the solution is not present server-side — not trusting it.');
+      if (await waitForSolution(env.url, sol.name)) {
+        ok(`${sol.name} imported + published (verified server-side).`);
+        break;
+      }
+      die(`pac reported that ${sol.name} imported successfully, but Dataverse did not return the solution ` +
+          'within 2 minutes. Refusing to import it again automatically; verify the solution unique name and ' +
+          'target environment, then resume with `--start-at connectors` if it is present.');
     }
     if (failed) {
       const missing = r.out.match(/<MissingDependencies[\s\S]*?<\/MissingDependencies>/i);
@@ -494,6 +541,23 @@ async function stepImport(env) {
   log(`Waiting ${manifest.apimPropagationSeconds}s for APIM propagation`);
   await sleep(manifest.apimPropagationSeconds * 1000);
   ok('Import step complete.');
+}
+
+async function ensureSolutionPrerequisites(env) {
+  let importedConnectors = false;
+  for (const sol of manifest.solutions) {
+    if (await solutionPresent(env.url, sol.name)) {
+      ok(`Prerequisite solution ${sol.name} is present.`);
+      continue;
+    }
+    warn(`Prerequisite solution ${sol.name} is missing; importing it before resuming at ${OPT.startAt}.`);
+    await importOne(env, sol);
+    importedConnectors ||= sol.kind === 'connectors';
+  }
+  if (importedConnectors) {
+    log(`Waiting ${manifest.apimPropagationSeconds}s for APIM propagation`);
+    await sleep(manifest.apimPropagationSeconds * 1000);
+  }
 }
 
 async function connectorModifiedOn(orgUrl, connectorId) {
@@ -572,7 +636,7 @@ async function connectedConnections(envId, apiName) {
   const tok = azToken(POWERAPPS);
   const url = `https://api.powerapps.com/providers/Microsoft.PowerApps/apis/${apiName}/connections?api-version=2016-11-01&$filter=environment eq '${envId}'`;
   const res = await fetch(url, { headers: { Authorization: `Bearer ${tok}` } });
-  if (!res.ok) return [];
+  if (!res.ok) throw new Error(`Could not verify existing connections for ${apiName} (HTTP ${res.status}): ${(await res.text()).slice(0, 300)}`);
   const j = await res.json();
   return (j.value || []).filter((c) => (c.properties?.statuses || []).some((s) => s.status === 'Connected')).map((c) => c.name);
 }
@@ -707,17 +771,20 @@ async function main() {
         'Run `node deploy/deploy.mjs --help` for details.');
   }
 
-  await selectProfile();
-  await ensureAz();
+  const profile = await selectProfile();
   const env = await selectEnv();
 
-  // verify we can mint a Dataverse token for this env (right az tenant)
-  azToken(dvResource(env.url));
+  // Validate the exact REST path used for post-import verification before pac
+  // performs any mutation. Minting a token alone does not prove the token's
+  // tenant can access this Dataverse environment.
+  await ensureAz(profile, env);
+  await verifyDataverseAccess(env);
   ok(`Ready to deploy into: ${env.name} ${env.url}`);
   if (!(await confirm('Proceed?'))) die('aborted by user');
 
   const from = STEPS.indexOf(OPT.startAt);
   if (from <= 0) await stepImport(env);
+  else if (from <= 3) await ensureSolutionPrerequisites(env);
   if (from <= 1) await stepConnectors(env);
   if (from <= 2) await stepConnections(env);
   if (from <= 3) await stepPublish(env);
