@@ -186,6 +186,65 @@ const base = import.meta.env.BASE_URL;
           </a>
         </figure>
       </section>
+
+      <section class="scenario__section journey-overview" aria-labelledby="journey-overview-title">
+        <h2 id="journey-overview-title">The scenario at a glance</h2>
+        <p class="journey-overview__intro">
+          A simple request hides a complex service journey. The agent keeps the systems,
+          calculations, and customer conversation moving together.
+        </p>
+
+        <figure class="journey-compare">
+          <div class="journey-compare__panel">
+            <div class="journey-compare__heading">
+              <h3>Human-supported process</h3>
+              <span class="journey-compare__badge">Fragmented</span>
+            </div>
+            <ul class="journey-compare__tasks">
+              <li>Validate purchase and defect</li>
+              <li>Interpret warranty policy</li>
+              <li>Check stock and alternatives</li>
+              <li>Calculate refund and upgrade</li>
+              <li>Reconcile membership and loyalty</li>
+              <li>Complete return and paperwork</li>
+            </ul>
+            <p class="journey-compare__summary">
+              The associate must keep <strong>six workstreams</strong> in sync while the
+              customer waits.
+            </p>
+          </div>
+
+          <div class="journey-compare__arrow" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg>
+          </div>
+
+          <div class="journey-compare__panel journey-compare__panel--agent">
+            <div class="journey-compare__heading">
+              <h3>With Store Associate Assistant</h3>
+              <span class="journey-compare__badge">Orchestrated</span>
+            </div>
+            <div class="journey-compare__agent-map">
+              <span>Policy</span>
+              <span>Inventory</span>
+              <strong>One conversation</strong>
+              <span>Membership</span>
+              <span>Orders</span>
+            </div>
+            <p class="journey-compare__summary">
+              The agent asks <strong>one clarifying question</strong>, presents the options,
+              executes the choice, and produces the settlement.
+            </p>
+          </div>
+
+          <figcaption class="journey-compare__outcome">
+            <span>Customer outcome</span>
+            Working console today &middot; membership credit applied &middot;
+            <strong>$23.34 due</strong> &middot; settlement PDF ready
+          </figcaption>
+        </figure>
+      </section>
     </div>
   </article>
 </Base>
