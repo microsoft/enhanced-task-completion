@@ -12,6 +12,6 @@
     "@microsoft/agents-copilotstudio-client": "^1.5.3"
   },
   "devDependencies": {
-    "vite": "^6.0.0"
+    "vite": "^6.4.3"
   }
 }
