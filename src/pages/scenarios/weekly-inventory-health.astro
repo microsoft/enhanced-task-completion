@@ -1,0 +1,179 @@
+---
+import Base from '../../layouts/Base.astro';
+import '../../styles/scenario.css';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<Base title="Weekly Inventory Health | Copilot Studio technical guide">
+  <article class="scenario">
+    <div class="container">
+      <a href={base} class="back">&larr; All scenarios</a>
+
+      <header class="scenario__header">
+        <h1>BlastBox Weekly Inventory Health</h1>
+        <p class="scenario__lead">
+          A proactive inventory review for every active gaming SKU. The Inventory &amp;
+          Fulfilment Agent returns a structured list, a <strong>Loop</strong> evaluates each
+          item independently, and a three-way condition decides whether to adjust price,
+          prepare for inbound stock, or leave a healthy item alone &mdash; then a data
+          transformation folds every decision into one staff digest.
+        </p>
+        <div class="scenario__tools scenario__tools--solo">
+          <div class="scenario__agent" style="--accent: var(--c-primary);">
+            <span class="scenario__agent-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="19" cy="12" r="2"/><path d="M7 6h5a3 3 0 0 1 3 3v.5"/><path d="M7 18h5a3 3 0 0 0 3-3v-.5"/></svg></span>
+            <span class="scenario__agent-text">
+              <span class="scenario__agent-label">Try it with</span>
+              <span class="scenario__agent-name">BlastBox Weekly Inventory Health</span>
+            </span>
+          </div>
+        </div>
+      </header>
+
+      <div class="wf-note">
+        <div class="wf-note__head">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/></svg>
+          Before you run it
+        </div>
+        <div class="wf-note__body">
+          <p>On import, MCP tools detach. Reattach them in two places:</p>
+          <ul>
+            <li>Published <strong>Inventory &amp; Fulfilment Agent</strong> &mdash; <code>Warehouse</code>.</li>
+            <li>Inline agent <strong>Review Order History &amp; Policy</strong> &mdash; <code>Order Management</code>, <code>Policy RAG</code>.</li>
+          </ul>
+          <p>Set the <strong>Email</strong> variable to your own mailbox &mdash; the review card and summary email go there. Outlook (Office 365) is required for the full scenario.</p>
+        </div>
+      </div>
+
+      <section class="convo">
+        <h2>The workflow</h2>
+        <p class="convo__intro">On a schedule, the workflow builds the inventory once, then loops every SKU down one of three lanes and closes with a single staff digest.</p>
+
+        <ol class="timeline">
+          <li class="tl-user">
+            <div class="tl-marker">1</div>
+            <div class="tl-content">
+              <div class="tl-label">Scheduled trigger</div>
+              <div class="tl-steps">
+                <p>Runs weekly with no inbound message. In the sample designer, use <strong>Run</strong> to fire the same execution on demand.</p>
+              </div>
+            </div>
+          </li>
+
+          <li class="tl-user">
+            <div class="tl-marker">2</div>
+            <div class="tl-content">
+              <div class="tl-label">Collect the SKUs</div>
+              <div class="tl-steps">
+                <p>One broad pass builds the working set before any per-item logic runs.</p>
+                <div class="tl-delegate"><span class="tl-delegate-name">Inventory &amp; Fulfilment Agent</span> returns a structured list of active SKUs with stock &amp; aging signals</div>
+              </div>
+            </div>
+          </li>
+
+          <li class="tl-user">
+            <div class="tl-marker">3</div>
+            <div class="tl-content">
+              <div class="tl-label">Initialize</div>
+              <div class="tl-steps">
+                <p>Sets the item index, SKU array, note array, and the <code>Email</code> variable &mdash; the mailbox that receives the review card and the digest, so set it to your own.</p>
+              </div>
+            </div>
+          </li>
+
+          <li class="tl-user">
+            <div class="tl-marker">4</div>
+            <div class="tl-content">
+              <div class="tl-label">Loop &rarr; three-way condition</div>
+              <div class="tl-steps">
+                <p><strong>Loop over each gaming SKU</strong> gives every item its own context; a Stock Aging Condition sends it down exactly one of three lanes.</p>
+                <div class="inventory-lanes">
+                  <article class="inventory-lane inventory-lane--aging">
+                    <div class="inventory-lane__top"><span>Stale / aging</span></div>
+                    <p>The inline Review Order History &amp; Policy agent grounds the pricing call before a manager decides.</p>
+                    <div class="inventory-lane__action">Set SKU: adjust price</div>
+                  </article>
+                  <article class="inventory-lane inventory-lane--reorder">
+                    <div class="inventory-lane__top"><span>Reorder</span></div>
+                    <p>A healthy seller with more stock inbound, so it stays visible on the shelf.</p>
+                    <div class="inventory-lane__action">Set SKU: keep price, main shelf</div>
+                  </article>
+                  <article class="inventory-lane inventory-lane--healthy">
+                    <div class="inventory-lane__top"><span>Healthy</span></div>
+                    <p>Nothing to action this cycle; the loop records it and moves on.</p>
+                    <div class="inventory-lane__action">Set SKU: keep price</div>
+                  </article>
+                </div>
+                <div class="tl-delegate"><span class="tl-delegate-name">Human review</span> on the stale lane, a manager confirms the discount in an Outlook card</div>
+                <div class="wf-hint">To reproduce the digest below, in the review card select <b>Accept Promo</b> and set <b>Minimum Discount (%)</b> to <b>12</b> and <b>Maximum Discount (%)</b> to <b>20</b>.</div>
+              </div>
+            </div>
+          </li>
+
+          <li class="tl-user">
+            <div class="tl-marker">5</div>
+            <div class="tl-content">
+              <div class="tl-label">Data transformation &rarr; email</div>
+              <div class="tl-steps">
+                <p>A <strong>Select</strong> shapes the collected notes into objects, <strong>Create HTML table</strong> renders them, and one summary email goes to the mailbox &mdash; not a message per SKU.</p>
+              </div>
+            </div>
+          </li>
+        </ol>
+
+        <div class="result">
+          <span class="result__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="19" cy="12" r="2"/><path d="M7 6h5a3 3 0 0 1 3 3v.5"/><path d="M7 18h5a3 3 0 0 0 3-3v-.5"/></svg></span>
+          <div>
+            <div class="result__label">Outcome</div>
+            <div class="result__value">Every active SKU &rarr; one of three lanes &rarr; one staff digest</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="scenario__section">
+        <h2>What was demonstrated</h2>
+        <div class="value-grid">
+          <div class="value-card"><h3>Agent output becomes iterable data</h3><p>The Inventory &amp; Fulfilment Agent does not return prose for a person to read. It supplies a structured array the workflow processes item by item.</p></div>
+          <div class="value-card"><h3>One bounded decision per SKU</h3><p>The loop and nested condition make all three outcomes explicit. A SKU cannot silently skip processing or wander into an unplanned action.</p></div>
+          <div class="value-card"><h3>Human judgment is narrowly placed</h3><p>Only stale inventory needs a manager&rsquo;s pricing call. Reorder and healthy lanes stay fully automated, keeping the weekly run moving.</p></div>
+        </div>
+      </section>
+
+      <section class="scenario__section">
+        <h2>What gets produced</h2>
+        <p class="gen-note">The result is one compact inventory-health email for staff &mdash; not a message per SKU. The <code>Create HTML table</code> shows the decision captured during each loop iteration and the action, if any, that follows.</p>
+        <div class="wf-email wf-email--wide">
+          <div class="wf-email__row"><b>To</b>your own mailbox</div>
+          <div class="wf-email__row wf-email__row--subject">Store Pricing - Weekly Update</div>
+          <div class="wf-email__body">
+            <p>Dear team,</p>
+            <p>Please notice and apply the following changes in our products in store, according to the latest review. Pay special attention to promotions, clearance, or high-visibility items to be reallocated:</p>
+            <table>
+              <thead><tr><th>SKU</th><th>Pricing note</th></tr></thead>
+              <tbody>
+                <tr><td>BlastBox Omega MEGA Edition</td><td>Good balance of supply and demand. Keep current pricing and store allocation. No action required.</td></tr>
+                <tr><td>MEGA Lizards from Outer Space</td><td>High-demand item. Keep current pricing and ensure it stays on the main, visible shelf per the latest store plan to keep momentum.</td></tr>
+                <tr><td>BlastBox Omega Core (1st-gen)</td><td>Good balance of supply and demand. Keep current pricing and store allocation. No action required.</td></tr>
+                <tr><td>BlastBox Cadet Bundle</td><td>Promo (temporary): take 10&ndash;30% off current shelf price while holding at least a 15% gross margin; no clearance signage. Used to test demand on a SKU with no recorded sales. Min Discount: 12 &middot; Max Discount: 20.</td></tr>
+                <tr><td>Galaxy Smash</td><td>Good balance of supply and demand. Keep current pricing and store allocation. No action required.</td></tr>
+              </tbody>
+            </table>
+            <p class="wf-email__sign">Your BlastBox Team</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .inventory-lanes { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-sm); margin: 12px 0; }
+  .inventory-lane { --lane: var(--c-primary); display: flex; flex-direction: column; padding: var(--space-md); background: var(--c-bg-deep); border: 1px solid var(--c-border-subtle); border-top: 2px solid var(--lane); border-radius: 8px; }
+  .inventory-lane--aging { --lane: var(--c-orange); }
+  .inventory-lane--reorder { --lane: var(--c-pink); }
+  .inventory-lane--healthy { --lane: var(--c-green); }
+  .inventory-lane__top span { font: 700 0.66rem var(--font-mono); color: var(--lane); text-transform: uppercase; letter-spacing: 0.04em; }
+  .inventory-lane p { margin: 7px 0 auto; font-size: 0.82rem; color: var(--c-text-secondary); line-height: 1.55; }
+  .inventory-lane__action { margin-top: 10px; padding: 6px 8px; font: 700 0.64rem var(--font-mono); color: var(--lane); background: color-mix(in srgb, var(--lane) 10%, transparent); border: 1px solid color-mix(in srgb, var(--lane) 28%, transparent); border-radius: 6px; }
+  @media (max-width: 760px) { .inventory-lanes { grid-template-columns: 1fr; } }
+</style>

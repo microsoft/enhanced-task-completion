@@ -26,6 +26,58 @@
 .scenario__section { margin-top: var(--space-3xl); }
 .scenario__section h2 { margin-bottom: var(--space-lg); }
 
+/* Workflow scenario framing */
+.wf-note { margin-top: var(--space-xl); overflow: hidden; background: var(--c-surface); border: 1px solid var(--c-border); border-radius: var(--radius-md); }
+.wf-note__head { display: flex; align-items: center; gap: 10px; padding: var(--space-md) var(--space-lg); background: var(--tint-orange); border-bottom: 1px solid var(--border-orange); font-family: var(--font-display); font-weight: 700; font-size: 0.92rem; color: var(--c-text); }
+.wf-note__head svg { width: 20px; height: 20px; flex-shrink: 0; color: var(--c-orange); }
+.wf-note__body { padding: var(--space-md) var(--space-lg); }
+.wf-note__body > p { margin: 0 0 var(--space-sm); font-size: 0.86rem; color: var(--c-text-secondary); line-height: 1.6; }
+.wf-note__body > p:last-child { margin-bottom: 0; }
+.wf-note ul { list-style: none; margin: 0 0 var(--space-sm); padding: 0; display: grid; gap: 6px; }
+.wf-note li { position: relative; padding-left: 18px; font-size: 0.84rem; color: var(--c-text-secondary); line-height: 1.55; }
+.wf-note li::before { content: ''; position: absolute; left: 3px; top: 8px; width: 6px; height: 6px; border-radius: 2px; background: var(--c-orange); }
+.wf-note li strong, .wf-note__body strong { color: var(--c-text); }
+.wf-note code { color: var(--c-orange); background: color-mix(in srgb, var(--c-orange) 12%, transparent); border-color: color-mix(in srgb, var(--c-orange) 30%, transparent); }
+.scenario__tools--solo { grid-template-columns: minmax(0, 720px); }
+/* Copyable email input (matches the conversation prompts) */
+.mail { display: grid; gap: var(--space-sm); }
+.mail__label { display: block; margin-bottom: 5px; font-family: var(--font-mono); font-size: 0.62rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-text-muted); }
+.mail__box { position: relative; padding: 11px 74px 11px 14px; background: var(--c-surface); border: 1px solid var(--c-border); border-radius: var(--radius-md); }
+.mail__subject { font-size: 0.88rem; color: var(--c-text); }
+.mail__body { font-size: 0.88rem; color: var(--c-text-secondary); line-height: 1.65; }
+.mail__body p { margin: 0 0 6px; }
+.mail__body p:last-child { margin-bottom: 0; }
+.mail__body strong { color: var(--c-text); }
+.mail__quote { margin-top: 8px; color: var(--c-text); font-style: italic; }
+.mail__copy { position: absolute; top: 8px; right: 8px; min-width: 56px; padding: 4px 9px; font: 700 0.66rem var(--font-mono); color: var(--c-primary); background: var(--c-surface); border: 1px solid var(--c-border); border-radius: 6px; cursor: pointer; }
+.mail__copy:hover { border-color: var(--c-primary); }
+.mail__ok { display: none; color: var(--c-green); }
+.mail__copy.is-copied .mail__idle { display: none; }
+.mail__copy.is-copied .mail__ok { display: inline; }
+
+/* Human-review hint (inventory) */
+.wf-hint { margin-top: 10px; padding: 9px 11px; font-size: 0.8rem; line-height: 1.5; color: var(--c-text-secondary); background: var(--tint-orange); border: 1px dashed var(--border-orange); border-radius: 6px; }
+.wf-hint b { color: var(--c-orange); font-family: var(--font-mono); font-size: 0.74rem; }
+
+/* Example-reply cards (What gets produced) */
+.wf-replies { display: grid; gap: var(--space-lg); max-width: 760px; }
+.wf-cap { margin-bottom: 8px; font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-text-muted); }
+.wf-email { max-width: 760px; padding: var(--space-md) var(--space-lg); background: var(--c-surface); border: 1px solid var(--c-border-subtle); border-radius: var(--radius-md); }
+.wf-email--wide { max-width: 860px; }
+.wf-email__row { font-size: 0.78rem; color: var(--c-text-secondary); }
+.wf-email__row b { margin-right: 6px; font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; color: var(--c-text-muted); }
+.wf-email__row--subject { margin: 6px 0 10px; font-size: 0.88rem; font-weight: 700; color: var(--c-text); }
+.wf-email__body { font-size: 0.88rem; color: var(--c-text-secondary); line-height: 1.65; }
+.wf-email__body p { margin: 0 0 9px; }
+.wf-email__body p:last-child { margin-bottom: 0; }
+.wf-email__body strong { color: var(--c-text); }
+.wf-email__sign { color: var(--c-text-muted); font-style: italic; }
+.wf-email table { width: 100%; border-collapse: collapse; margin: 4px 0 10px; font-size: 0.82rem; }
+.wf-email th { padding: 0 8px 8px; text-align: left; color: var(--c-text-muted); font: 700 0.62rem var(--font-mono); letter-spacing: 0.05em; text-transform: uppercase; border-bottom: 1px solid var(--c-border); }
+.wf-email td { padding: 9px 8px; vertical-align: top; border-bottom: 1px solid var(--c-border-subtle); }
+.wf-email tbody tr:last-child td { border-bottom: 0; }
+.wf-email td:first-child { color: var(--c-text); }
+
 /* Conversation timeline */
 .convo { margin-top: var(--space-3xl); }
 .convo h2 { margin-bottom: var(--space-sm); }
@@ -154,4 +206,9 @@
   .journey-compare__tasks { grid-template-columns: 1fr; }
   .journey-compare__outcome { align-items: flex-start; flex-direction: column; gap: var(--space-sm); }
   .journey-compare__outcome span { padding-right: 0; border-right: 0; }
+}
+
+@media (max-width: 600px) {
+  .wf-email--wide .wf-email__body { overflow-x: auto; }
+  .wf-email--wide table { min-width: 460px; }
 }

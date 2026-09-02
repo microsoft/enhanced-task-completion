@@ -1,0 +1,201 @@
+---
+import Base from '../../layouts/Base.astro';
+import EmailSample from '../../components/EmailSample.astro';
+import '../../styles/scenario.css';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<Base title="Post-Sales Mailbox | Copilot Studio technical guide">
+  <article class="scenario">
+    <div class="container">
+      <a href={base} class="back">&larr; All scenarios</a>
+
+      <header class="scenario__header">
+        <h1>BlastBox Post-Sales Mailbox</h1>
+        <p class="scenario__lead">
+          One support inbox, three kinds of post-sale problem. A <strong>Classify</strong>
+          node reads each raw email and a switch routes it. Inline agents combine order,
+          stock, weather, and policy facts from the existing BlastBox MCP layer, while
+          conditions and human reviews keep consequential decisions controlled &mdash; and
+          both the shipment and defect branches merge back into one shared return step.
+        </p>
+        <div class="scenario__tools scenario__tools--solo">
+          <div class="scenario__agent" style="--accent: var(--c-pink);">
+            <span class="scenario__agent-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="19" cy="12" r="2"/><path d="M7 6h5a3 3 0 0 1 3 3v.5"/><path d="M7 18h5a3 3 0 0 0 3-3v-.5"/></svg></span>
+            <span class="scenario__agent-text">
+              <span class="scenario__agent-label">Try it with</span>
+              <span class="scenario__agent-name">BlastBox Post Sales Service</span>
+            </span>
+          </div>
+        </div>
+      </header>
+
+      <div class="wf-note">
+        <div class="wf-note__head">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z"/></svg>
+          Before you run it
+        </div>
+        <div class="wf-note__body">
+          <p>On import, MCP tools detach. Reattach them in two places:</p>
+          <ul>
+            <li>Published <strong>Store Policy Agent</strong> &mdash; <code>Policy RAG</code> (membership branch).</li>
+            <li>Inline agent <strong>Review Order, Stock &amp; Weather</strong> &mdash; <code>Order Management</code>, <code>Policy RAG</code>, <code>Warehouse</code>.</li>
+            <li>Inline agent <strong>Review Order &amp; Policy</strong> &mdash; <code>Order Management</code>, <code>Policy RAG</code>.</li>
+            <li>Inline agent <strong>Trigger Order Return/Exchange</strong> &mdash; <code>Order Management</code>.</li>
+          </ul>
+          <p>Outlook (Office 365) is required for the full scenario. Send the sample from your own mailbox so the replies come back to you.</p>
+        </div>
+      </div>
+
+      <section class="convo">
+        <h2>The workflow</h2>
+        <p class="convo__intro">Send one of these emails to the connected mailbox &mdash; keep the subject prefix so the trigger fires &mdash; and the Classify node routes each down a different path.</p>
+
+        <ol class="timeline">
+          <li class="tl-user">
+            <div class="tl-marker">A</div>
+            <div class="tl-content">
+              <div class="tl-label">Incoming email &middot; shipment</div>
+              <EmailSample id="shipment-body" subject="BlastBox Customer Service - 2592780">
+                <p>Ticket <strong>2592780</strong></p>
+                <p><em>Customer Name:</em> <strong>Jordan Pixel</strong></p>
+                <p><em>Customer Email:</em> jordan.pixel@example.com</p>
+                <p><em>Customer Order:</em> <strong>ORD-10502</strong>, placed <strong>9 June 2026</strong></p>
+                <p><em>Customer message:</em></p>
+                <p class="mail__quote">Hi, I'm getting worried about my order. I bought a BlastBox Omega console and it still hasn't arrived. My gaming-league night is this weekend, can you tell me where it is, or what my options are?</p>
+              </EmailSample>
+            </div>
+          </li>
+          <li class="tl-agent">
+            <div class="tl-marker">&#9670;</div>
+            <div class="tl-content">
+              <div class="tl-label">Classify &rarr; Shipment branch</div>
+              <div class="tl-steps">
+                <p>An inline agent reviews the order, live stock, restock ETA, and local weather, then emails the customer an options summary.</p>
+                <div class="tl-delegate"><span class="tl-delegate-name">Human review</span> the customer picks an option in the email</div>
+                <div class="tl-tool"><span class="tl-tool-name">Wait</span> a &ldquo;thanks for waiting&rdquo; reply is sent and the flow ends</div>
+                <div class="tl-tool"><span class="tl-tool-name">Return / Exchange</span> the shared return step fires and emails a confirmation</div>
+              </div>
+            </div>
+          </li>
+
+          <li class="tl-user">
+            <div class="tl-marker">B</div>
+            <div class="tl-content">
+              <div class="tl-label">Incoming email &middot; defect</div>
+              <EmailSample id="defect-body" subject="BlastBox Customer Service - 2492749">
+                <p>Ticket <strong>2492749</strong></p>
+                <p><em>Customer Name:</em> <strong>Jordan Pixel</strong></p>
+                <p><em>Customer Email:</em> jordan.pixel@example.com</p>
+                <p><em>Customer Order:</em> <strong>ORD-10502</strong>, placed <strong>9 June 2026</strong></p>
+                <p><em>Customer message:</em></p>
+                <p class="mail__quote">My BlastBox Omega Core arrived and after using it for a month, it won't power on at all anymore. At arrival, I noticed the box had suffered damage during transit. I ignored it assuming the product inside would be protected. I want it replaced or refunded. Can you assist?</p>
+              </EmailSample>
+            </div>
+          </li>
+          <li class="tl-agent">
+            <div class="tl-marker">&#9670;</div>
+            <div class="tl-content">
+              <div class="tl-label">Classify &rarr; Defect branch</div>
+              <div class="tl-steps">
+                <p>An inline agent weighs the order against policy. The mixed evidence &mdash; transit damage, ignored, a fault after a month &mdash; makes it an exception, so it pauses for review.</p>
+                <div class="tl-delegate"><span class="tl-delegate-name">Human review</span> a manager approves or rejects the exception</div>
+                <div class="tl-tool"><span class="tl-tool-name">Approve</span> the shared return step fires as a goodwill exception, then confirms</div>
+                <div class="tl-tool"><span class="tl-tool-name">Reject</span> a no-refund email explains the decision; no action is taken</div>
+              </div>
+            </div>
+          </li>
+
+          <li class="tl-user">
+            <div class="tl-marker">C</div>
+            <div class="tl-content">
+              <div class="tl-label">Incoming email &middot; other</div>
+              <EmailSample id="membership-body" subject="BlastBox Customer Service - 2122755">
+                <p>Ticket <strong>2122755</strong> - General enquiry</p>
+                <p><em>Sender Email:</em> john.doe@example.com</p>
+                <p><em>Sender Enquiry:</em></p>
+                <p class="mail__quote">Hi, thinking about BlastPass before I commit: what's the difference between Plus and Plus Extra, and is there a fee if I cancel partway through the year? Thanks!</p>
+              </EmailSample>
+            </div>
+          </li>
+          <li class="tl-agent">
+            <div class="tl-marker">&#9670;</div>
+            <div class="tl-content">
+              <div class="tl-label">Classify &rarr; Other (default)</div>
+              <div class="tl-steps">
+                <p>The message isn&rsquo;t tied to an order, so the default branch answers from policy.</p>
+                <div class="tl-delegate"><span class="tl-delegate-name">Store Policy Agent</span> the published agent answers from BlastPass tier &amp; cancellation rules</div>
+                <p>A structured reply is emailed back &mdash; no human step.</p>
+              </div>
+            </div>
+          </li>
+        </ol>
+
+        <div class="result">
+          <span class="result__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="5" cy="6" r="2"/><circle cx="5" cy="18" r="2"/><circle cx="19" cy="12" r="2"/><path d="M7 6h5a3 3 0 0 1 3 3v.5"/><path d="M7 18h5a3 3 0 0 0 3-3v-.5"/></svg></span>
+          <div>
+            <div class="result__label">Outcome</div>
+            <div class="result__value">3 classified branches &middot; 2 human-in-the-loop gates &middot; 1 shared return step</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="scenario__section">
+        <h2>What was demonstrated</h2>
+        <div class="value-grid">
+          <div class="value-card"><h3>Classification becomes control flow</h3><p>The model interprets an unstructured email, but a switch owns the actual route. The workflow stays visible and testable after the AI decision.</p></div>
+          <div class="value-card"><h3>Existing agents become workflow steps</h3><p>The published Store Policy Agent and the workflow&rsquo;s inline agents reuse the same Order Management, Warehouse, and Policy RAG MCP data as the conversational samples.</p></div>
+          <div class="value-card"><h3>Human review protects side effects</h3><p>Customer choices and exception approvals happen before the workflow changes an order, and both branches merge into one shared return step. Reasoning recommends; deterministic nodes authorize.</p></div>
+        </div>
+      </section>
+
+      <section class="scenario__section">
+        <h2>What gets produced</h2>
+        <p class="gen-note">Each branch produces a resolved support thread rather than a file: a grounded reply, plus an options or approval step first when the decision is consequential. While testing, every reply lands in your own mailbox. Here is the summarized reply for each case.</p>
+        <div class="wf-replies">
+          <div>
+            <div class="wf-cap">Shipment &middot; exchange confirmed</div>
+            <div class="wf-email">
+              <div class="wf-email__row"><b>To</b>your own mailbox</div>
+              <div class="wf-email__row wf-email__row--subject">BlastBox Service &ndash; Your return/exchange is confirmed</div>
+              <div class="wf-email__body">
+                <p>Dear Customer,</p>
+                <p>Your exchange for order <strong>ORD-10502</strong> is registered under return authorization <strong>RA-50020</strong> &mdash; the BlastBox Omega Console (SKU-OMEGA, $399.99) is being exchanged for the BlastBox Omega MEGA Edition (SKU-OMEGA-MEGA, $499.99), a $100.00 difference and no restocking fee.</p>
+                <p>A prepaid return label follows for the original console; your MEGA Edition ships now from Seattle-WA1 (5 in stock), with the $399.99 credit applied against your Visa ending 1024.</p>
+                <p class="wf-email__sign">The BlastBox Team</p>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="wf-cap">Defect &middot; referred to a manager</div>
+            <div class="wf-email">
+              <div class="wf-email__row"><b>To</b>your own mailbox</div>
+              <div class="wf-email__row wf-email__row--subject">BlastBox Service &ndash; Your return/exchange is confirmed</div>
+              <div class="wf-email__body">
+                <p>Dear Customer,</p>
+                <p>Your request for order <strong>ORD-10502</strong> (BlastBox Omega Console, SKU-OMEGA, $399.99) has been received and referred to a manager as a <strong>goodwill exception</strong> &mdash; the no-power fault was reported outside the 30-day window and may relate to the transit damage noted on arrival.</p>
+                <p>You&rsquo;ll receive the manager&rsquo;s decision on a possible replacement or $399.99 refund before any label or refund is issued. No return has been created at this stage.</p>
+                <p class="wf-email__sign">The BlastBox Team</p>
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="wf-cap">Membership &middot; answered from policy</div>
+            <div class="wf-email">
+              <div class="wf-email__row"><b>To</b>your own mailbox</div>
+              <div class="wf-email__row wf-email__row--subject">BlastBox Service - Your enquiry</div>
+              <div class="wf-email__body">
+                <p>Dear customer,</p>
+                <p>Thanks for getting in touch. Here&rsquo;s a summary of the two tiers and the cancellation rules:</p>
+                <p><strong>BlastPass Plus</strong> ($79.99/yr): 4-player co-op, 1 Mystery Cartridge per month, 25GB of cloud saves.<br><strong>BlastPass Plus Extra</strong> ($129.99/yr): the Extra Vault (200+ titles), 100GB of cloud saves, 2 Mystery Cartridges per month, and early demo access.</p>
+                <p><strong>Cancellations:</strong> both tiers give a full refund within 14 days if you&rsquo;ve streamed under 2 hours. After that, both offer a prorated refund for whole unused months &mdash; Plus has <strong>no fee</strong> ($6.67/month returned), while Plus Extra deducts a <strong>$10 fee</strong> ($10.83/month, never below $0).</p>
+                <p class="wf-email__sign">The BlastBox Team</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </article>
+</Base>

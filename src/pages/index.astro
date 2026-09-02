@@ -112,6 +112,26 @@ const base = import.meta.env.BASE_URL;
           pillars={["3 connected agents", "live charts", "policy-bound recs", "manager PDF"]}
           upcoming={true}
         />
+        <ScenarioCard
+          title="Post-Sales Mailbox"
+          capability="Event-driven workflow"
+          tier="Customer support"
+          accent="pink"
+          icon="ticket"
+          description="Classify inbound support email, ground each branch in order, stock, and policy data, and pause for customer choice or human approval before acting."
+          href={`${base}scenarios/post-sales-mailbox`}
+          pillars={["classification", "agent nodes", "human in the loop", "mail trigger", "merging branches"]}
+        />
+        <ScenarioCard
+          title="Weekly Inventory Health"
+          capability="Scheduled workflow"
+          tier="Store operations"
+          accent="cyan"
+          icon="inventory"
+          description="Turn agent-grounded inventory into an iterable SKU list, evaluate each item through three controlled lanes, and send one weekly staff digest."
+          href={`${base}scenarios/weekly-inventory-health`}
+          pillars={["scheduled run", "agents", "loop", "three-way condition", "data transformation", "human review"]}
+        />
       </div>
     </div>
   </section>

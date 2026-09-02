@@ -1,0 +1,49 @@
+---
+interface Props {
+  id: string;
+  subject: string;
+}
+
+const { id, subject } = Astro.props;
+---
+
+<div class="mail">
+  <div>
+    <span class="mail__label">Subject</span>
+    <div class="mail__box">
+      <span class="mail__subject">{subject}</span>
+      <button class="mail__copy" type="button" data-copy-value={subject} aria-label="Copy email subject">
+        <span class="mail__idle">Copy</span><span class="mail__ok">Copied</span>
+      </button>
+    </div>
+  </div>
+  <div>
+    <span class="mail__label">Body</span>
+    <div class="mail__box">
+      <div class="mail__body" id={id}><slot /></div>
+      <button class="mail__copy" type="button" data-copy-target={id} aria-label="Copy email body">
+        <span class="mail__idle">Copy</span><span class="mail__ok">Copied</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>('.mail__copy').forEach((button) => {
+    if (button.dataset.copyReady) return;
+    button.dataset.copyReady = 'true';
+
+    button.addEventListener('click', async () => {
+      const targetId = button.dataset.copyTarget;
+      const target = targetId ? document.getElementById(targetId) : null;
+      const value = button.dataset.copyValue ?? target?.innerText.trim() ?? '';
+
+      try {
+        await navigator.clipboard.writeText(value);
+      } finally {
+        button.classList.add('is-copied');
+        window.setTimeout(() => button.classList.remove('is-copied'), 1600);
+      }
+    });
+  });
+</script>
