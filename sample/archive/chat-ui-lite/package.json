@@ -9,7 +9,7 @@
   },
   "dependencies": {
     "@azure/msal-browser": "^4.13.1",
-    "@microsoft/agents-copilotstudio-client": "^1.5.3"
+    "@microsoft/agents-copilotstudio-client": "^1.6.1"
   },
   "devDependencies": {
     "vite": "^6.0.0"
