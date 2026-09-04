@@ -6,7 +6,7 @@
       <LocalizedName description="BlastBoxConnectors" languagecode="1033" />
     </LocalizedNames>
     <Descriptions />
-    <Version>1.0.0.1</Version>
+    <Version>1.0.0.2</Version>
     <Managed>0</Managed>
     <Publisher>
       <UniqueName>CAT</UniqueName>
@@ -78,6 +78,7 @@
       </Addresses>
     </Publisher>
     <RootComponents>
+      <RootComponent type="372" id="{9e039fba-b859-46ec-975a-ccdceead2fa5}" schemaName="cat_curb-20pickup-20mcp" behavior="0" />
       <RootComponent type="372" id="{5d6180ed-0d6f-418c-8ccb-1360b7c33f88}" schemaName="cat_membership-20mcp-20v2" behavior="0" />
       <RootComponent type="372" id="{e4e7e713-5c3f-f111-bec6-70a8a59a4421}" schemaName="new_order-20management-20mcp" behavior="0" />
       <RootComponent type="372" id="{32399478-9062-f111-ab0b-0022480a52c7}" schemaName="new_policy-20rag-20mcp-20v2" behavior="0" />

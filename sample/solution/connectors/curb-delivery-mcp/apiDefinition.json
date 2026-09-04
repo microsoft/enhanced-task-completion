@@ -1,0 +1,37 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Curb Delivery MCP",
+    "description": "MCP-sourced BlastBox Curb Delivery operational facts for pickup locations identified by city and state, collection bay availability, bay assignment, and clearly disclosed fallback conditions. Order status does not gate curbside assignment. Live weather comes separately from MSN Weather; this connector makes no weather or network calls.",
+    "version": "1.0.0"
+  },
+  "host": "placeholder.azure-apim.net",
+  "basePath": "/mcp",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/": {
+      "post": {
+        "summary": "Curb Delivery MCP Server",
+        "description": "MCP server for BlastBox Curb Delivery operational facts. Stores are identified by city and state; no store ID is required. Tools: get_store_location, list_bays, assign_bay, get_fallback_conditions. Order status is informational and does not block pickup. Live conditions and sunset come separately from MSN Weather and are combined with these facts by the staging skill.",
+        "operationId": "InvokeCurbDeliveryMCP",
+        "x-ms-agentic-protocol": "mcp-streamable-1.0",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "MCP response"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {},
+  "security": []
+}

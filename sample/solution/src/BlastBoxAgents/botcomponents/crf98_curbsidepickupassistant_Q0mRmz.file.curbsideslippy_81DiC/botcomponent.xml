@@ -1,0 +1,14 @@
+<botcomponent schemaname="crf98_curbsidepickupassistant_Q0mRmz.file.curbsideslippy_81DiC">
+  <componenttype>14</componenttype>
+  <filedata mimetype="application/octet-stream">curbside_slip.py</filedata>
+  <iscustomizable>0</iscustomizable>
+  <name>./curbside_slip.py</name>
+  <parentbotcomponentid>
+    <schemaname>crf98_curbsidepickupassistant_Q0mRmz.skill.curbside-slip-pdf_dpE</schemaname>
+  </parentbotcomponentid>
+  <parentbotid>
+    <schemaname>crf98_curbsidepickupassistant_Q0mRmz</schemaname>
+  </parentbotid>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+</botcomponent>

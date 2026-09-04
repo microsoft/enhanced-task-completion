@@ -13,7 +13,7 @@
 //      the connectors surface in the modern "Add a tool" MCP picker,
 //   3. creates a no-auth connection per connector (BAP REST API),
 //   4. publishes the agents (children first),
-//   5. prints the one manual UI step (attach each agent's MCP server).
+//   5. prints the one manual UI step (attach connection-bound agent tools).
 //
 // Requirements: Node 18+, pac CLI (authenticated). The script picks the az tenant
 // from the chosen pac profile and runs `az login` for you if az isn't already signed
@@ -688,29 +688,56 @@ async function stepPublish(env) {
 }
 
 function stepManual(env) {
-  const rows = manifest.agents.map((a) => `  ${a.displayName.padEnd(34)} ${a.mcp.join(', ')}`).join('\n');
+  const mcpRows = manifest.agents
+    .filter((a) => a.mcp?.length)
+    .map((a) => `  ${a.displayName.padEnd(34)} ${a.mcp.join(', ')}`)
+    .join('\n');
+  const connectorToolRows = manifest.agents
+    .flatMap((a) => (a.connectorTools || []).map((tool) => ({
+      agent: a.displayName,
+      connector: tool.connector,
+      actions: tool.actions,
+    })))
+    .map((tool) => `  ${tool.agent.padEnd(34)} ${tool.connector}: ${tool.actions.join(', ')}`)
+    .join('\n');
+  const mcpCount = manifest.agents.reduce((count, a) => count + (a.mcp?.length || 0), 0);
+  const connectorToolCount = manifest.agents.reduce(
+    (count, a) => count + (a.connectorTools || [])
+      .reduce((agentCount, tool) => agentCount + tool.actions.length, 0),
+    0,
+  );
   console.log(`
 ================================================================================
   MANUAL POST-INSTALL STEP (required — one time, in the UI)
 ================================================================================
 The deploy is complete: solution imported, connector code deployed, no-auth
 connections Connected, and all agents published. One manual step has no supported
-API — re-attach each agent's MCP server in the authoring UI.
+API — re-attach the connection-bound tools in the authoring UI.
 
 Open Copilot Studio:  https://copilotstudio.microsoft.com/
 Environment:          ${env.id}
   org URL:            ${env.url}
 
-For EACH agent below: open it -> Tools -> remove the listed MCP server -> Add a
-tool -> Model Context Protocol -> pick the connector and choose the EXISTING
-Connected connection (do not create a new one) -> Save -> Publish.
+MCP servers (${mcpCount} attachments)
+For EACH agent below: open it -> Tools -> remove the listed MCP server if it is
+present -> Add a tool -> Model Context Protocol -> pick the connector and choose
+the EXISTING Connected connection (do not create a new one) -> Add -> Save.
 
   Agent                              MCP server(s) to remove + re-add
   ---------------------------------  --------------------------------
-${rows}
+${mcpRows}
 
-Connections already exist for every connector, so just select the existing one
-when re-adding. After re-attaching, the tools load and both scenarios work.
+Standard connector actions (${connectorToolCount} attachments)
+For each row below: open the agent -> Tools -> Add a tool -> Connector -> choose
+the connector -> add EACH listed action. Select an existing connection, or sign
+in/create one if Copilot Studio prompts you.
+
+  Agent                              Connector and action(s) to add
+  ---------------------------------  --------------------------------
+${connectorToolRows || '  (none)'}
+
+Save and publish every changed agent after all of its tools are attached.
+After re-attaching, the tools load and the sample scenarios are ready to test.
 ================================================================================
 `);
 }
