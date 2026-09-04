@@ -44,6 +44,8 @@
 .tl-steps { font-size: 0.88rem; color: var(--c-text-secondary); line-height: 1.65; padding: var(--space-md); background: var(--c-surface); border-radius: var(--radius-md); border: 1px solid var(--c-border-subtle); }
 .tl-steps p { margin-top: 8px; }
 .tl-steps strong { color: var(--c-text); }
+.demo-orders { margin-bottom: var(--space-lg); }
+.demo-orders p:first-child { margin-top: 0; }
 .tl-tool, .tl-skill, .tl-delegate, .tl-file { display: flex; align-items: baseline; gap: 8px; padding: 4px 0; }
 .tl-tool-name { font-family: var(--font-mono); font-size: 0.78em; font-weight: 600; color: var(--c-primary); background: var(--c-primary-light); padding: 2px 8px; border-radius: 4px; white-space: nowrap; }
 .tl-skill-name { font-family: var(--font-mono); font-size: 0.78em; font-weight: 600; color: var(--c-pink); background: rgba(255,46,136,0.12); padding: 2px 8px; border-radius: 4px; white-space: nowrap; }

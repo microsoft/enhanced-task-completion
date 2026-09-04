@@ -1,0 +1,202 @@
+---
+import Base from '../../layouts/Base.astro';
+import DemoTypeCopy from '../../components/DemoTypeCopy.astro';
+import '../../styles/scenario.css';
+
+const base = import.meta.env.BASE_URL;
+---
+
+<Base title="Curb Pickup Assistant | Copilot Studio technical guide">
+  <article class="scenario">
+    <div class="container">
+      <a href={base} class="back">&larr; All scenarios</a>
+
+      <header class="scenario__header">
+        <h1>Curb Pickup Assistant</h1>
+        <p class="scenario__lead">
+          A customer is on the way to collect an order. The <strong>Curb Pickup
+          Assistant</strong> verifies the order and membership, checks live weather and
+          current bay availability, calculates the curbside staging time, confirms a
+          suitable bay, and offers a barcode delivery note &mdash; all from the customer's
+          order, location, and ETA.
+        </p>
+        <div class="scenario__tools">
+          <div class="scenario__agent" style="--accent: var(--c-primary);">
+            <span class="scenario__agent-icon"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8.01" y2="16"/><line x1="16" y1="16" x2="16.01" y2="16"/></svg></span>
+            <span class="scenario__agent-text">
+              <span class="scenario__agent-label">Test this scenario with</span>
+              <span class="scenario__agent-name">Curb Pickup Assistant</span>
+            </span>
+          </div>
+          <DemoTypeCopy />
+        </div>
+      </header>
+
+      <section class="convo">
+        <h2>The conversation</h2>
+        <p class="gen-note">
+          The agent follows the same orchestration on every run, but the response may change
+          based on store location, expected arrival time, live weather, and current bay
+          availability. The conversation below shows one illustrative run.
+        </p>
+        <aside class="tl-steps demo-orders">
+          <p><strong>Try one of these sample orders:</strong></p>
+          <p>
+            Springfield, IL &mdash; <code>ORD-10421</code> &middot;
+            Los Angeles, CA &mdash; <code>ORD-10455</code> &middot;
+            Seattle, WA &mdash; <code>ORD-10478</code> &middot;
+            Pixel Heights, WA &mdash; <code>ORD-10502</code>
+          </p>
+          <p>
+            To test membership-based priority, use <code>ORD-10502</code> with membership ID
+            <code>MEGA-BLAST-1024</code>.
+          </p>
+        </aside>
+
+        <ol class="timeline">
+          <li class="tl-user">
+            <div class="tl-marker">1</div>
+            <div class="tl-content">
+              <div class="tl-label">Customer</div>
+              <div class="try-prompt">
+                <blockquote class="try-prompt__text">Hi, I'm coming to the Pixel Heights, Washington store to collect order ORD-10502. I should be there in about 20 minutes.</blockquote>
+              </div>
+            </div>
+          </li>
+          <li class="tl-agent">
+            <div class="tl-marker">&#9670;</div>
+            <div class="tl-content">
+              <div class="tl-label">Curb Pickup Assistant</div>
+              <div class="tl-steps">
+                <p>The order, location, and ETA are already present, so the agent asks only for the missing eligibility information.</p>
+                <p>"Do you have a BlastPass membership?"</p>
+              </div>
+            </div>
+          </li>
+
+          <li class="tl-user">
+            <div class="tl-marker">2</div>
+            <div class="tl-content">
+              <div class="tl-label">Customer</div>
+              <div class="try-prompt">
+                <blockquote class="try-prompt__text">Yes, I have BlastPass Mega.</blockquote>
+              </div>
+            </div>
+          </li>
+          <li class="tl-agent">
+            <div class="tl-marker">&#9670;</div>
+            <div class="tl-content">
+              <div class="tl-label">Curb Pickup Assistant</div>
+              <div class="tl-steps">
+                <p>A claimed tier is not used for bay selection until it is verified.</p>
+                <p>"What's your BlastPass membership ID?"</p>
+              </div>
+            </div>
+          </li>
+
+          <li class="tl-user">
+            <div class="tl-marker">3</div>
+            <div class="tl-content">
+              <div class="tl-label">Customer</div>
+              <div class="try-prompt">
+                <blockquote class="try-prompt__text">It's MEGA-BLAST-1024.</blockquote>
+              </div>
+            </div>
+          </li>
+          <li class="tl-agent">
+            <div class="tl-marker">&#9670;</div>
+            <div class="tl-content">
+              <div class="tl-label">Curb Pickup Assistant &rarr; connected agent and tools &rarr; Customer</div>
+              <div class="tl-steps">
+                <div class="tl-tool"><span class="tl-tool-name">Store Associate Assistant</span> verifies ORD-10502 for Jordan Pixel, one BlastBox Omega Console, and the membership record for MEGA-BLAST-1024</div>
+                <div class="tl-tool"><span class="tl-tool-name">Curb Pickup MCP &middot; get_store_location + list_bays</span> resolves Pixel Heights, WA and retrieves a fresh list of covered, lit, priority, and occupied bays</div>
+                <div class="tl-tool"><span class="tl-tool-name">MSN Weather</span> gets current conditions, the forecast relevant to the 20-minute ETA, and sunset in Metric units</div>
+                <div class="tl-skill"><span class="tl-skill-name">staging-window-calculator</span> uses the item quantity and expected arrival time, applies the after-dark safety rule, calculates curbside staging for 15 minutes from now, and selects an available well-lit bay</div>
+                <div class="tl-tool"><span class="tl-tool-name">Curb Pickup MCP &middot; assign_bay</span> confirms the calculator-selected bay and returns confirmation CURB-10502-2</div>
+                <p>"Hello Jordan. Your BlastPass Plus Extra membership is verified. Your order will be ready at BlastBox Pixel Heights for your expected arrival in about 20 minutes. Our team will move your order into curbside staging five minutes before you arrive."</p>
+                <p>"Bay 2 is assigned. Because your arrival is after sunset, the calculator selected a well-lit bay; it is also the available priority bay for your verified tier. Please stay in your vehicle with the trunk accessible, and use caution if you need to step outside."</p>
+                <p>"Would you like me to generate a PDF delivery note for your pickup?"</p>
+              </div>
+            </div>
+          </li>
+
+          <li class="tl-user">
+            <div class="tl-marker">4</div>
+            <div class="tl-content">
+              <div class="tl-label">Customer</div>
+              <div class="try-prompt">
+                <blockquote class="try-prompt__text">Yes, please generate it.</blockquote>
+              </div>
+            </div>
+          </li>
+          <li class="tl-agent">
+            <div class="tl-marker">&#9670;</div>
+            <div class="tl-content">
+              <div class="tl-label">Curb Pickup Assistant</div>
+              <div class="tl-steps">
+                <div class="tl-skill"><span class="tl-skill-name">curbside-slip-pdf</span> runs reportlab with the confirmed order, assignment, times, bay characteristics, weather handling, and safety precaution</div>
+                <div class="tl-file"><span class="ticon-cat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span><span class="ticon-bb">&#129534;</span> hands back <strong>blastbox_curbside_slip.pdf</strong></div>
+                <p>"Your delivery note is ready. It includes your confirmed bay, pickup and curbside staging times, handling instructions, and assignment barcode."</p>
+              </div>
+            </div>
+          </li>
+        </ol>
+
+        <div class="result">
+          <span class="result__icon"><span class="ticon-cat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V10l7-7 7 7v11"/><path d="M9 21v-6h6v6"/></svg></span><span class="ticon-bb">&#128663;</span></span>
+          <div>
+            <div class="result__label">Illustrative pickup plan</div>
+            <div class="result__value">Verified order and tier &middot; calculated curbside staging time &middot; confirmed bay &middot; barcode delivery note</div>
+          </div>
+        </div>
+      </section>
+
+      <section class="scenario__section">
+        <h2>What was demonstrated</h2>
+        <div class="value-grid">
+          <div class="value-card">
+            <h3>Orchestrates live pickup</h3>
+            <p>The agent combines verified order and membership details with the customer's ETA, current weather, and live bay availability to coordinate one complete pickup experience.</p>
+          </div>
+          <div class="value-card">
+            <h3>Calculates staging and bay</h3>
+            <p>The staging skill applies business rules to calculate the curbside staging time, select the most suitable available bay, and produce relevant handling guidance.</p>
+          </div>
+          <div class="value-card">
+            <h3>Confirms the customer plan</h3>
+            <p>Curb Pickup MCP reserves the selected bay, and the PDF skill turns the confirmed decision into a customer-ready handoff document with the pickup details and barcode.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="scenario__section">
+        <h2>What gets generated</h2>
+        <p class="gen-note">
+          The customer gets a collection handoff slip generated by
+          <code>curbside-slip-pdf</code> (reportlab). This illustrative file uses the
+          after-dark run above; a live run uses its own confirmed bay, times, weather,
+          handling instruction, and assignment barcode.
+        </p>
+        <div class="files">
+          <a class="filecard filecard--download" href={`${base}files/blastbox_curbside_slip.pdf`} download>
+            <span class="filecard__icon"><span class="ticon-cat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></span><span class="ticon-bb">&#129534;</span></span>
+            <div>
+              <strong>blastbox_curbside_slip.pdf</strong>
+              <span>reportlab &middot; confirmed pickup &middot; assignment barcode</span>
+            </div>
+            <span class="filecard__dl">Download &darr;</span>
+          </a>
+        </div>
+        <figure class="slip-preview">
+          <a href={`${base}files/blastbox_curbside_slip.pdf`} target="_blank" rel="noopener">
+            <img
+              src={`${base}img/blastbox_curbside_slip-preview.png`}
+              alt="BlastBox curb delivery collection slip for Jordan Pixel and order ORD-10502, showing assigned bay 2, pickup and curbside staging times, after-dark handling instructions, and an assignment barcode."
+              loading="lazy"
+            />
+          </a>
+        </figure>
+      </section>
+    </div>
+  </article>
+</Base>

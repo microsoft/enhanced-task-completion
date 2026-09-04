@@ -1,0 +1,11 @@
+<botcomponent schemaname="crf98_curbsidepickupassistant_Q0mRmz.action.cr26e_storeassociateassistant_ZQHUx1_YbrqUdtD">
+  <componenttype>9</componenttype>
+  <description>Use this agent only to retrieve order, customer, item, status, payment, and optional membership information through its own MCP tools. Never call Inventory &amp; Fulfillment Agent, Store Policy Agent, or any other connected agent. Return the retrieved facts directly to Curb Side Pickup Assistant. If an order is not found, report that directly without delegating.</description>
+  <iscustomizable>0</iscustomizable>
+  <name>Store Associate Assistant</name>
+  <parentbotid>
+    <schemaname>crf98_curbsidepickupassistant_Q0mRmz</schemaname>
+  </parentbotid>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+</botcomponent>

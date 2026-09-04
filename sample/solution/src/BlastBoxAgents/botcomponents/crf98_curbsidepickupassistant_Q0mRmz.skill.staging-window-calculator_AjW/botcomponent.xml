@@ -1,0 +1,11 @@
+<botcomponent schemaname="crf98_curbsidepickupassistant_Q0mRmz.skill.staging-window-calculator_AjW">
+  <componenttype>9</componenttype>
+  <description>Calculate the exact Curb Delivery conditions band, collection bay, and staging time from the customer ETA, order quantities, store layout, and Metric weather conditions.</description>
+  <iscustomizable>0</iscustomizable>
+  <name>staging-window-calculator</name>
+  <parentbotid>
+    <schemaname>crf98_curbsidepickupassistant_Q0mRmz</schemaname>
+  </parentbotid>
+  <statecode>0</statecode>
+  <statuscode>1</statuscode>
+</botcomponent>

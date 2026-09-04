@@ -4,7 +4,7 @@ One cross-platform Node script (`deploy.mjs`) that stands up the BlastBox demo i
 an **existing** Power Platform environment. It imports the two solutions, deploys
 each MCP connector's inline custom code, publishes all customizations, creates the
 no-auth MCP connections, publishes the agents, and prints the single manual UI
-step that has no API.
+step that has no API for the MCP and standard connector tool bindings.
 
 Run it from a fresh clone — everything it needs (both solution zips and all
 connector code) is in the repo. It does **not** create or delete environments; you
@@ -60,7 +60,7 @@ arrays (no shell string interpolation), resolves paths with `node:path`, and rea
    node deploy/deploy.mjs
    ```
 
-3. **Re-attach the MCP tools** — the one manual UI step (~2 min). The script
+3. **Re-attach the connection-bound tools** — the one manual UI step. The script
    also prints these instructions at the end of the run.
 
    1. Open **Copilot Studio** (https://copilotstudio.microsoft.com/) in the deployed env.
@@ -75,8 +75,15 @@ arrays (no shell string interpolation), resolves paths with `node:path`, and rea
       | Inventory & Fulfillment Agent | Warehouse MCP |
       | Returns & Service Assistant | Membership MCP v2 |
       | Store Associate Assistant | Order Management MCP **and** Membership MCP v2 |
+      | Curb Pickup Assistant | Curb Pickup MCP |
 
-   That is 5 attachments total. See [Manual post-install step](#manual-post-install-step-required-2-min)
+   3. For **Curb Pickup Assistant**, also go to **Tools → Add a tool → Connector →
+      MSN Weather**. Add **Get current weather** and **Get forecast for today**.
+      Select an existing MSN Weather connection, or sign in/create one if prompted,
+      then **Save and publish**.
+
+   That is 8 attachments total: 6 MCP server bindings and 2 MSN Weather actions.
+   See [Manual post-install step](#manual-post-install-step-required)
    for why this can't be scripted.
 
 4. **Validate using the scenarios** at
@@ -128,8 +135,8 @@ The demo ships as **two solutions** that import in order:
 
 | # | Solution (zip) | Imports as unique name | Carries |
 | --- | --- | --- | --- |
-| 1 | `BlastBoxConnectors_1_0_0_1.zip` | `BlastBoxConnectors` | the 4 custom MCP connectors |
-| 2 | `BlastBoxAgents_1_0_0_1.zip` | `BlastBoxDeploy` | the 4 agents + their Python skills |
+| 1 | `BlastBoxConnectors_1_0_0_1.zip` | `BlastBoxConnectors` | the 5 custom MCP connectors |
+| 2 | `BlastBoxAgents_1_0_0_1.zip` | `BlastBoxDeploy` | the 5 agents + their Python skills |
 
 Both zips are committed under `sample/solution/`, and each is also **unpacked**
 into `sample/solution/src/<UniqueName>/` so the solution contents are reviewable
@@ -159,36 +166,37 @@ Run steps:
 3. **Connections:** create one no-auth connection per connector via the BAP REST
    API (idempotent — an existing Connected connection is reused). No guid binding is
    needed; `authMode: Maker` resolves any Connected connection for that connector.
-4. **Publish:** `PvaPublish` the 4 agents, children before parents.
+4. **Publish:** `PvaPublish` the 5 agents, children before parents.
 5. **Manual step:** print the one UI action that has no supported API (below).
 
 `pac connector update` can hang for 30+ minutes on these connectors even when the
 server compile succeeds, so it runs in its own process group with a deadline and
 the step resolves the moment `modifiedon` advances — it never blocks on a hung pac.
 
-## Manual post-install step (required, ~2 min)
+## Manual post-install step (required)
 
 Everything above is automated. The one thing the script cannot do (there is no
-supported API for it) is finalise each agent's MCP tool wiring. New-UI MCP
+supported API for it) is finalise each agent's connection-bound tool wiring. New-UI
 connection references don't survive solution export cleanly, so the sanitized
-agents solution ships **without** the MCP tools, and the modern Copilot Studio
-canvas only re-creates a working tool binding when a maker re-attaches the MCP
-server in the UI. The connectors and Connected connections already exist, so this
-is just a few clicks per agent.
+agents solution ships **without** the MCP tools or the two MSN Weather actions.
+The modern Copilot Studio canvas only re-creates working bindings when a maker
+re-attaches them in the UI. The custom MCP connectors and their Connected
+connections already exist; MSN Weather may prompt the maker to select or create
+its authenticated connection.
 
 The concrete steps and the agent → MCP table are in
 [Step 3 of the happy path](#tldr--the-happy-path) above. `deploy.mjs` also prints
 them at the end of every run (or run `node deploy/deploy.mjs --start-at manual ...`
-to re-print). After re-attaching (5 attachments total), the tools load and both
-packaged scenarios work end to end.
+to re-print). After re-attaching (8 attachments total), the tools load and all
+three packaged scenarios work end to end.
 
 ## Verify (end-to-end test)
 
 Validate using the scenarios at
 https://microsoft.github.io/new-copilot-studio-tech-guide/#scenarios — each one
-names the agent to test it with and the exact turns to paste. Both scenarios have
-been validated on a fresh env after a clean scripted run, with every MCP tool and
-every Python skill firing live (visible in the agent's activity map):
+names the agent to test it with and the exact turns to paste. Use the agent's
+activity map to confirm every expected MCP tool, connector action, connected
+agent, and Python skill fires:
 
 - **Block Party Trade-Up** — open **Store Associate Assistant, Preview** and paste
   the 4 turns from
@@ -204,6 +212,16 @@ every Python skill firing live (visible in the agent's activity map):
   verification, the old card deactivated, a new card serial, and a generated PNG
   card. Tools: `get_membership`, `reissue_card`. Skills: `card-reissue`,
   `membership-card-png`.
+- **Weather-aware Curb Pickup** — open **Curb Pickup Assistant, Preview** and use
+  the turns on the
+  [scenario page](https://microsoft.github.io/new-copilot-studio-tech-guide/scenarios/curb-pickup-assistant).
+  Expect the agent to request the membership ID only after membership is claimed,
+  verify `ORD-10502` and `MEGA-BLAST-1024`, retrieve fresh bays and relevant live
+  weather, invoke `staging-window-calculator`, confirm the assignment through Curb
+  Pickup MCP, and generate the PDF only after consent. Exact weather, times, and
+  bay vary with live conditions and occupancy. Tools: Store Associate Assistant,
+  Curb Pickup MCP, Get current weather, Get forecast for today. Skills:
+  `staging-window-calculator`, `curbside-slip-pdf`.
 
 The Python skills ride in on the agents solution and register on `PublishAllXml`;
 no manual skill upload is needed. (If a skill ever lands present-but-broken in some
@@ -218,8 +236,8 @@ skill** dialog and republish — the portal recompiles the bundle.)
 - `connectors` — slug, display name, connector id, and `settlePass` flag per MCP
   connector. The connector files live under `sample/solution/connectors/<slug>/`
   (`apiDefinition.json`, `apiProperties.json`, `script.csx`).
-- `agents` — schema name, display name, role (child/parent), and the MCP server(s)
-  each agent re-attaches in the manual step.
+- `agents` — schema name, display name, role (child/parent), the MCP server(s), and
+  any standard connector actions each agent re-attaches in the manual step.
 - `import` retry/timeout and `apimPropagationSeconds` tuning.
 
 Edit it if the solution contents change.
@@ -230,10 +248,9 @@ The connectors and the agents have different lifecycles and the MCP connection
 references don't export cleanly from the new authoring UI (they're born in the CDS
 Default Solution and export with no edges). Splitting them keeps the connectors —
 whose identity the agents' tools reference — in their own stable solution, while
-the agents solution is sanitized to strip the un-exportable MCP tools. The cost is
-the one manual re-attach step above, which recreates a fresh, working tool binding
-against the connection that already exists. This is the only flow validated end to
-end.
+the agents solution is sanitized to strip the unexportable connection-bound tools.
+The cost is the one manual re-attach step above, which recreates fresh, working
+bindings. This is the only flow validated end to end.
 
 ## Findings (the "deployment process" problems, resolved)
 

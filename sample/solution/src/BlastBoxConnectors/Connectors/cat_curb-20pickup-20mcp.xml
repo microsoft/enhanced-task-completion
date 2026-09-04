@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Connector xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <connectorid>9e039fba-b859-46ec-975a-ccdceead2fa5</connectorid>
+  <description>MCP-sourced BlastBox Curb Delivery operational facts for store locations, collection bay availability, bay assignment, and clearly disclosed fallback conditions. Live weather comes separately from MSN Weather; this connector makes no weather or network calls.</description>
+  <displayname>Curb Pickup MCP</displayname>
+  <iconbrandcolor>#007ee5</iconbrandcolor>
+  <name>cat_curb-20pickup-20mcp</name>
+  <connectortype>1</connectortype>
+  <scriptoperations>[]</scriptoperations>
+  <openapidefinition>/Connector/cat_curb-20pickup-20mcp_openapidefinition.json</openapidefinition>
+  <connectionparameters>/Connector/cat_curb-20pickup-20mcp_connectionparameters.json</connectionparameters>
+  <policytemplateinstances>/Connector/cat_curb-20pickup-20mcp_policytemplateinstances.json</policytemplateinstances>
+  <customcodeblobcontent>/Connector/cat_curb-20pickup-20mcp_customcodeblobcontent.csx</customcodeblobcontent>
+</Connector>

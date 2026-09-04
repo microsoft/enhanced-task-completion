@@ -102,6 +102,16 @@ const base = import.meta.env.BASE_URL;
           pillars={["4 MCPs", "2 connected agents", "chained skills", "settlement PDF"]}
         />
         <ScenarioCard
+          title="Curb Pickup Assistant"
+          capability="Customer pickup"
+          tier="Curb Pickup Assistant"
+          accent="cyan"
+          icon="car"
+          description="A customer provides an order number, store location, and expected arrival time. The agent verifies membership, checks current weather and available bays, calculates the curbside staging time, assigns a suitable bay, and generates a barcode pickup note."
+          href={`${base}scenarios/curb-pickup-assistant`}
+          pillars={["connected agent", "live weather", "staging skill", "PDF out"]}
+        />
+        <ScenarioCard
           title="End-of-Quarter Markdown Review"
           capability="Store manager"
           tier="Merch Insights Assistant"
@@ -124,7 +134,7 @@ const base = import.meta.env.BASE_URL;
           <div class="cta__intro">
             <p class="section-label">Get started</p>
             <h2>Stand up the store</h2>
-            <p class="cta__desc">One command downloads the sample and deploys all four agents and their MCP connectors into a Power Platform environment you already have &mdash; no clone, no servers, nothing to host. A few minutes later you have a running store to explore.</p>
+            <p class="cta__desc">One command downloads the sample and deploys all five agents and their MCP connectors into a Power Platform environment you already have &mdash; no clone, no servers, nothing to host. A few minutes later you have a running store to explore.</p>
             <p class="cta__note">Needs the <a href="https://learn.microsoft.com/power-platform/developer/cli/introduction" target="_blank" rel="noopener">pac CLI</a> (signed in) and <a href="https://learn.microsoft.com/cli/azure/install-azure-cli" target="_blank" rel="noopener">az CLI</a>. Prefer to clone? Grab the <a href="https://github.com/microsoft/new-copilot-studio-tech-guide/tree/main/sample/solution">sample</a> and run <code>node deploy/deploy.mjs</code>.</p>
           </div>
           <div class="term" role="group" aria-label="Deploy commands">
@@ -143,7 +153,7 @@ const base = import.meta.env.BASE_URL;
         <ol class="cta__steps">
           <li class="cta__step"><span class="cta__num">1</span><div class="cta__step-body"><strong>Run the one-liner</strong><p>Pick your pac profile and target environment when it asks.</p></div></li>
           <li class="cta__step"><span class="cta__num">2</span><div class="cta__step-body"><strong>It deploys</strong><p>Imports both solutions, deploys the MCP connectors, creates connections, publishes the agents.</p></div></li>
-          <li class="cta__step"><span class="cta__num">3</span><div class="cta__step-body"><strong>Re-attach MCP tools</strong><p>One ~2-minute manual UI step it prints at the end.</p></div></li>
+          <li class="cta__step"><span class="cta__num">3</span><div class="cta__step-body"><strong>Re-attach connection-bound tools</strong><p>One short manual UI step for the MCP servers and MSN Weather actions.</p></div></li>
           <li class="cta__step"><span class="cta__num">4</span><div class="cta__step-body"><strong>Play the scenarios</strong><p>Open each agent&apos;s Preview and run the walkthroughs above.</p></div></li>
         </ol>
       </div>

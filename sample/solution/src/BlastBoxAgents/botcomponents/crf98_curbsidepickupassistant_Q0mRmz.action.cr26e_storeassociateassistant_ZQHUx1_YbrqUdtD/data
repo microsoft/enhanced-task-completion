@@ -1,0 +1,5 @@
+kind: ConnectedAgentTool
+historyType:
+  kind: ConversationHistory
+
+botSchemaName: cr26e_storeassociateassistant_ZQHUx1

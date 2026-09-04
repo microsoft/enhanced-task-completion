@@ -20,6 +20,11 @@
   },
   "connectors": [
     {
+      "slug": "curb-delivery-mcp",
+      "displayName": "Curb Pickup MCP",
+      "connectorId": "9e039fba-b859-46ec-975a-ccdceead2fa5"
+    },
+    {
       "slug": "membership-mcp-v2",
       "displayName": "Membership MCP v2",
       "connectorId": "5d6180ed-0d6f-418c-8ccb-1360b7c33f88"
@@ -73,6 +78,23 @@
       "mcp": [
         "Order Management MCP",
         "Membership MCP v2"
+      ]
+    },
+    {
+      "schemaName": "crf98_curbsidepickupassistant_Q0mRmz",
+      "displayName": "Curb Pickup Assistant",
+      "role": "parent",
+      "mcp": [
+        "Curb Pickup MCP"
+      ],
+      "connectorTools": [
+        {
+          "connector": "MSN Weather",
+          "actions": [
+            "Get current weather",
+            "Get forecast for today"
+          ]
+        }
       ]
     }
   ],

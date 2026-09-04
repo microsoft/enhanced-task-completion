@@ -14,9 +14,10 @@ A showcase site and deployable sample for the Agents and Workflows experience in
 
 ## Deploying the sample
 
-Four agents (flagship Store Associate Assistant, self-serve Returns & Service Assistant,
-and two connected agents) and four inline MCP connectors (Membership, Order Management,
-Policy RAG, Warehouse). Everything runs inside the Power Platform: no external servers.
+Five agents (flagship Store Associate Assistant, self-serve Returns & Service Assistant,
+Curb Pickup Assistant, and two connected agents) and five inline MCP connectors
+(Membership, Order Management, Policy RAG, Warehouse, Curb Pickup). Everything runs
+inside the Power Platform: no external servers.
 
 Stand it up with one command — no clone required. It downloads the deploy assets and
 runs the guided deploy (needs **Node 18+**, the **pac CLI** signed in, and the **az
@@ -35,7 +36,8 @@ powershell -c "irm https://raw.githubusercontent.com/microsoft/new-copilot-studi
 ```
 
 It imports both solutions, deploys the connector code, creates the connections, and
-publishes the agents, then prints one ~2-minute manual UI step. Set `BLASTBOX_REF` to
+publishes the agents, then prints one short manual UI step for connection-bound tools.
+Set `BLASTBOX_REF` to
 deploy from a branch or tag other than `main`.
 
 Prefer to clone? Everything the script needs is committed in the repo:
@@ -55,8 +57,8 @@ sample/
 
 See [`deploy/README.md`](./deploy/README.md) for the full walkthrough and the manual
 re-attach step, and [`sample/solution/README.md`](./sample/solution/README.md) for what's
-in the solution and the two demo scenarios (Self-Serve Card Reissue and Block Party
-Trade-Up).
+in the solution and the three demo scenarios (Self-Serve Card Reissue, Block Party
+Trade-Up, and Weather-aware Curb Pickup).
 
 ## Site development
 

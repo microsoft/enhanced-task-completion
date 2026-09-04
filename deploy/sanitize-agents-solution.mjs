@@ -1,13 +1,13 @@
 #!/usr/bin/env node
 // sanitize-agents-solution.mjs — turn an exported Copilot Studio solution zip into
 // an AGENTS-ONLY solution: strip every custom connector, every connection
-// reference, and every connection-bound MCP tool component, leaving only the bots
+// reference, and every connection-bound tool component, leaving only the bots
 // and their non-connector botcomponents (skills, files, connected-agent tools).
 //
 // WHY (the two-solution split):
 //   We ship the BlastBox demo as two solutions the user imports in order:
-//     1. a connectors solution (the 4 custom-code MCP connectors), then
-//     2. this agents-only solution (the 4 bots + skills).
+//     1. a connectors solution (the custom-code MCP connectors), then
+//     2. this agents-only solution (the bots + skills).
 //   Keeping connectors out of the agents solution avoids the connector compile /
 //   capacity problems bleeding into the agent import, and lets the connectors be
 //   versioned and re-imported independently. The agents solution must therefore
@@ -18,8 +18,9 @@
 // WHAT IT REMOVES (generically, not by hard-coded name/id):
 //   - every `<RootComponent type="372" .../>` (custom connector) in solution.xml
 //   - the whole `Connector/` (or `Connectors/`) folder
-//   - every connection-bound MCP tool botcomponent (`kind: McpTool` or the older
-//     `InvokeExternalAgentTaskAction` TaskDialog form)
+//   - every connection-bound tool botcomponent (`kind: McpTool`,
+//     `kind: ConnectorTool`, or the older `InvokeExternalAgentTaskAction`
+//     TaskDialog form)
 //   - connection-reference artifacts: `Assets/botcomponent_connectionreferenceset.xml`
 //     and any `connectionreferences/` folder
 //   - the removed parts' `<Override>` entries in `[Content_Types].xml`
@@ -30,7 +31,7 @@
 //
 // After importing the agents solution, the connections already exist (from the
 // connectors solution + one no-auth connection each), so the only manual step is
-// re-adding each agent's MCP server in the Copilot Studio portal.
+// re-adding each agent's connector-bound tools in the Copilot Studio portal.
 //
 // Usage:
 //   node deploy/sanitize-agents-solution.mjs <input.zip> [output.zip]
@@ -67,11 +68,12 @@ try {
   const bcRoot = join(work, 'botcomponents');
   if (!existsSync(bcRoot)) die('no botcomponents/ folder in solution — is this a Copilot Studio solution zip?');
 
-  // 1. Remove connection-bound MCP tool components. Their `data` declares
-  //    `kind: McpTool` (new UI) or an `InvokeExternalAgentTaskAction` (older
-  //    TaskDialog form). Both bind a connection reference and are re-added in the
-  //    portal after import. Skills (InlineAgentSkill), bundled files and
-  //    connected-agent tools (ConnectedAgentTool) are left untouched.
+  // 1. Remove connection-bound tool components. Their `data` declares
+  //    `kind: McpTool`, `kind: ConnectorTool`, or an
+  //    `InvokeExternalAgentTaskAction` (older TaskDialog form). They bind a
+  //    connection reference and are re-added in the portal after import. Skills
+  //    (InlineAgentSkill), bundled files and connected-agent tools
+  //    (ConnectedAgentTool) are left untouched.
   const removedComponents = [];
   for (const name of readdirSync(bcRoot)) {
     const dir = join(bcRoot, name);
@@ -79,14 +81,16 @@ try {
     const dataPath = join(dir, 'data');
     if (!existsSync(dataPath)) continue;
     const data = readFileSync(dataPath, 'utf8');
-    const isMcp = /^\s*kind:\s*McpTool\s*$/m.test(data) || /InvokeExternalAgentTaskAction/.test(data);
-    if (isMcp) {
+    const isConnectionBoundTool =
+      /^\s*kind:\s*(?:McpTool|ConnectorTool)\s*$/m.test(data)
+      || /InvokeExternalAgentTaskAction/.test(data);
+    if (isConnectionBoundTool) {
       rmSync(dir, { recursive: true, force: true });
       removedComponents.push(name);
     }
   }
-  if (!removedComponents.length) warn('no MCP tool components found (already MCP-free?)');
-  else { log(`Removed ${removedComponents.length} MCP tool component(s):`); removedComponents.forEach((n) => console.log(`     - ${n}`)); }
+  if (!removedComponents.length) warn('no connection-bound tool components found (already connection-free?)');
+  else { log(`Removed ${removedComponents.length} connection-bound tool component(s):`); removedComponents.forEach((n) => console.log(`     - ${n}`)); }
 
   // 2. Remove the connector folder(s) entirely (the custom connector definitions
   //    and inline code blobs). Match `Connector` or `Connectors`, case-insensitive.
@@ -165,7 +169,7 @@ try {
     }
   } else warn('customizations.xml not found — skipping <Connectors> reset');
 
-  // 6. Prune the removed MCP components' <Override> entries from [Content_Types].xml
+  // 6. Prune the removed tool components' <Override> entries from [Content_Types].xml
   //    so the package manifest stays consistent. Connector files ride on <Default>
   //    extension content types, so removing the Connector/ folder needs no edit here.
   const ctPath = join(work, '[Content_Types].xml');
@@ -186,7 +190,7 @@ try {
   log(`Packing ${basename(output)}`);
   sh('zip', ['-r', '-q', '-X', output, ...ordered], { cwd: work });
   ok(`Wrote agents-only solution: ${output}`);
-  console.log(`\nNext: import the connectors solution first, then this agents-only solution, then create one no-auth connection per connector and re-add each MCP server to its agent in the Copilot Studio portal.`);
+  console.log(`\nNext: import the connectors solution first, then this agents-only solution, create one no-auth connection per custom connector, and follow deploy/manifest.json or deploy/README.md to re-add all MCP servers and standard connector actions in Copilot Studio.`);
 } finally {
   rmSync(work, { recursive: true, force: true });
 }
